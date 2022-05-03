@@ -1,4 +1,12 @@
 struct qubit
     state
-    operators::Array
-    
+    operations::Array
+end
+
+struct circuit
+    noOfQutbi::Int64
+    qubits::Array{::qubit}
+end
+
+struct multiQubitGate
+    operation
