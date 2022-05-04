@@ -1,6 +1,5 @@
 module HardwareConfiguration
 
-# include("circuit-configuration.jl")
 import ..CircuitConfiguration
 
 abstract type Hardware end
