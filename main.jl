@@ -3,6 +3,7 @@ include("configuration/circuit-configuration.jl")
 include("configuration/hardware-configuration.jl")
 include("function/circuit-generator.jl")
 
+
 """
 This part is setting to provider.
 """
@@ -32,17 +33,38 @@ else
     error("The execution on real hardware isn't yet built")
 end
 
+
 """
 This part is setting to configuration.
 Only configuration by file is yet possible.
 """
+
+# TODO: how set the configuration of circuit and hardware
 circuitConfigPath = ""
 hardwareConfigPath = ""
 communicationConfigPath = ""
 
 CircuitConfiguration.openConfigFile(circuitConfigPath)
+HardwareConfiguration.openConfigFile(hardwareConfigPath)
+CommunicationConfiguration.openConfigFile(communicationConfigPath)
 
-configuration = nothing # TODO: how set the configuration of circuit and hardware
+
+configuration = nothing  # TODO
 
 
-# provider.run()
+"""
+This part is mapping to initial topology configuraiton to minimize the inter-core communication for input quantum circuit.
+Only generating circuit by file is yet possible.
+"""
+
+#
+circuitFilePath = ""
+
+CircuitGenerator.openCircuitFile(circuitFilePath)
+
+
+"""
+This part is running the provider with scheduling.
+"""
+
+provider.run()

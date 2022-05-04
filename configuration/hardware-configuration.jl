@@ -59,7 +59,7 @@ module HardwareConfiguration
     function configure()
     end
 
-    function openConfigFile()
+    function openConfigFile(filePath::String)
     end
 
 end
@@ -147,7 +147,7 @@ module CommunicationConfiguration
     function configure()
     end
 
-    function openConfigFile()
+    function openConfigFile(filePath::String)
     end
 
 end

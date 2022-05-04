@@ -11,4 +11,7 @@ end
 module Simulator
     import ..CostCalculator
     import ..ErrorCalculator
+
+    function run()
+    end
 end
