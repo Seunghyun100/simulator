@@ -1,54 +1,97 @@
-module CommunicationConfiguration
-    export communicationChannel, communicationQubit
-
-    abstract type CommunicationChannel end
-    abstract type ShuttlingPath <:CommunicationChannel end
-    abstract type LinearPath <:ShuttlingPath end
-    abstract type Junction <:ShuttlingPath end
-    abstract type Edge <:ShuttlingPath end
-
-    # Add abstract type (i.e., shuttlingPath)
-    function addType(type::String, supreType::String)
-        if supreType
-            abstract type $type <:supreType end
-        else
-            abstract type $type end
-        end
-    end
-
-    struct communicationQubit
-    end
-
-    mutable struct communicationChannel
-        type <:CommunicationChannel
-        duration::Float64 # duration of communication
-        heatingRate::Float64 # heating rate by shuttling
-        id::Int64
-        connectivity::Array{communicationChannel,1} # connectivity between channels
-        dwellTime::Float64 # dwell time to avoid deadlock
-    end
-end
-
 module HardwareConfiguration
-    using communicationConfiguration
-    
-    struct actualQubit
-        id::Int64
-        intraConnectivity::Array{::Int64,1}
-        state
-        isCommunicationQubit::Bool
-    end
 
-    mutable struct core
-        id::Int64
-        capacity::Int64
-        phononNumber::Float64
-        interConnectivity::Array{::communicationChannel,1}
-    end
+abstract type Hardware end
+abstract type Communication end
 
-    struct hardware
-        cores::Array{::core}
-    end
+abstract type ActualQubit <: Hardware end
+abstract type Core <: Hardware end
 
+abstract type CommunicationQubit <: Communication end
+abstract type CommunicationChannel <: Communication end
+abstract type CommunicationOperation <: Communication end
+
+abstract type Path <: CommunicationChannel end
+abstract type Junction <: CommunicationChannel end
+abstract type Edge <: CommunicationChannel end
+abstract type Shuttling <:CommunicationOperation end
+
+abstract type JunctionRotating <:CommunicationOperation end
+abstract type Split <:CommunicationOperation end
+abstract type Merge <:CommunicationOperation end
+
+
+"""
+This part is about the hardware configuration.
+"""
+
+mutable struct actualQubit <: ActualQubit
+    id::Int64
+    intraConnectivity::Array{ActualQubit}
+    runningOperations::Array{Operation, CommunicationOperation} # running oepration list
+    error::Float64
+    executionTime::Float64
+    circuitQubit::CircuitQubit
+    communicationQubit::CommunicationQubit
+    isCommunicationQubit::Bool
 end
 
+mutable struct core <: Core
+    id::Int64
+    capacity::Int64
+    noOfQubits::Int64
+    qubits::Array{ActualQubit}
+    noOfPhonons::Float64
+    interConnectivity::Array{Core}
+end
+
+struct hardware <: Hardware
+    noOfCores::Int64
+    totalTime::Float64
+    cores::Array{Core}
+end
+
+
+"""
+This part is about the communication configuration.
+"""
+
+mutable struct communicationQubit <:CommunicationQubit
+    interConnectivity::Array{Core}
+    noOfPhonons::Float64
+    dwellTime::Float64
+    inChannel::CommunicationChannel
+    isCommunicating::Bool
+end
+
+mutable struct path <:CommunicationChannel
+    id::Int64
+    isOccupide::Bool
+    length::Float64 # length of shuttling path to calculate shuttling duration
+    connectedChannel::Tuple{Junction, Edge}
+end
+
+mutable struct junction <:Junction
+    id::Int64
+    isOccupide::Bool
+    noOfPath::Int64
+    connectedChannel::Tuple{Path}
+end
+
+mutable struct edge <:Edge
+    id::Int64
+    isOccupide::Bool
+    connectedChannel::Path
+    connectedCore::Core
+end
+
+struct shuttling <:CommunicationOperation
+end
+
+struct junctionRotating <:CommunicationOperation
+end
+
+struct split <:CommunicationOperation
+end
+
+struct merge <:CommunicationOperation
+end
