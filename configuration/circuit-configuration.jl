@@ -1,50 +1,55 @@
-module OperationConfiguration
+module CircuitConfiguration
 
-    abstract type operation end
+abstract type Error end
+abstract type Circuit end
 
-    struct error
-        dependOfHeat::Float64
-        errorRate::Float64
-    end
+abstract type Operation <: Circuit end
+abstract type CircuitQubit <: Circuit end
 
-    struct singleQubitGate <:operation
-        type::String # i.e., rotation, Crifford etc.
-        name::String
-        duration::Float64
-    end
+abstract type Gate <: Operation end
+abstract type Initialization <: Operation end
+abstract type Measure <: Operation end
 
-    struct multiQubitGate <:operation
-        noOfQubits::Int64
-        name::String
-        qubits::Array{int,1}
-        duration::Float64
-    end
-
-    struct measurement <:operation
-        type::String
-        duration::Float64
-    end
-
-    struct initilization <:operation
-        duration::Float64
-    end
+struct error <: Error
+    dependOnHeat::Float64
+    errorRate::Float64
 end
 
-module CircuitConfiguration
-    import operationConfiguration
+struct singleGate <: Gate
+    name::String
+    duration::Float64
+    error::error
+    qubit::CircuitQubit
+end
 
-    struct qubit
-        quantumState
-        qubitState::String # whether could apply operation
-        operations::Array{::operation,1}
-    end
+struct multiGate <: Gate
+    name::String
+    duration::Float64
+    error::error
+    noOfQubits::Int64
+    qubits::Array{CircuitQubit}
+end
 
-    struct circuit
-        noOfQutbi::Int64
-        qubits::Array{::qubit,1}
-    end
+struct initilization <: Initialization
+    duration::Float64
+    qubit::CircuitQubit
+    error::error
+end
 
-    struct multiQubitGate
-        operation
-    end
+struct measure <: Measure
+    name::String
+    duration::Float64
+    qubit::CircuitQubit
+    error::error
+end
+
+struct circuitQubit <: CircuitQubit
+    id::Int64
+    operations::Array{Operation}
+end
+
+struct circuit <: Circuit
+    noOfQubits::Int64
+    qubits::Array{CircuitQubit}
+end
 end

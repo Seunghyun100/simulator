@@ -1,7 +1,14 @@
 module HardwareConfiguration
 
+# include("circuit-configuration.jl")
+import ..CircuitConfiguration
+
 abstract type Hardware end
 abstract type Communication end
+abstract type Circuit end
+
+abstract type Operation <: Circuit end
+abstract type CircuitQubit <: Circuit end
 
 abstract type ActualQubit <: Hardware end
 abstract type Core <: Hardware end
@@ -13,8 +20,8 @@ abstract type CommunicationOperation <: Communication end
 abstract type Path <: CommunicationChannel end
 abstract type Junction <: CommunicationChannel end
 abstract type Edge <: CommunicationChannel end
-abstract type Shuttling <:CommunicationOperation end
 
+abstract type Shuttling <:CommunicationOperation end
 abstract type JunctionRotating <:CommunicationOperation end
 abstract type Split <:CommunicationOperation end
 abstract type Merge <:CommunicationOperation end
@@ -57,13 +64,14 @@ This part is about the communication configuration.
 
 mutable struct communicationQubit <:CommunicationQubit
     interConnectivity::Array{Core}
+    communicationTime::Float64
     noOfPhonons::Float64
     dwellTime::Float64
     inChannel::CommunicationChannel
     isCommunicating::Bool
 end
 
-mutable struct path <:CommunicationChannel
+mutable struct path <:Path
     id::Int64
     isOccupide::Bool
     length::Float64 # length of shuttling path to calculate shuttling duration
@@ -84,14 +92,24 @@ mutable struct edge <:Edge
     connectedCore::Core
 end
 
-struct shuttling <:CommunicationOperation
+struct shuttling <:Shuttling
+    speed::Float64 # To calculate shuttling time of path
+    heatingRate::Float64
 end
 
-struct junctionRotating <:CommunicationOperation
+struct junctionRotating <:JunctionRotating
+    duration::Float64
+    heatingRate::Float64
+    toPath::Path
 end
 
-struct split <:CommunicationOperation
+struct split <:Split
+    duration::Float64
+    heatingRate::Tuple{Float64} # (Core, CommQubit)
 end
 
-struct merge <:CommunicationOperation
+struct merge <:Merge
+    duration::Float64
+    heatingRate::Float64
+end
 end
