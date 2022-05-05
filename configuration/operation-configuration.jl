@@ -69,6 +69,10 @@ module OperationConfiguration
         end
     end
 
+    
+    """
+    This part is about the configuration functions.
+    """
     function configure(configType::String, operation::String, specification::Array{Array{Any,1},1})::Tuple
         config = nothing
         ex = "$operation = $configType("
@@ -80,8 +84,8 @@ module OperationConfiguration
         return (configType, config)
     end
 
-    function openConfigFile(filePath::String = nothing)::Dict
-        if filePath === nothing 
+    function openConfigFile(filePath::String = "")::Dict
+        if filePath === "" 
             currentPath = pwd()
             filePath = currentPath * "/input/operation_configuraiton.json"
         end
