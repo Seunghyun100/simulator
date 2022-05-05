@@ -40,16 +40,16 @@ Only configuration by file is yet possible.
 """
 
 # TODO: how set the configuration of circuit and hardware
-circuitConfigPath = ""
+operationConfigPath = ""
 hardwareConfigPath = ""
 communicationConfigPath = ""
 
-circuitConfiguration = CircuitConfiguration.openConfigFile(circuitConfigPath)
+operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
 hardwareConfiguration = HardwareConfiguration.openConfigFile(hardwareConfigPath)
 communicationConfiguration = CommunicationConfiguration.openConfigFile(communicationConfigPath)
 
 
-configuration = ("circuit"=>circuitConfiguration, "hardware"=>hardwareConfiguration, 
+configuration = ("operation"=>operationConfiguration, "hardware"=>hardwareConfiguration, 
 "communication"=>communicationConfiguration)
 
 

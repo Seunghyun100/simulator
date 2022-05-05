@@ -1,21 +1,8 @@
-module CircuitConfiguration
+module OperationConfiguration
+    import JSON
 
     abstract type Operation end
     abstract type Gate <: Operation end
-
-    mutable struct CircuitQubit
-        id::Int64
-        operations::Array{Operation}
-    end
-
-    mutable struct Circuit
-        noOfQubits::Int64
-        qubits::Array{CircuitQubit}
-    end
-
-    """
-    This part is about operations.
-    """
 
     struct Fidelity
         errorRate::Float64
@@ -43,10 +30,10 @@ module CircuitConfiguration
         name::String
         duration::Float64
         noOfQubits::Int64
-        qubits::Array{CircuitQubit}
+        qubits::Array
         fidelity::Fidelity
         function MultiGate(name::String="None", duration::Float64=0.0, 
-            noOfQubits::Int64=2, qubits::Array{CircuitQubit}=[], fidelity::Fidelity=Fidelity())
+            noOfQubits::Int64=2, qubits::Array=[], fidelity::Fidelity=Fidelity())
             @assert(name=="None", "You must name the multi gate.")
             if duration ==0.0
                 @info "The duration of operation is 0"
@@ -82,9 +69,9 @@ module CircuitConfiguration
         end
     end
 
-    function configure(configType::String, specification::Tuple{Vararg{Tuple{String, Any}}})::Tuple
+    function configure(configType::String, operation::String, specification::Array{Array{Any,1},1})::Tuple
         config = nothing
-        ex = "$configType("
+        ex = "$operation = $configType("
         for i in specification
             ex = ex * i[2]*','
         end
@@ -93,17 +80,24 @@ module CircuitConfiguration
         return (configType, config)
     end
 
-    function openConfigFile(filePath::String)::Dict
-        configuration = Dict()
-        
-        # TODO: parsing the configuration file
-        while true
-            configType = nothing
-            specification = nothing
-            config = configure(configType, specification)
-            configuration[config[1]] = config[2]
+    function openConfigFile(filePath::String = nothing)::Dict
+        if filePath === nothing 
+            currentPath = pwd()
+            filePath = currentPath * "/input/operation_configuraiton.json"
         end
 
+        configuraiton = nothing 
+
+        configJSON = JSON.parsefile(filePath)
+        configTypes = keys(configJSON)
+
+        for configType in configTypes
+            for operation in configJSON[configType]
+                specification = configType[oepration]
+                config = configure(configType, operation, specification)
+                configuraiton[config[1]] = config[2]
+            end
+        end
         return configuration
     end
 end
