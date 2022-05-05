@@ -44,12 +44,13 @@ circuitConfigPath = ""
 hardwareConfigPath = ""
 communicationConfigPath = ""
 
-CircuitConfiguration.openConfigFile(circuitConfigPath)
-HardwareConfiguration.openConfigFile(hardwareConfigPath)
-CommunicationConfiguration.openConfigFile(communicationConfigPath)
+circuitConfiguration = CircuitConfiguration.openConfigFile(circuitConfigPath)
+hardwareConfiguration = HardwareConfiguration.openConfigFile(hardwareConfigPath)
+communicationConfiguration = CommunicationConfiguration.openConfigFile(communicationConfigPath)
 
 
-configuration = nothing  # TODO
+configuration = ("circuit"=>circuitConfiguration, "hardware"=>hardwareConfiguration, 
+"communication"=>communicationConfiguration)
 
 
 """
