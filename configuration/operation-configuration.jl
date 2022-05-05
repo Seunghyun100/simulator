@@ -1,5 +1,6 @@
 module OperationConfiguration
     import JSON
+    export Operation
 
     abstract type Operation end
     abstract type Gate <: Operation end
@@ -104,4 +105,5 @@ module OperationConfiguration
         end
         return configuration
     end
+
 end

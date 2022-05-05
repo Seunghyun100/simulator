@@ -1,6 +1,6 @@
 module HardwareConfiguration
-    using ..OperationConfiguration
-    using ..CircuitGenerator
+    import ..OperationConfiguration
+    import ..CircuitGenerator
 
     # Abstract type of hardware
     abstract type Circuit end
@@ -20,13 +20,15 @@ module HardwareConfiguration
         id::Int64
         operationTime::Float64
         communicationTime::Float64
-        intraConnectivity::Array{ActualQubit}
+        intraConnectivity::Array{ActualQubit} # TODO
         runningOperations::Array # running oepration list
-        circuitQubit::CircuitQubit
+        circuitQubit::CircuitGenerator.CircuitQubit
         isCommunicationQubit::Bool
-        error::Float64
+        fidelity::Float64
         function ActualQubit(id::Int64, operationTime::Float64=0.0, communicationTime::Float64=0.0,
-            intraConnectivity::Array{ActualQubit}=[],runningOperation::Array=[], circuitQubit::)
+            intraConnectivity::Array{ActualQubit}=[],runningOperations::Array=[], circuitQubit::CircuitQubit = nothing, 
+            isCommunicationQubit::Bool=false, fidelity::Float64=1.0)
+            new(id,operationTime,communicationTime,intraConnectivity, runningOperations,circuitQubit,isCommunicationQubit,fidelity)
         end
     end
 
@@ -36,13 +38,19 @@ module HardwareConfiguration
         noOfQubits::Int64
         qubits::Array{ActualQubit}
         noOfPhonons::Float64
-        interConnectivity::Array{Core}
+        interConnectivity::Array{Core} # TODO
+        function Core(id::Int64, capacity::Int64,  noOfQubits::Int64=0, qubits::Array{ActualQubit}=[],
+            noOfPhonons::Float64=0.0,interConnectivity::Array{Core}=[])
+            new(id, capacity, noOfQubits, qubits, noOfPhonons, interConnectivity)
+        end
     end
 
-    struct Hardware
+    mutable struct Hardware
         noOfCores::Int64
-        totalTime::Float64
         cores::Array{Core}
+        totalTime::Float64
+        function Hardware(noOfCores::Int64, cores::Array{Core}=[], totalTime::Float64=0.0)
+            new(noOfCores, totalTime, cores)
     end
 
 
@@ -58,48 +66,76 @@ module HardwareConfiguration
         dwellTime::Float64
         inChannel::CommunicationChannel
         isCommunicating::Bool
+        function CommunicationQubit(interConnectivity::Array{Core}, actualQubit::ActualQubit,communicationTime::FLoat64=0.0,
+            noOfPhonons::Float64=0.0, dwellTime::Float64=0.0, inChannel::CommunicationChannel=nothing, isCommunicating::Bool=false)
+            new(interConnectivity, actualQubit,communicationTime, noOfPhonons,dwellTime,inChannel, isCommunicating)
+        end
     end
 
     mutable struct Path <: CommunicationChannel
         id::Int64
-        isOccupide::Bool
-        length::Float64 # length of shuttling path to calculate shuttling duration
         connectedChannel::Tuple{CommunicationChannel, CommunicationChannel}
+        length::Float64 # length of shuttling path to calculate shuttling duration
+        isOccupied::Bool
+        function Path(id::Int64, connectedChannel::Tuple{CommunicationChannel, CommunicationChannel}, length::Float64, isOccupide::Bool=false)
+            new(id, connectedChannel, length, isOccupide)
+        end
     end
 
     mutable struct Junction <: CommunicationChannel
         id::Int64
-        isOccupide::Bool
+        connectedChannel::Tuple{Vararg{Path}}
         noOfPath::Int64
-        connectedChannel::Tuple{Path}
+        isOccupied::Bool
+        function Junction(id::Int64, connectedChannel::Tuple{Vararg{Path}}, noOfPath::Int64=length(connectedChannel), isOccupied::Bool=false)
+            new(id, connectedChannel, noOfPath, isOccupied)
+        end
     end
 
     mutable struct Edge <: CommunicationChannel
         id::Int64
-        isOccupide::Bool
         connectedChannel::Path
         connectedCore::Core
+        isOccupied::Bool
+        function Edge(id::Int64, connectedChannel::Path, connectedCore::Core, isOccupied::Bool=false)
+            new(id, connectedChannel, connectedCore, isOccupied)
+        end
     end
 
     struct LinearTransport <: Shuttling
         speed::Float64 # To calculate shuttling time of path
         heatingRate::Float64
+        function LinearTransport(speed::Float64, heatingRate::Float64=0.0)
+            @assert(speend>0.0, "Speed must be larger than 0.")
+            new(speed, heatingRate)
+        end
     end
 
     struct JunctionRotate <: Shuttling
         duration::Float64
         heatingRate::Float64
         toPath::Path
+        function JunctionRotate(duration::Float64, heatingRate::Float64=0.0, toPath::Path=nothing)
+            @assert(duraiton>0.0, "Duration must be larger than 0.")
+            new(duration, heatingRate, toPath)
+        end
     end
 
     struct Split <: Shuttling
         duration::Float64
-        heatingRate::Tuple{Float64} # (Core, CommQubit)
+        heatingRate::Tuple{Float64, Float64} # (Core, CommQubit)
+        function Split(duration::Float64, heatingRate::Tuple{Float64, Float64}=(0.0, 0.0))
+            @assert(duraiton>0.0, "Duration must be larger than 0.")
+            new(duration, heatingRate)
+        end
     end
 
     struct Merge <: Shuttling
         duration::Float64
         heatingRate::Float64
+        function Merge(duration::Float64, heatingRate::Float64=0.0)
+            @assert(duraiton>0.0, "Duration must be larger than 0.")
+            new(duration, heatingRate)
     end
 
 
@@ -107,6 +143,23 @@ module HardwareConfiguration
     This part is about the configuraiton functions.
     """
  
+    function buildHardware(noOfCores::Int64, noOfQubitsPerCore::Int64, capacity::Int64=noOfQubitsPerCore)
+        @assert(noOfQubitsPerCore>capacity,"#qubits per core do NOT exceed capacity of core.")
+        totalQubits = noOfCores*noOfQubitsPerCore
+        hardware = Hardware(noOfCores)
+        idOfQubit = 1
+        for idOfCore in 1:noOfCores
+            core = Core(idOfCore, capacity,noOfQubitsPerCore)
+            for i in 1:noOfQubitsPerCore
+                qubit = ActualQubit(idOfQubit)
+                push!(core.qubits,qubit)
+                idOfQubit += 1
+            end
+            push(hardware.cores,core)
+        end
+        return hardware
+    end
+
     function configure(configType::String, operation::String, specification::Array{Array{Any,1},1})::Tuple
         config = nothing
         ex = "$operation = $configType("
@@ -116,6 +169,9 @@ module HardwareConfiguration
         ex = ex * ')'
         config = eval(ex)
         return (configType, config)
+    end
+
+    function buildCommunicationChannel()
     end
 
     function openConfigFile(filePath::String = "")::Dict

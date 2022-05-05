@@ -1,5 +1,5 @@
 module CircuitGenerator
-    export CircuitGenerator, Circuit
+    using ..OperationConfiguration
     
     mutable struct CircuitQubit
         id::Int64
