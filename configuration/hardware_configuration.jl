@@ -36,12 +36,13 @@ module HardwareConfiguration
         id::String
         capacity::Int64
         noOfQubits::Int64
+        connectedJunction::String
         qubits::Array{ActualQubit}
         noOfPhonons::Float64
         interConnectivity::Array{Core} # TODO
-        function Core(id::String, capacity::Int64,  noOfQubits::Int64=0, qubits::Array{ActualQubit}=[],
+        function Core(id::String, capacity::Int64,  noOfQubits::Int64=0, connectedJunction::String="", qubits::Array{ActualQubit}=[],
             noOfPhonons::Float64=0.0,interConnectivity::Array{Core}=[])
-            new(id, capacity, noOfQubits, qubits, noOfPhonons, interConnectivity)
+            new(id, capacity, noOfQubits, connectedJunction, qubits, noOfPhonons, interConnectivity)
         end
     end
 
@@ -50,10 +51,14 @@ module HardwareConfiguration
         noOfCores::Int64
         noOfTotalQubits::Int64
         totalTime::Float64
-        cores::Array{Core}
+        cores::Array
+        qubits::Array
+        junctions::Array
+        paths::Array
 
-        function Hardware(name::String, noOfCores::Int64=0, noOfTotalQubits::Int64=0, totalTime::Float64=0.0, cores::Array{Core}=[])
-            new(name, noOfCores, noOfTotalQubits, totalTime, cores)
+        function Hardware(name::String, noOfCores::Int64=0, noOfTotalQubits::Int64=0, 
+            totalTime::Float64=0.0, cores::Array=[], qubits::Array=[], junctions::Array, paths::Array=[])
+            new(name, noOfCores, noOfTotalQubits, totalTime, cores, qubits, junctions, paths)
     end
 
 
@@ -86,18 +91,21 @@ module HardwareConfiguration
 
     mutable struct Junction <: CommunicationChannel
         id::String
-        connection::Dict{String, Tuple{Tuple{String,String}, Vararg{Tuple{String, String}}}}
+        connection::Dict{String, Tuple{Tuple{Core, Path}, Vararg{Tuple{Core, Path}}}}
         """ 
         e.g., "connection": {
                         "x": (("junction1","path1"),("junction3","path2")),
                         "y": (("core2","e_core2"),)}
         """
         isOccupied::Bool
-        function Junction(id::String, connection::Dict{String, Tuple{Tuple{String,String}, Vararg{Tuple{String, String}}}}, 
+        function Junction(id::String, connection::Dict{String, Tuple{Tuple{Core, Path}, Vararg{Vararg{Core, Path}}}}, 
             isOccupied::Bool=false)
             new(id, connection, isOccupied)
         end
     end
+
+    a= Dict("x"=>(("a",1),(true,1)),"y"=>((true,1),))
+    ::Dict{String, Tuple{Vararg{Tuple{Union{String,Bool},Int64}}}}
 
     # mutable struct Entrance <: CommunicationChannel
     #     id::String
@@ -110,11 +118,10 @@ module HardwareConfiguration
     #     end
     # end
 
-
     """
     This part is about the configuraiton functions.
     """
-    function buildCore(hardware::Hardware, name::String, capacity::Int64, noOfQubits::Int64=0)
+    function buildCore(name::String, capacity::Int64, noOfQubits::Int64=0)
         @assert(noOfQubits>capacity,"#qubits per core do NOT exceed capacity of core.")
         core = Core(name, capacity, noOfQubits)
         return core
@@ -134,6 +141,7 @@ module HardwareConfiguration
             for i in 1:noOfQubitsPerCore
                 qubit = ActualQubit("qubit$idOfQubit")
                 push!(core.qubits,qubit)
+                push!(hardware.qubits,qubit)
                 idOfQubit += 1
             end
             push!(hardware.cores,core)
@@ -143,11 +151,33 @@ module HardwareConfiguration
         return hardware
     end
     
+    function buildConnectionPair(destination::String, pathLength::Float64)
+        # TODO
+        Path
+        return(core::Core, path::Path)
+    end
 
-    function buildCommunicationSystem(hardware::Hardware, topology::Dict)
-        junctions = keys(topology)
-        for junction in junctions
+    function buildCommunicationSystem(topology::Dict)
+        noOfJunctions = topology["number_of_junctions"]::Int64
+        noOfPaths = topology["number_of_paths"]::Int64
+        directions = topology["directions"]::Array{String,1}
+        junctionsConfig = topology["junctions"]::Dict
+        pathLength = topology["length_of_path"]::Float64
+        junctions = []::Array
+        for junctionConfig in junctionsConfig
+            connectionConfig = junctionConfg["connection"]
+            connection = Dict()
+            for direction in directions
+                connectionPairList = []
+                for coreName in connectionConfig[direction]
+                    connectionPair = buildConnectionPair(coreName,pathLength)
+                    push!(connectionPairList, connectionPair)
+                end
+                connection[direction] = connectionPairList
+            end
+            push!(junctions, Junction(junctionConfig["name"], connection))
         end
+        return junctions
     end
 
     function generateCommunicationQubit()
@@ -180,7 +210,7 @@ module HardwareConfiguration
         # configTypes = ["hardware", "topology"]
 
         hardware = buildHardware(configJSON["hardware"])
-        communicationSystem = buildCommunicationSystem(hardware, configJSON["topology"])
+        push!(hardware.junctions, buildCommunicationSystem(configJSON["topology"]))
 
         configuration = Dict("hardware"=>hardware, "communicationSystem" => communicationSystem)
         return configuration    

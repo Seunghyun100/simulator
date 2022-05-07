@@ -46,8 +46,10 @@
         }
     },
     "topology":{
-        "number_of_junction": 6,
-        "number_of_path":5,
+        "number_of_junctions": 6,
+        "number_of_paths":5,
+        "directions": ["x", "y"],
+        "length_of_path": 1000,
         "junctions":{
             "junction1":{
                 "name": "junction1",
