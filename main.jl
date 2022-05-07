@@ -1,6 +1,7 @@
 include("compiler/mapper.jl")
-include("configuration/circuit-configuration.jl")
-include("configuration/hardware-configuration.jl")
+include("configuration/operation_configuration.jl")
+include("configuration/hardware_configuration.jl")
+include("configuration/communication_configuration.jl")
 include("function/circuit-generator.jl")
 
 

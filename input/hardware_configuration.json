@@ -1,0 +1,96 @@
+{
+    "hardware":{
+        "name": "Q-bus",
+        "number_of_cores": 10,
+        "cores":{
+            "bus_store":{
+                "name":"busStore",
+                "capacity":32,
+                "number_of_qubits": 0
+            },
+            "bus_detector":{
+                "name":"busDetector",
+                "capacity":32,
+                "number_of_qubits": 0
+            },
+            "core1":{
+                "name":"core1",
+                "capacity":32,
+                "number_of_qubits": 30
+            },
+            "core2":{
+                "name":"core2",
+                "capacity":32,
+                "number_of_qubits": 30
+            },
+            "core3":{
+                "name":"core3",
+                "capacity":32,
+                "number_of_qubits": 30
+            },
+            "core4":{
+                "name":"core4",
+                "capacity":32,
+                "number_of_qubits": 30
+            },
+            "core5":{
+                "name":"core5",
+                "capacity":32,
+                "number_of_qubits": 30
+            },
+            "core6":{
+                "name":"core6",
+                "capacity":32,
+                "number_of_qubits": 30
+            }
+        }
+    },
+    "topology":{
+        "number_of_junction": 6,
+        "number_of_path":5,
+        "junctions":{
+            "junction1":{
+                "name": "junction1",
+                "connection": {
+                    "x": ["busStore", "junction2"],
+                    "y": ["core1"]
+                }
+            },
+            "junction2":{
+                "name": "junction2",
+                "connection": {
+                    "x": ["junction1", "junction3"],
+                    "y": ["core2"]
+                }
+            },
+            "junction3":{
+                "name": "junction3",
+                "connection": {
+                    "x": ["junction2", "junction4"],
+                    "y": ["core3"]
+                }
+            },
+            "junction4":{
+                "name": "junction4",
+                "connection": {
+                    "x": ["junction3", "junction5"],
+                    "y": ["core4"]
+                }
+            },
+            "junction5":{
+                "name": "junction5",
+                "connection": {
+                    "x": ["junction4", "junction6"],
+                    "y": ["core5"]
+                }
+            },
+            "junction6":{
+                "name": "junction6",
+                "connection": {
+                    "x": ["junction5", "busDetector"],
+                    "y": ["core6"]
+                }
+            }
+       }
+    }
+}
