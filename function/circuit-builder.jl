@@ -1,10 +1,16 @@
 module CircuitBuilder
-    using ..OperationConfiguration
+    import ..OperationConfiguration
+
+    operationConfigPath = ""
+    operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
+
+    multiGateTable = Dict{Int64, Vector{Qubit}}
+    multiGateID = 1
 
     mutable struct CircuitQubit
-        id::Int64
+        id::String
         operations::Vecotr{Operation}
-        function CircuitQubit(id::Int64, operations::Vector{Operation}=Operation[])
+        function CircuitQubit(id::String, operations::Vector{Operation}=Operation[])
             new(id, operations)
         end
     end
@@ -21,35 +27,52 @@ module CircuitBuilder
     """
     This part is about the method to build circuits.
     """
-    # TODO: Include oepration configuration
-    # Single-Gate
-    function incodeOperation(operationConfig::String)
+
+    # Single-Gate, Initialization, Measurement
+    function incodeOperation(composition::String)
+        return operationConfiguration[composition]
     end
 
     # Multi-Gate
-    function incodeOperation(operationConfig::Vector)
+    function incodeOperation(composition::Vector)
+        operationName = composition[1]
+        appliedQubits = composition[2:length(composition)]
+        operationMold = operationConfiguration[operationName]
+        operation = deepcopy(operationMold)
+        operation.id = multiGateID
+        multiGateTable[multiGateID] = appliedQubits
+        multiGateID +=1
+        return operation
     end
 
-    function geneateCircuitQubit(qubitComposition::Tuple)
+    function composeCircuitQubit(qubits::Vector{CircuitQubit}, qubitComposition::Tuple)
         qubitID = qubitComposition[1]
-        operationsConfig = qubitComposition[2]
+        compositions = qubitComposition[2]
         operations = Operation[]
-        for operationConfig in operationsConfig
-            oepration = incodeOperation(operationConfig)
+        for composition in compositions
+            oepration = incodeOperation(composition)
             push!(operations, oepration)
         end
-        circuitQubit = CircuitQubit(qubitID, operations)
-        return circuitQubit
+        for qubit in qubits
+            if qubitID == qubit.id
+                qubit.operations = operations
+            end
+        end
     end
     
     function buildCircuit(circuitConfig)
         circuitName = circuitConfig["name"]
         
         noOfQubits = circuitConfig["number_of_qubits"]
+
         qubits = CircuitQubit[]
+
         for qubitComposition in circuitConfig["qubits"]
-            circuitQubit = generateCircuitQubit(qubitComposition)
+            circuitQubit = CircuitQubit(qubitComposition[1])
             push!(qubits, circuitQubit)
+        end
+        for qubitComposition in circuitConfig["qubits"]
+            composeCircuitQubit(qubits, qubitComposition)
         end
         
         circuit = Circuit(circuitName, qubits)
