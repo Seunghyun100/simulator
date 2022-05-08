@@ -2,122 +2,103 @@ module HardwareConfiguration
     import ..OperationConfiguration
     import ..CircuitGenerator
 
-    # Abstract type of hardware
-    # abstract type Circuit end
-    # abstract type Operation <: Circuit end
+    abstract type Component end
 
-    # Abstract type of communication
-    abstract type CommunicationChannel end
-    
-    abstract type CommunicationOperation end
-    abstract type Shuttling <:CommunicationOperation end
+    # abstract type CommunicationChannel end
+    # abstract type CommunicationOperation end
+    # abstract type Shuttling <:CommunicationOperation end
 
-    """
-    This part is about the configuration for Hardware.
-    """
-
-    mutable struct ActualQubit
-        id::String
-        operationTime::Float64
-        communicationTime::Float64
-        intraConnectivity::Array{ActualQubit} # TODO
-        runningOperations::Array{Union{Operation,CommunicationOperation},1} # running oepration list
-        circuitQubit::CircuitGenerator.CircuitQubit
-        isCommunicationQubit::Bool
-        fidelity::Float64
-        function ActualQubit(id::String, operationTime::Float64=0.0, communicationTime::Float64=0.0,
-            intraConnectivity::Array{ActualQubit}=[],runningOperations::Array{Union{Operation,CommunicationOperation},1}=[], 
-            circuitQubit::CircuitQubit = nothing, isCommunicationQubit::Bool=false, fidelity::Float64=1.0)
-            new(id,operationTime,communicationTime,intraConnectivity, runningOperations,circuitQubit,isCommunicationQubit,fidelity)
+    struct Direction
+        direction::String
+        function Direction(direction::String = "Stop")
+            new(direction)
         end
     end
 
-    mutable struct Core
+    stop = Direction("stop")
+    up = Direction("up")
+    right = Direction("right")
+    down = Direction("down")
+    left = Direction("left")
+    
+    dumyCircuitQubit = CircuitQubit()
+    # dumyQubit = Qubit()
+
+    mutable struct Qubit <:Component
+        id::String
+        circuitQubit::CircuitQubit
+        executionTime::Float64
+        runningOperation::Vector{Operation}
+        isCommunicationQubit::Bool
+        communicationList::Vector{CommunicationOperation}
+        communicationTime::Float64
+        dwellTime::Float64
+        noOfPhonons::Float64
+        function Qubit(id::String, circuitQubit::CircuitQubit = dumyCircuitQubit, executionTime::Float64=0.0, runningOperation::Vector{Operation}=Operation[],
+            isCommunicationQubit::Bool=false, communicationList::Vector{CommunicationOperation}=CommunicationOperation[], communicationTime::Float64=0.0, 
+            dwellTime::Float64=0.0, noOfPhonons::Float64=0.0)
+            new(id, circuitQubit, executionTime, runningOperation, isCommunicationQubit, communicationList, communicationTime, dwellTime, noOfPhonons)
+        end
+    end
+
+    mutable struct Core <: Component
         id::String
         capacity::Int64
-        noOfQubits::Int64
-        connectedJunction::String
-        qubits::Array{ActualQubit}
+        coordinates::Tuple{Int64,Int64}
+        qubits::Dict{String, Qubit}
         noOfPhonons::Float64
-        interConnectivity::Array{Core} # TODO
-        function Core(id::String, capacity::Int64,  noOfQubits::Int64=0, connectedJunction::String="", qubits::Array{ActualQubit}=[],
-            noOfPhonons::Float64=0.0,interConnectivity::Array{Core}=[])
-            new(id, capacity, noOfQubits, connectedJunction, qubits, noOfPhonons, interConnectivity)
+        function Core(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict{String, Qubit}, noOfPhonons::Float64=0.0)
+            new(id, capacity, coordinates, qubits, noOfPhonons)
         end
     end
 
-    mutable struct Hardware
+    mutable struct Junction <: Component
+        id::String
+        coordination::Tuple{Int64,Int64}
+        isShuttling::Bool
+        qubits::Vector{Qubit}
+        function Junction(id::String, coordination::Tuple{Int64, Int64}, isShuttling::Bool=false, qubits::Vector{Qubit}=Qubit[])
+            new(id, coordination, isShuttling, qubits)
+        end
+    end
+
+    mutable struct Path <: Component
+        id::String
+        length::Float64
+        coordinates::Tuple{Int64,Int64}
+        isShuttling::Bool
+        direction::Direction
+        qubits::Vector{Qubit}
+        function Path(id::String, length::Float64, coordinates::Tuple{Int64, Int64}, isShuttling::Bool=false, 
+            direction::Diraction=stop, qubits::Vector{Qubit}=Qubit[])
+            new(id, length, coordinates, isShuttling, direction, qubits)
+        end
+    end
+
+    mutable struct Architecture
         name::String
-        noOfCores::Int64
-        noOfTotalQubits::Int64
+        components::Dict{String,Vector{Component}} # e.g., core, junction, path, qubit
+        topology::Matrix{Component} # It is mapping components as coordinates
         totalTime::Float64
-        cores::Array
-        qubits::Array
-        junctions::Array
-        paths::Array
-
-        function Hardware(name::String, noOfCores::Int64=0, noOfTotalQubits::Int64=0, 
-            totalTime::Float64=0.0, cores::Array=[], qubits::Array=[], junctions::Array, paths::Array=[])
-            new(name, noOfCores, noOfTotalQubits, totalTime, cores, qubits, junctions, paths)
-    end
-
-
-    """
-    This part is about the configuration for communication.
-    """
-
-    mutable struct CommunicationQubit <:Communication
-        interConnectivity::Array{Core}
-        actualQubit::ActualQubit
-        communicationTime::Float64
-        noOfPhonons::Float64
-        dwellTime::Float64
-        inChannel::CommunicationChannel
-        isCommunicating::Bool
-        function CommunicationQubit(interConnectivity::Array{Core}, actualQubit::ActualQubit,communicationTime::FLoat64=0.0,
-            noOfPhonons::Float64=0.0, dwellTime::Float64=0.0, inChannel::CommunicationChannel=nothing, isCommunicating::Bool=false)
-            new(interConnectivity, actualQubit,communicationTime, noOfPhonons,dwellTime,inChannel, isCommunicating)
+        function Architecture(name::String, components::Dict{String,Vector{Component}}, topology::Matrix{Component}, totalTime::Float64 =0.0)
+            new(name, components, topology, totalTime)
         end
     end
 
-    mutable struct Path <: CommunicationChannel
-        id::String
-        length::Float64 # length of shuttling path to calculate shuttling duration
-        isOccupied::Bool
-        function Path(id::String, length::Float64, isOccupide::Bool=false)
-            new(id, length, isOccupide)
-        end
-    end
 
-    mutable struct Junction <: CommunicationChannel
-        id::String
-        connection::Dict{String, Tuple{Tuple{Core, Path}, Vararg{Tuple{Core, Path}}}}
-        """ 
-        e.g., "connection": {
-                        "x": (("junction1","path1"),("junction3","path2")),
-                        "y": (("core2","e_core2"),)}
-        """
-        isOccupied::Bool
-        function Junction(id::String, connection::Dict{String, Tuple{Tuple{Core, Path}, Vararg{Vararg{Core, Path}}}}, 
-            isOccupied::Bool=false)
-            new(id, connection, isOccupied)
-        end
-    end
 
-    a= Dict("x"=>(("a",1),(true,1)),"y"=>((true,1),))
-    ::Dict{String, Tuple{Vararg{Tuple{Union{String,Bool},Int64}}}}
 
-    # mutable struct Entrance <: CommunicationChannel
-    #     id::String
-    #     length::Float64
-    #     connectedJunction::Junction
-    #     connectedCore::Core
-    #     isOccupied::Bool
-    #     function Entrance(id::String, length::Float64, connectedJunction::Junction, connectedCore::Core, isOccupied::Bool=false)
-    #         new(id, length, connectedJunction, connectedCore, isOccupied)
-    #     end
-    # end
 
+
+
+
+
+
+
+
+
+
+    
     """
     This part is about the configuraiton functions.
     """
