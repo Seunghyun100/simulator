@@ -1,0 +1,162 @@
+{
+    "Q-bus":{
+        "name": "Q-bus",
+        "components":{
+            "cores":{
+                "bus_store":{
+                    "id": "BusStore",
+                    "capacity": 32,
+                    "coordinates": [3,1],
+                    "number_of_qubits":0
+                },
+                "bus_detector":{
+                    "id": "BusDetector",
+                    "capacity": 32,
+                    "coordinates": [3,15],
+                    "number_of_qubits":0
+                },
+                "core1":{
+                    "id": "Core1",
+                    "capacity": 32,
+                    "coordinates": [1,3],
+                    "number_of_qubits":30
+                },
+                "core2":{
+                    "id": "Core2",
+                    "capacity": 32,
+                    "coordinates": [1,5],
+                    "number_of_qubits":30
+                },
+                "core3":{
+                    "id": "Core3",
+                    "capacity": 32,
+                    "coordinates": [1,7],
+                    "number_of_qubits":30
+                },
+                "core4":{
+                    "id": "Core4",
+                    "capacity": 32,
+                    "coordinates": [1,9],
+                    "number_of_qubits":30
+                },
+                "core5":{
+                    "id": "Core5",
+                    "capacity": 32,
+                    "coordinates": [1,11],
+                    "number_of_qubits":30
+                },
+                "core6":{
+                    "id": "Core6",
+                    "capacity": 32,
+                    "coordinates": [1,13],
+                    "number_of_qubits":30
+                }
+            },
+            "junctions": {
+                "junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,3]
+                },
+                "junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,5]
+                },
+                "junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,7]
+                },
+                "junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,9]
+                },
+                "junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,11]
+                },
+                "junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,13]
+                }
+            },
+            "paths": {
+                "entrance_of_bus_store":{
+                    "id": "Entrance_BusStore",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "entrance_of_bus_detector":{
+                    "id": "Entrance_BusDetector",
+                    "length": 100.0,
+                    "coordinates": [3,14]
+                },
+                "entrance_of_core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "entrance_of_core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "entrance_of_core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "entrance_of_core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "entrance_of_core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "entrance_of_core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,13]
+                },
+                "path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                },
+                "path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,12]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,15],
+            "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
+            ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
+            ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
+        }
+    },
+    "QCCD-Grid":{
+
+    },
+    "QCCD-Comb":{
+        
+    }
+}
