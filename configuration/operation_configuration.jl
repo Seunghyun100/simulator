@@ -27,20 +27,20 @@ module OperationConfiguration
         end
     end
 
-    struct MultiGate <: Gate
+    mutable struct MultiGate <: Gate
         name::String
         duration::Float64
         noOfQubits::Int64
-        qubits::Array
         fidelity::Fidelity
+        id::Int64
         function MultiGate(name::String="None", duration::Float64=0.0, 
-            noOfQubits::Int64=2, qubits::Array=[], fidelity::Fidelity=Fidelity())
+            noOfQubits::Int64=2, fidelity::Fidelity=Fidelity(), id::Int64=0)
             @assert(name=="None", "You must name the multi gate.")
             if duration ==0.0
                 @info "The duration of operation is 0"
             end
             @info "It it $noOfQubits-qubits gate."
-            new(name,duration, noOfQubits, qubits, fidelity)
+            new(name,duration, noOfQubits, fidelity, id)
         end
     end
 

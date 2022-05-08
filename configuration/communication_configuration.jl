@@ -1,4 +1,24 @@
 module CommunicationConfiguraiton
+
+    struct Shuttling
+        name::String
+        duration::Float64
+        speed::Float64
+        heatingRate::Float64
+        function Shuttling(name::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate::Float64=0.0)
+            new(name, duration, speed, heatingRate)
+        end
+    end
+
+
+
+
+
+
+
+
+
+
     struct LinearTransport <: Shuttling
         speed::Float64 # To calculate shuttling time of path
         heatingRate::Float64

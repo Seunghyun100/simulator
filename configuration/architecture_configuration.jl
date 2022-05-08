@@ -238,12 +238,12 @@ module ArchitectureConfiguration
 
         configJSON = JSON.parsefile(filePath) 
 
-        architectureList = Dict()
+        architectures = Dict()
         for architectureConfigPair in configJSON
             architectureName = architectureConfigPair[1]
             architectureConfig = architectureConfigPair[2]
             architectureList[architectureName] = buildArchitecture(architectureConfig)
         end
-        return architectureList    
+        return architectures    
     end
 end
