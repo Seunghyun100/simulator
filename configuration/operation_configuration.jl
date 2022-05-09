@@ -44,10 +44,10 @@ module OperationConfiguration
         end
     end
 
-    struct Initialization <: Operation
+    struct Initialize <: Operation
         duration::Float64
         fidelity::Fidelity
-        function Initialization(duration::Float64=0.0, fidelity::Fidelity=Fidelity())
+        function Initialize(duration::Float64=0.0, fidelity::Fidelity=Fidelity())
             if duration ==0.0
                 @info "The duration of operation is 0"
             end

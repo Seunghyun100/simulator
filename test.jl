@@ -1,9 +1,12 @@
-import JSON
+# import JSON
 
-currentPath = pwd()
-filePath = currentPath * "/test.json"
+# currentPath = pwd()
+# filePath = currentPath * "/test.json"
 
-configJSON = JSON.parsefile(filePath) 
+# configJSON = JSON.parsefile(filePath) 
 
-println(typeof(configJSON))
-print(configJSON)
+# println(typeof(configJSON))
+# print(configJSON)
+
+
+println("Hello, World")

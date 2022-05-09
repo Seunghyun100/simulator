@@ -29,12 +29,12 @@ module CircuitBuilder
     """
 
     # Single-Gate, Initialization, Measurement
-    function incodeOperation(composition::String)
+    function encodeOperation(composition::String)
         return operationConfiguration[composition]
     end
 
     # Multi-Gate
-    function incodeOperation(composition::Vector)
+    function encodeOperation(composition::Vector)
         operationName = composition[1]
         appliedQubits = composition[2:length(composition)]
         operationMold = operationConfiguration[operationName]
@@ -50,7 +50,7 @@ module CircuitBuilder
         compositions = qubitComposition[2]
         operations = Operation[]
         for composition in compositions
-            oepration = incodeOperation(composition)
+            oepration = encodeOperation(composition)
             push!(operations, oepration)
         end
         for qubit in qubits
@@ -91,7 +91,11 @@ module CircuitBuilder
         circuits = Dict()
         for circuitConfig in values(configJSON)
             circuitName = circuitConfig["name"]
-            circuitList[circuitName] = buildCircuit(circuitConfig)
+            circuitList[circuitName] = Dict(
+                "circuit"=>buildCircuit(circuitConfig),
+                "multiGateTable"=>multiGateTable
+            )
+
         end
         return circuits    
     end

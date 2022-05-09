@@ -1,57 +1,61 @@
 module CommunicationConfiguraiton
 
     struct Shuttling
-        name::String
+        type::String
         duration::Float64
         speed::Float64
         heatingRate::Float64
-        function Shuttling(name::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate::Float64=0.0)
-            new(name, duration, speed, heatingRate)
+        function Shuttling(type::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate::Float64=0.0)
+            if type=="linearTransport"
+                @assert(speend>0.0, "Speed must be larger than 0.")
+            else
+                @assert(duraiton>0.0, "Duration must be larger than 0.")
+            end
+            new(type, duration, speed, heatingRate)
         end
     end
 
 
+    """
+    This part is about to build the communication operaitons.
+    """
 
-
-
-
-
-
-
-
-    struct LinearTransport <: Shuttling
-        speed::Float64 # To calculate shuttling time of path
-        heatingRate::Float64
-        function LinearTransport(speed::Float64, heatingRate::Float64=0.0)
-            @assert(speend>0.0, "Speed must be larger than 0.")
-            new(speed, heatingRate)
+    function generateComponent(communicationName, componentConfig)
+        if communicationName =="shuttling"
+            if componentConfig["type"] =="linearTransport"
+                component = Shuttling(componentConfig["type"], 0.0, componentConfig["speed"], componentConfig["heatingRate"])
+            else
+                component = Shuttling(componentConfig["type"], componentConfig["duration"], componentConfig["heatingRate"])
+            end
         end
     end
 
-    struct JunctionRotate <: Shuttling
-        duration::Float64
-        heatingRate::Float64
-        toPath::Path
-        function JunctionRotate(duration::Float64, heatingRate::Float64=0.0, toPath::Path=nothing)
-            @assert(duraiton>0.0, "Duration must be larger than 0.")
-            new(duration, heatingRate, toPath)
+    function buildCommunication(communicationName, communicationConfig)
+        communication = Dict()
+        for component in communicationConfig
+            componentName = component[1]
+            componentConfig = component[2]
+            communication[componentName] = generateComponent(communicationName, componentConfig)
         end
+        return communication
     end
 
-    struct Split <: Shuttling
-        duration::Float64
-        heatingRate::Tuple{Float64, Float64} # (Core, CommQubit)
-        function Split(duration::Float64, heatingRate::Tuple{Float64, Float64}=(0.0, 0.0))
-            @assert(duraiton>0.0, "Duration must be larger than 0.")
-            new(duration, heatingRate)
+
+    function openConfigFile(filePath::String = "")::Dict
+        if filePath === "" 
+            currentPath = pwd()
+            filePath = currentPath * "/input/communication_configuraiton.json"
         end
+
+        configJSON = JSON.parsefile(filePath) 
+
+        communications = Dict()
+        for communicationConfigPair in configJSON
+            communicationName = communicationConfigPair[1]
+            communicationConfig = communicationConfigPair[2]
+            communications[communicationName] = buildcommunication(communicationName, communicationConfig)
+        end
+        return communications    
     end
 
-    struct Merge <: Shuttling
-        duration::Float64
-        heatingRate::Float64
-        function Merge(duration::Float64, heatingRate::Float64=0.0)
-            @assert(duraiton>0.0, "Duration must be larger than 0.")
-            new(duration, heatingRate)
-    end
 end
