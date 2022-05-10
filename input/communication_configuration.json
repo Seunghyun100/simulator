@@ -35,5 +35,8 @@
             "duration": 18,
             "heatingRate": 0.2
         }
+    },
+    "protocol":{
+        "pathRow": 3
     }
 }

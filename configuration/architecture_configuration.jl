@@ -1,6 +1,6 @@
 module ArchitectureConfiguration
     import ..OperationConfiguration
-    import ..CircuitGenerator
+    import ..CircuitBuilder
 
     abstract type Component end
 
@@ -10,7 +10,7 @@ module ArchitectureConfiguration
 
     struct Direction
         direction::String
-        function Direction(direction::String = "Stop")
+        function Direction(direction::String = "stop")
             new(direction)
         end
     end
@@ -21,14 +21,14 @@ module ArchitectureConfiguration
     down = Direction("down")
     left = Direction("left")
     
-    dumyCircuitQubit = CircuitQubit()
+    dumyCircuitQubit = CircuitBuilder.CircuitQubit()
     # dumyQubit = Qubit()
 
     mutable struct Qubit <:Component
         id::String
         executionTime::Float64
         isCommunicationQubit::Bool
-        circuitQubit::Circuit
+        circuitQubit::CircuitQubit
         runningOperation::Vector{Operation}
         communicationList::Vector{CommunicationOperation}
         communicationTime::Float64

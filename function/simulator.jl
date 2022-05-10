@@ -12,6 +12,9 @@ module Simulator
     import ..CostCalculator
     import ..ErrorCalculator
 
+    function executeCircuitQubit()
+    end
+
     function run()
     end
 end

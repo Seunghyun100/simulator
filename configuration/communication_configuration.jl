@@ -28,6 +28,10 @@ module CommunicationConfiguraiton
                 component = Shuttling(componentConfig["type"], componentConfig["duration"], componentConfig["heatingRate"])
             end
         end
+        if communicationName == "pathRow"
+            component = componentConfig["pathRow"]
+        end
+        return component
     end
 
     function buildCommunication(communicationName, communicationConfig)

@@ -81,6 +81,7 @@ module OperationConfiguration
             ex = ex * i[2]*','
         end
         ex = ex * ')'
+        ex = Meta.parse(ex)
         config = eval(ex)
         return (configType, config)
     end
@@ -91,7 +92,7 @@ module OperationConfiguration
             filePath = currentPath * "/input/operation_configuraiton.json"
         end
 
-        configuraiton = nothing 
+        configuration = Dict() 
 
         configJSON = JSON.parsefile(filePath)
         configTypes = keys(configJSON)
@@ -100,7 +101,7 @@ module OperationConfiguration
             for operation in configJSON[configType]
                 specification = configType[oepration]
                 config = configure(configType, operation, specification)
-                configuraiton[config[1]] = config[2]
+                configuration[config[1]] = config[2]
             end
         end
         return configuration
