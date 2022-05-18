@@ -12,7 +12,63 @@ module Simulator
     import ..CostCalculator
     import ..ErrorCalculator
 
-    function executeCircuitQubit()
+    function checkNeedCommunication()
+    end
+
+    function communicateInterCore()
+    end
+
+    function scheduling()
+    end
+
+    function checkEndOperation(qubit::Qubit,refTime)
+        qubitTime = qubit.executionTime + qubit.communicationTime + qubit.dwellTime
+        if refTime > qubitTime
+            return true
+        end
+        return false
+    end
+
+    function executeOepration(qubit::Qubit)
+        operation = popfirst!(qubit.circuitQubit.operations)
+        operationType = typeof(operation)
+        if operationType == SingleGate
+            qubit.executionTime += operaiton.duration
+        elseif operationType == MultiGate
+            checkNeedCommunication()
+            scheduling()
+            communicateInterCore()
+        # elseif
+        end
+    end
+
+    function executeCircuitQubit(circuit, architecture)
+        refTime = 0.1
+
+        circuitQubits = circuit["circuit"].qubits
+
+        qubits = Dict()
+        for i in architecture.components["cores"]
+            merge!(qubits, i.qubits)
+        end
+
+        while 1
+
+            for i in qubits
+                checkEndOperation(i, refTime)
+                executeOperation(i)
+            end
+
+            # check ending
+            remainderOperation = 0
+            for i in circuitQubits
+                remainderOperation += length(i.operations)
+            end
+            if remainderOperaiton == 0
+                break
+            end
+            refTime += 0.1
+        end
     end
 
     function run()
