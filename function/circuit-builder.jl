@@ -4,7 +4,7 @@ module CircuitBuilder
     operationConfigPath = ""
     operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
 
-    multiGateTable = Dict{Int64, Vector{Qubit}}
+    multiGateTable = Dict{Int64, Vector}
     multiGateID = 1
 
     mutable struct CircuitQubit
@@ -18,8 +18,8 @@ module CircuitBuilder
     mutable struct Circuit
         name::String
         qubits::Vector{CircuitQubit}
-        function Circuit(noOfQubits::Int64, qubits::Vector{CircuitQubit})
-            new(noOfQubits, qubits)
+        function Circuit(name::String, qubits::Vector{CircuitQubit})
+            new(name, qubits)
         end
     end
 

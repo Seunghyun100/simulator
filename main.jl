@@ -77,7 +77,7 @@ println()
 
 circuit = circuitList[ans]
 
-mappedCircuit = Mapper.mapping() # TODO
+Mapper.mapping(circuit, configuration["architecture"]) # TODO: optimize the mapping algorithm
 
 
 """
