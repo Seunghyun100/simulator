@@ -44,7 +44,6 @@ module Simulator
 
     function executeCircuitQubit(circuit, architecture)
         refTime = 0.1
-
         circuitQubits = circuit["circuit"].qubits
 
         qubits = Dict()
@@ -53,10 +52,10 @@ module Simulator
         end
 
         while 1
-
             for i in qubits
-                checkEndOperation(i, refTime)
-                executeOperation(i)
+                if checkEndOperation(i, refTime)
+                    executeOperation(i)
+                end
             end
 
             # check ending
@@ -71,6 +70,44 @@ module Simulator
         end
     end
 
-    function run()
+    function evaluateResult(architecture)
+        executionTimeList = []
+        noOfPhonons = Dict()
+        cores = architecture.component["cores"]
+        qubits = Dict()
+        for i in architecture.components["cores"]
+            merge!(qubits, i.qubits)
+        end
+
+        for i in valuse(qubits)
+            time = i.executionTime + i.communicationTime + i.dwellTime
+            append!(executionTimeList, time)
+        end
+        executionTime = maximum(executionTimeList)
+        
+        for i in cores
+            noOfPhonons[i[1]] = i[2].noOfPhonons
+        end
+        
+        result = Dict()
+        result["executionTime"] = executionTime
+        result["noOfPhonons"] = noOfPhonons
+        return result
     end
+
+    function run(circuit, architecture)
+        executeCircuitQubit(circuit, architecture)
+        result = evaluateResult(architecture)
+        return result
+    end
+
+    function printResult(result)
+        println("Execution time is $(result["executionTime"])")
+        println()
+        println("Number of phonons per core are")
+        for i in result["noOfPhonons"]
+            println("$(i[1]): $(i[2])")
+        end
+    end
+
 end

@@ -2,7 +2,8 @@ include("compiler/mapper.jl")
 include("configuration/operation_configuration.jl")
 include("configuration/architecture_configuration.jl")
 include("configuration/communication_configuration.jl")
-include("function/circuit-generator.jl")
+include("function/circuit-builder.jl")
+include("function/simulator.jl")
 
 
 """
@@ -79,9 +80,10 @@ circuit = circuitList[ans]
 
 Mapper.mapping(circuit, configuration["architecture"]) # TODO: optimize the mapping algorithm
 
-
 """
 This part is running the provider with scheduling.
 """
+# provider.run(mappedCircuit) #TODO
 
-provider.run(mappedCircuit) #TODO
+result = Simulator.run(circuit, configuration["architecture"])
+Simulator.printResult(result)

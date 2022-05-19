@@ -110,12 +110,14 @@ module QCCDShuttlingProtocol
             return
         end
         
-        ## TODO
+        ## TODO: 
         for target in targets
             if target[2].isCommunicationQubit == false
                 for qubit in target[1].qubits
                     if qubit.isCommunicationQubit    
-                        communicationQubit = 
+                        # TODO: push swap gate
+                        # pushfirst!(qubit.circuitQubit.operations, )
+                        traget[2].isCommunicationqubit = true
             end
         end
         
