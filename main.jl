@@ -43,11 +43,11 @@ Only configuration by file is yet possible.
 # TODO: how set the configuration of circuit and hardware
 operationConfigPath = ""
 architectureConfigPath = ""
-communicationConfigPath = ""
+# communicationConfigPath = ""
 
 operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
 architectureConfigurationList = HardwareConfiguration.openConfigFile(architecutureConfigPath)
-communicationConfiguration = CommunicationConfiguration.openConfigFile(communicationConfigPath)
+# communicationConfiguration = CommunicationConfiguration.openConfigFile(communicationConfigPath)
 
 println("What is the architecture you simulate? \n (pleas answer the architecture name)")
 for name in keys(architectureConfigurationList)
@@ -56,8 +56,7 @@ end
 ans = readline()
 println()
 
-configuration = ("operation"=>operationConfiguration, "architecture"=>architectureConfigurationList[ans], 
-"communication"=>communicationConfiguration)
+configuration = ("operation"=>operationConfiguration, "architecture"=>architectureConfigurationList[ans])
 
 
 """

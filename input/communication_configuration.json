@@ -10,7 +10,7 @@
             "duration": 100,
             "heatingRate": 10
         },
-        "slowRotate":{
+        "junctionRotate":{
             "type": "junctionRotate",
             "duration": 420,
             "heatingRate": 0.18
@@ -20,7 +20,7 @@
             "duration": 55,
             "heatingRate": 2
         },
-        "balancedSplit":{
+        "split":{
             "type": "split",
             "duration": 55,
             "heatingRate": [2,2]

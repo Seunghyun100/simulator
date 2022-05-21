@@ -1,6 +1,6 @@
 module CommunicationConfiguraiton
 
-    struct Shuttling
+    mutable struct Shuttling
         type::String
         duration::Float64
         speed::Float64
@@ -13,8 +13,7 @@ module CommunicationConfiguraiton
             else
                 @assert(duraiton>0.0, "Duration must be larger than 0.")
             end
-            @assert(currentCoordinates !== (0,0)&&nextCoordinates !== (0,0), "Coordinates must be defined.")
-        
+            # @assert(currentCoordinates !== (0,0)&&nextCoordinates !== (0,0), "Coordinates must be defined.")
             new(type, duration, speed, heatingRate, currentCoordinates, nextCoordinates)
         end
     end
@@ -48,11 +47,10 @@ module CommunicationConfiguraiton
         return communication
     end
 
-
     function openConfigFile(filePath::String = "")::Dict
         if filePath === "" 
             currentPath = pwd()
-            filePath = currentPath * "/input/communication_configuraiton.json"
+            filePath = currentPath * "/input/communication_configuraiton.json" 
         end
 
         configJSON = JSON.parsefile(filePath) 
@@ -66,4 +64,14 @@ module CommunicationConfiguraiton
         return communications    
     end
 
+    filePath = "" # Define to communication configuration json file path
+    const communicationConfiguration = openConfigurationFile(filePath)
+
+    function generateCommunicationOperation(operationName::String, currentCoordinates::Tuple{Int64,Int64}, nextCoordinates::Tuple{Int64,Int64})
+        dummyOperation = communicationConfiguration["shuttling"][operationName]
+        operation = deepcopy(dummyOperation)
+        operation.currentCoordinates = currentCoordinates
+        operation.nextCoordinates = nextCoordinates
+        return operation
+    end
 end

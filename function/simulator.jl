@@ -65,7 +65,7 @@ module Simulator
         return false
     end
 
-    function executeOperation(qubit::Qubit, refTime, multiGateTable, architecture, communicationConfiguration)
+    function executeOperation(qubit::Qubit, refTime, multiGateTable, architecture)
         operation = qubit.circuitQubit.operations[1]
         operationType = typeof(operation)
         if operationType == SingleGate
@@ -94,20 +94,20 @@ module Simulator
             if checkNeedCommunications(appliedQubits, architecture)
                 for i in 1:length(appliedQubits)
                     if checkEndOperation(appliedQubits[i], refTime)
-                        communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, communications)
-                        pushfirst!(appliedQubits[i].circuitQubit.operation, communicationOperations)
+                        communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
+                        for communicationOperation in reverse(communicationOperations)
+                            pushfirst!(appliedQubits[i].circuitQubit.operation, communicationOperation)
+                        end
                     else
                         if i == length(appliedQubits)
-                            CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, communications)
+                            communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
+                            for communicationOperation in reverse(communicationOperations)
+                                pushfirst!(appliedQubits[i].circuitQubit.operation, communicationOperation)
+                            end
                         end
                     end
                 end
                 
-                # if checkEndOperation(appliedQubits, refTime)
-
-                # else
-                #     return
-                # end
                 return
             else
                 if checkEndOperation(appliedQubits, refTime)
@@ -122,19 +122,14 @@ module Simulator
             end
            
             
-            # TODO
-            # shuttling = CommunicationProtocol.executeShuttling(qubit, operation, multiGateTable, architecture, communicationConfiguration)
-
-            # checkNeedCommunication()
-            # scheduling()
-            # communicateInterCore()
+            # TODO: scheduling()
         
         elseif operationType == Shuttling
-
+            # TODO: execute shuttling
         end
     end
 
-    function executeCircuitQubit(circuit, architecture, communicationConfiguration)
+    function executeCircuitQubit(circuit, architecture)
         refTime = 0.1
         circuitQubits = circuit["circuit"].qubits
         multiGateTable = circuit["multiGateTable"]
@@ -147,7 +142,7 @@ module Simulator
         while 1
             for i in qubits
                 if checkEndOperation(i, refTime)
-                    executeOperation(i, refTime, multiGateTable, architecture, communicationConfiguration)
+                    executeOperation(i, refTime, multiGateTable, architecture)
                 end
             end
 
@@ -190,10 +185,9 @@ module Simulator
 
     function run(circuit, configuration)
         architecture = configuration["architecture"]
-        communicationConfiguration = configuration["communication"]
         operationConfiguration = configuration["operation"]
 
-        executeCircuitQubit(circuit, architecture, communicationConfiguration)
+        executeCircuitQubit(circuit, architecture)
         result = evaluateResult(architecture)
         return result
     end
