@@ -8,8 +8,8 @@ module CircuitBuilder
 
     mutable struct CircuitQubit
         id::String
-        operations::Vecotr{Operation}
-        function CircuitQubit(id::String, operations::Vector{Operation}=Operation[])
+        operations::Vecotr
+        function CircuitQubit(id::String, operations::Vector=[])
             new(id, operations)
         end
     end
@@ -48,7 +48,7 @@ module CircuitBuilder
     function composeCircuitQubit(qubits::Vector{CircuitQubit}, qubitComposition::Tuple)
         qubitID = qubitComposition[1]
         compositions = qubitComposition[2]
-        operations = Operation[]
+        operations = []
         for composition in compositions
             oepration = encodeOperation(composition)
             push!(operations, oepration)

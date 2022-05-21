@@ -36,7 +36,8 @@ module QCCDShuttlingProtocol
                             composition = [length(multiGateTable)+1, "swap", targetQubit.circuitQubit.id, qubit.circuitQubit.id]
                             swap = CircuitBuilder.encodeOperation(composition)
                             pushfirst!(qubit.circuitQubit.operation, swap)
-                            # pushfirst!(target[i][2].circuitQubit.operation, swap)
+                            qubit.isCommunicationQubit = false
+                            targetQubit.isCommunicationQubit = true
                             return swap
                         end
                     end

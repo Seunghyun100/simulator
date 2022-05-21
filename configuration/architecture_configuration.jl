@@ -46,8 +46,9 @@ module ArchitectureConfiguration
         coordinates::Tuple{Int64,Int64}
         qubits::Dict #{String, Qubit}
         noOfPhonons::Float64
-        function Core(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict(), noOfPhonons::Float64=0.0)
-            new(id, capacity, coordinates, qubits, noOfPhonons)
+        executionTime::Float64
+        function Core(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict(), noOfPhonons::Float64=0.0, executionTime::Float64=0.0)
+            new(id, capacity, coordinates, qubits, noOfPhonons, executionTime)
         end
     end
 
@@ -56,8 +57,9 @@ module ArchitectureConfiguration
         coordination::Tuple{Int64,Int64}
         isShuttling::Bool
         qubits::Vector{Qubit}
-        function Junction(id::String, coordination::Tuple{Int64, Int64}, isShuttling::Bool=false, qubits::Vector{Qubit}=Qubit[])
-            new(id, coordination, isShuttling, qubits)
+        executionTime::Float64
+        function Junction(id::String, coordination::Tuple{Int64, Int64}, isShuttling::Bool=false, qubits::Vector{Qubit}=Qubit[], executionTime::Float64=0.0)
+            new(id, coordination, isShuttling, qubits, executionTime)
         end
     end
 
@@ -71,9 +73,10 @@ module ArchitectureConfiguration
         isShuttling::Bool
         direction::Direction
         qubits::Vector{Qubit}
+        executionTime::Float64
         function Path(id::String, length::Float64, coordinates::Tuple{Int64, Int64}, isShuttling::Bool=false, 
-            direction::Direction=stop, qubits::Vector{Qubit}=Qubit[])
-            new(id, length, coordinates, isShuttling, direction, qubits)
+            direction::Direction=stop, qubits::Vector{Qubit}=Qubit[], executionTime::Float64=0.0)
+            new(id, length, coordinates, isShuttling, direction, qubits, executionTime)
         end
     end
 

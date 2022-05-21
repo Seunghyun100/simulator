@@ -125,7 +125,75 @@ module Simulator
             # TODO: scheduling()
         
         elseif operationType == Shuttling
+            # TODO: multi qubit shuttling
+            # TODO: optimize to piplining
+            # TODO: check to be occupied next component
             # TODO: execute shuttling
+            currentCooordinates = operation.currentCoordinates
+            nextCoordinates = operation.nextCoordinates
+            currentComponent = architecture.topology[currentCooordinates[1]][currentCooordinates[2]]
+            nextComponent = architecture.topology[nextCoordinates[1]][nextCoordinates[2]]
+            currentComponentType = typeof(currentComponent)
+            nextComponentType = typeof(nextComponent)
+
+
+            if operation.type == "split"
+                if nextComponent.executionTime < refTime
+                    qubit.executionTime += operation.duration
+
+                    delete!(currentComponent.qubits, qubit.id)
+                    currentComponent.noOfPhonons += operaiton.heatingRate[1] # split
+                    currentComponent.executionTime = qubit.executionTime
+
+                    nextComponent.isShuttling = true
+                    # TODO
+                    # nextComponent.direction # path
+                    push!(nextComponent.qubits, qubit)
+                    currentComponent.executionTime = qubit.executionTime
+
+                    qubit.noOfPhonons += operation.heatingRate[2] # split
+                else # TODO: dwell time
+                end
+
+            elseif operation.type == "merge"
+                if nextComponent.executionTime < refTime
+                    qubit.executionTime += operation.duration
+
+                    currentComponent.isShuttling = false
+                    currentComponent.qubits = []
+                    currentComponent.executionTime = qubit.executionTime
+
+                    nextComponent.qubits[qubit.id] = qubit
+                    nextComponent.executionTime = qubit.executionTime
+                    nextComponent.noOfPhonons += qubit.noOfPhonons + operation.heatingRate # merge
+
+                    qubit.noOfPhonons = 0.0
+                else # TODO: dwell time
+                end
+            elseif operation.type == "linearTransport"
+                # TODOTOTOTOTOTOTOTODODODODOD
+                if nextComponent.executionTime < refTime
+                    qubit.executionTime += operation.duration
+
+                    currentComponent.isShuttling = false
+                    currentComponent.qubits = []
+                    currentComponent.executionTime = qubit.executionTime
+
+                    nextComponent.qubits[qubit.id] = qubit
+                    nextComponent.executionTime = qubit.executionTime
+                    nextComponent.noOfPhonons += qubit.noOfPhonons + operation.heatingRate # merge
+
+                    qubit.noOfPhonons = 0.0
+                else # TODO: dwell time
+                end
+
+            elseif operation.type == "junctionRotate"
+            else
+                
+            end
+
+            qubit.noOfPhonons += operation.heatingRate
+            # popfirst!(qubit.circuitQubit.operation)
         end
     end
 
