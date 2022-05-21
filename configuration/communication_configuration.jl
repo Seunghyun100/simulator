@@ -5,13 +5,17 @@ module CommunicationConfiguraiton
         duration::Float64
         speed::Float64
         heatingRate::Float64
-        function Shuttling(type::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate::Float64=0.0)
+        currentCoordinates::Tuple{Int64,Int64}
+        nextCoordinates::Tuple{Int64,Int64}
+        function Shuttling(type::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate::Float64=0.0,currentCoordinates::Tuple{Int64,Int64}=(0,0), nextCoordinates::Tuple{Int64,Int64}=(0,0))
             if type=="linearTransport"
                 @assert(speend>0.0, "Speed must be larger than 0.")
             else
                 @assert(duraiton>0.0, "Duration must be larger than 0.")
             end
-            new(type, duration, speed, heatingRate)
+            @assert(currentCoordinates !== (0,0)&&nextCoordinates !== (0,0), "Coordinates must be defined.")
+        
+            new(type, duration, speed, heatingRate, currentCoordinates, nextCoordinates)
         end
     end
 

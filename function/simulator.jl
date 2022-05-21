@@ -11,8 +11,27 @@ end
 module Simulator
     import ..CostCalculator
     import ..ErrorCalculator
+    include("../input/communication_protocol.jl")
+    CommunicationProtocol = QCCDShuttlingProtocol # architecture dependency
 
-    function checkNeedCommunication()
+    function checkNeedCommunication(appliedQubits, architecture)
+        appliedCores = []
+        for appliedQubit in appliedQubits
+            for core in values(architecture.components["cores"])
+                for qubitID in keys(core.qubits)
+                    if qubitID == appliedQubit.id
+                        append!(appliedCores, core)
+                        break
+                    end
+                end
+            end
+        end
+        for i in 1:length(appliedCores)-1
+            if appliedCores[i] !== appliedCores[i+1]
+                return true
+            end
+        end
+        return false
     end
 
     function communicateInterCore()
@@ -22,29 +41,103 @@ module Simulator
     end
 
     function checkEndOperation(qubit::Qubit,refTime)
-        qubitTime = qubit.executionTime + qubit.communicationTime + qubit.dwellTime
+        qubitTime = qubit.executionTime
         if refTime > qubitTime
             return true
         end
         return false
     end
 
-    function executeOepration(qubit::Qubit)
-        operation = popfirst!(qubit.circuitQubit.operations)
+    function checkEndOperation(appliedQubits::Vector,refTime)
+        qubitTimeList = []
+        for qubit in appliedQubits
+            qubitTime = qubit.executionTime
+            append!(qubitTimeList, qubitTime)
+        end
+        qubitTime = maximum(qubitTimeList)
+
+        if refTime > qubitTime
+            for qubit in appliedQubits
+                qubit.executionTime = qubitTime
+            end
+            return true
+        end
+        return false
+    end
+
+    function executeOperation(qubit::Qubit, refTime, multiGateTable, architecture, communicationConfiguration)
+        operation = qubit.circuitQubit.operations[1]
         operationType = typeof(operation)
         if operationType == SingleGate
-            qubit.executionTime += operaiton.duration
+            qubit.executionTime += operation.duration
+            popfirst!(qubit.circuitQubit.operation)
+            return
         elseif operationType == MultiGate
-            checkNeedCommunication()
-            scheduling()
-            communicateInterCore()
-        # elseif
+            operationID = operation.id
+            appliedQubits = multiGateTable[operationID]
+
+            qubits = Dict()
+            for core in values(architecture.components["cores"])
+                merge!(qubits, core.qubits)
+            end
+
+            for i in 1:length(appliedQubits)
+                for k in 1:length(values(qubits))
+                    if qubits[k].circuitQubit.id == appliedQubits[i]
+                        appliedQubits[i] = qubits[k]
+                        break
+                    end
+                    @assert(k < length(qubits),"Not found qubit")
+                end
+            end
+
+            if checkNeedCommunications(appliedQubits, architecture)
+                for i in 1:length(appliedQubits)
+                    if checkEndOperation(appliedQubits[i], refTime)
+                        communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, communications)
+                        pushfirst!(appliedQubits[i].circuitQubit.operation, communicationOperations)
+                    else
+                        if i == length(appliedQubits)
+                            CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, communications)
+                        end
+                    end
+                end
+                
+                # if checkEndOperation(appliedQubits, refTime)
+
+                # else
+                #     return
+                # end
+                return
+            else
+                if checkEndOperation(appliedQubits, refTime)
+                    for qubit in appliedQubits
+                        qubit.executionTime += operation.duration
+                        popfirst!(qubit.circuitQubit.operation)
+                        return
+                    end
+                else
+                    return
+                end
+            end
+           
+            
+            # TODO
+            # shuttling = CommunicationProtocol.executeShuttling(qubit, operation, multiGateTable, architecture, communicationConfiguration)
+
+            # checkNeedCommunication()
+            # scheduling()
+            # communicateInterCore()
+        
+        elseif operationType == Shuttling
+
         end
     end
 
-    function executeCircuitQubit(circuit, architecture)
+    function executeCircuitQubit(circuit, architecture, communicationConfiguration)
         refTime = 0.1
         circuitQubits = circuit["circuit"].qubits
+        multiGateTable = circuit["multiGateTable"]
 
         qubits = Dict()
         for i in architecture.components["cores"]
@@ -54,7 +147,7 @@ module Simulator
         while 1
             for i in qubits
                 if checkEndOperation(i, refTime)
-                    executeOperation(i)
+                    executeOperation(i, refTime, multiGateTable, architecture, communicationConfiguration)
                 end
             end
 
@@ -75,7 +168,7 @@ module Simulator
         noOfPhonons = Dict()
         cores = architecture.component["cores"]
         qubits = Dict()
-        for i in architecture.components["cores"]
+        for i in cores
             merge!(qubits, i.qubits)
         end
 
@@ -95,8 +188,12 @@ module Simulator
         return result
     end
 
-    function run(circuit, architecture)
-        executeCircuitQubit(circuit, architecture)
+    function run(circuit, configuration)
+        architecture = configuration["architecture"]
+        communicationConfiguration = configuration["communication"]
+        operationConfiguration = configuration["operation"]
+
+        executeCircuitQubit(circuit, architecture, communicationConfiguration)
         result = evaluateResult(architecture)
         return result
     end

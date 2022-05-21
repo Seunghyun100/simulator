@@ -5,7 +5,6 @@ module CircuitBuilder
     operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
 
     multiGateTable = Dict{Int64, Vector}
-    multiGateID = 1
 
     mutable struct CircuitQubit
         id::String
@@ -35,13 +34,14 @@ module CircuitBuilder
 
     # Multi-Gate
     function encodeOperation(composition::Vector)
-        operationName = composition[1]
-        appliedQubits = composition[2:length(composition)]
+        multiGateID = composition[1]
+        operationName = composition[2]
+        appliedQubits = composition[3:length(composition)]
         operationMold = operationConfiguration[operationName]
         operation = deepcopy(operationMold)
         operation.id = multiGateID
         multiGateTable[multiGateID] = appliedQubits
-        multiGateID +=1
+
         return operation
     end
 

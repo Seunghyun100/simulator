@@ -31,14 +31,13 @@ module ArchitectureConfiguration
         circuitQubit::CircuitQubit
         runningOperation::Vector{Operation}
         communicationList::Vector{CommunicationOperation}
-        communicationTime::Float64
-        dwellTime::Float64
+        # communicationTime::Float64
+        # dwellTime::Float64
         noOfPhonons::Float64
         function Qubit(id::String, executionTime::Float64=0.0, isCommunicationQubit::Bool=false,
             circuitQubit::CircuitQubit = dumyCircuitQubit, runningOperation::Vector{Operation}=Operation[],
-            communicationList::Vector{CommunicationOperation}=CommunicationOperation[], communicationTime::Float64=0.0, 
-            dwellTime::Float64=0.0, noOfPhonons::Float64=0.0)
-            new(id, executionTime, isCommunicationQubit, circuitQubit, runningOperation, communicationList, communicationTime, dwellTime, noOfPhonons)
+            communicationList::Vector{CommunicationOperation}=CommunicationOperation[], noOfPhonons::Float64=0.0)
+            new(id, executionTime, isCommunicationQubit, circuitQubit, runningOperation, communicationList, noOfPhonons)
         end
     end
 

@@ -192,7 +192,7 @@
                     "capacity": 32,
                     "coordinates": [5,5],
                     "number_of_qubits":30
-                },
+                }
 
             },
             "junctions":{
@@ -207,7 +207,7 @@
                 "Junction3":{
                     "id": "Junction3",
                     "coordinates": [3,5]
-                },
+                }
 
             },
             "paths":{

@@ -1,12 +1,10 @@
 module QCCDShuttlingProtocol
 
+    include("../function/circuit_builder.jl")
+
     """
     Only Two-qubit gate is avilable yet.
     """
-    
-    function isCommunicationQubit(qubits...)
-
-    end
 
     function checkTarget(multiGateID::Int64, multiGateTable::Dict, architecture)
         appliedQubits = multiGateTable[multiGateID]
@@ -16,13 +14,35 @@ module QCCDShuttlingProtocol
             for core in cores
                 qubits = values(core.qubits)
                 for qubit in qubits
-                    if qubit.circuitQubit == appliedQubit
+                    if qubit.circuitQubit.id == appliedQubit
                         push!(targets, (core, qubit))
                     end
                 end
             end   
         end
         return  targets
+    end
+
+    function checkCommunicationQubit(appliedQubit, targets)
+        for target in targets
+            targetCore = target[1]
+            targetQubit = target[2]
+            if appliedQubit == targetQubit
+                if targetQubit.isCommunicationQubit == false
+                    for qubit in targetCore.qubits
+                        if qubit.isCommunicationQubit
+                            composition = [length(multiGateTable)+1, "swap", targetQubit.circuitQubit.id, qubit.circuitQubit.id]
+                            swap = CircuitBuilder.encodeOperation(composition)
+                            pushfirst!(qubit.circuitQubit.operation, swap)
+                            # pushfirst!(target[i][2].circuitQubit.operation, swap)
+                            return swap
+                        end
+                    end
+                else
+                    return
+                end
+            end
+        end
     end
 
     function drawShuttlingRoute(startingCore::Core, targetCore::Core, pathRow::Int64)
@@ -87,14 +107,14 @@ module QCCDShuttlingProtocol
 
         shuttlingTypes = []
         if currentComponentType == Core & nextComponentType == Path
-            push!(shuttlingTypes, "linearTransport")
+            push!(shuttlingTypes, "split")
         elseif currentComponentType == Path
             if nextComponentType == Junction
-                push!(shuttlingTypes, "junctionRotate")
+                push!(shuttlingTypes, "linearTransport")
             elseif nextComponentType == Core
                 push!(shuttlingTypes,"merge")
         elseif currentComponentType == Junction & nextComponentType == Path
-            if preCoordinates[1] != nextCoordinates[1] & preCoordinates[2] != nextCoordinates[2] & preCoordinates !=(0,0)
+            if preCoordinates[1] !== nextCoordinates[1] & preCoordinates[2] !== nextCoordinates[2] & preCoordinates !==(0,0)
                 push!(shuttlingTypes, "junctionRotate")
             end
             push!(shuttlingTypes, "linearTransport")
@@ -102,31 +122,37 @@ module QCCDShuttlingProtocol
         return shuttlingTypes
     end
 
-    function executeShuttling(multiGateID::Int64, multiGateTable::Dict, architecture::Architecture, communications::Dict)
-        shuttlingList = []
-        targets = checkTarget(multiGateID::Int64, multiGateTable::Dict, architecture)
+    function buildCommunicationOperations(appliedQubit, operation, multiGateTable::Dict, architecture::Architecture, communications::Dict)
+        communicationOperationList = []
+
+        operationID = operation.id
+        targets = checkTarget(operationID, multiGateTable::Dict, architecture)
         
         if targets[1][1] == targets[2][1]
             return
         end
         
-        ## TODO: 
-        for target in targets
-            if target[2].isCommunicationQubit == false
-                for qubit in target[1].qubits
-                    if qubit.isCommunicationQubit    
-                        # TODO: push swap gate
-                        # pushfirst!(qubit.circuitQubit.operations, )
-                        traget[2].isCommunicationqubit = true
-            end
+        # checkCommunicationQubit(targets, multiGateTable)
+        swap = checkCommunicationQubit(appliedQubit, targets)
+        if swap !== nothing
+            append!(communicationOperationList, swap)
         end
-        
+
         pathRow = communications["protocol"]["pathRow"]
         shuttlingRoute = drawShuttlingRoute(startingCore, targetCore, pathRow) # Tuple{Int64, Int64}[]
+
+        shuttlingTypeList = []
         for i in 2:length(shuttlingRoute)-1
-            append!(shuttlingList,checkShuttlingType(i-1, i, i+1, architecture))
+            append!(shuttlingTypeList,checkShuttlingType(shuttlingRoute[i-1], shuttlingRoute[i], shuttlingRoute[i+1], architecture))
         end
-        return shuttlingList
+
+        # TODO: build communication operation
+        
+        # for i in 1:length(shuttlingTypeList)
+        #     communicationOperationPair = (shuttlingTypeList[i], (shuttlingRoute[i+1],shuttlingroute[i+2])) # (shuttlingType, (currentCoordinates, nextCoordinates))
+        #     append!(communicationOperationList,communicationOperationPair)
+        end
+        return communicationOperationList
     end
 
 end

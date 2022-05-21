@@ -2,7 +2,7 @@ include("compiler/mapper.jl")
 include("configuration/operation_configuration.jl")
 include("configuration/architecture_configuration.jl")
 include("configuration/communication_configuration.jl")
-include("function/circuit-builder.jl")
+include("function/circuit_builder.jl")
 include("function/simulator.jl")
 
 
@@ -85,5 +85,5 @@ This part is running the provider with scheduling.
 """
 # provider.run(mappedCircuit) #TODO
 
-result = Simulator.run(circuit, configuration["architecture"])
+result = Simulator.run(circuit, configuration)
 Simulator.printResult(result)
