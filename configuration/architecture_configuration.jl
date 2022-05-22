@@ -1,6 +1,6 @@
 module ArchitectureConfiguration
     import ..OperationConfiguration
-    import ..CircuitBuilder
+    include("../function/circuit_builder.jl")
 
     abstract type Component end
 
@@ -92,7 +92,7 @@ module ArchitectureConfiguration
 
 
     """
-    This part is about the configuraiton functions.
+    This part is about the configuration functions.
     """
 
     function generateQubit(id::String, executionTime::Float64=0.0, isCommunicationQubit::Bool=false)
@@ -234,7 +234,7 @@ module ArchitectureConfiguration
     function openConfigFile(filePath::String = "")::Dict
         if filePath === "" 
             currentPath = pwd()
-            filePath = currentPath * "/input/architecture_configuraiton.json"
+            filePath = currentPath * "/input/architecture_configuration.json"
         end
 
         configJSON = JSON.parsefile(filePath) 

@@ -74,7 +74,7 @@ module OperationConfiguration
     """
     This part is about the configuration functions.
     """
-    function configure(configType::String, operation::String, specification::Array{Array{Any,1},1})::Tuple
+    function configure(configType::String, operation::String, specification::Vector{Any})::Tuple
         config = nothing
         ex = "$operation = $configType("
         for i in specification
@@ -83,13 +83,13 @@ module OperationConfiguration
         ex = ex * ')'
         ex = Meta.parse(ex)
         config = eval(ex)
-        return (configType, config)
+        return (operation, config)
     end
 
     function openConfigFile(filePath::String = "")::Dict
         if filePath === "" 
             currentPath = pwd()
-            filePath = currentPath * "/input/operation_configuraiton.json"
+            filePath = currentPath * "/input/operation_configuration.json"
         end
 
         configuration = Dict() 
@@ -99,8 +99,8 @@ module OperationConfiguration
 
         for configType in configTypes
             for operation in configJSON[configType]
-                specification = configType[oepration]
-                config = configure(configType, operation, specification)
+                specification = operation[2]
+                config = configure(configType, operation[1], specification)
                 configuration[config[1]] = config[2]
             end
         end

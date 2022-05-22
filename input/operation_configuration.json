@@ -1,34 +1,34 @@
 {
     "SingleGate":{
-        "x":[["name","x"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]],
-        "y":[["name","y"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]],
-        "z":[["name","z"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]],
+        "x":[["name","x"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]],
+        "y":[["name","y"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]],
+        "z":[["name","z"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]],
 
-        "rx":[["name","rx"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]],
-        "ry":[["name","ry"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]],
-        "rz":[["name","rz"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]],
+        "rx":[["name","rx"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]],
+        "ry":[["name","ry"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]],
+        "rz":[["name","rz"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]],
 
-        "h":[["name","h"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]],
-        "s":[["name","s"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]],
-        "t":[["name","t"],["duration",5.0],["fidelity","Fidelity(0.0, 0.0)"]]
+        "h":[["name","h"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]],
+        "s":[["name","s"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]],
+        "t":[["name","t"],["duration","5.0"],["fidelity","Fidelity(0.0, 0.0)"]]
     },
     "MultiGate":{
-        "cx":[["name","cx"],["duration",40.0],["noOfQubits",2], ["fidelity","Fidelity(0.0, 0.0)"]],
-        "cy":[["name","cy"],["duration",40.0],["noOfQubits",2], ["fidelity","Fidelity(0.0, 0.0)"]],
-        "cz":[["name","cz"],["duration",40.0],["noOfQubits",2], ["fidelity","Fidelity(0.0, 0.0)"]],
+        "cx":[["name","cx"],["duration","40.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
+        "cy":[["name","cy"],["duration","40.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
+        "cz":[["name","cz"],["duration","40.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
     
-        "rxx":[["name","rxx"],["duration",40.0],["noOfQubits",2], ["fidelity","Fidelity(0.0, 0.0)"]],
-        "ryy":[["name","ryy"],["duration",40.0],["noOfQubits",2], ["fidelity","Fidelity(0.0, 0.0)"]],
-        "rzz":[["name","rzz"],["duration",40.0],["noOfQubits",2], ["fidelity","Fidelity(0.0, 0.0)"]],
+        "rxx":[["name","rxx"],["duration","40.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
+        "ryy":[["name","ryy"],["duration","40.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
+        "rzz":[["name","rzz"],["duration","40.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
     
-        "swap":[["name","swap"],["duration",120.0],["noOfQubits",2], ["fidelity","Fidelity(0.0, 0.0)"]],
-        "toffoli":[["name","toffoli"],["duration",40.0],["noOfQubits",3], ["fidelity","Fidelity(0.0, 0.0)"]]
+        "swap":[["name","swap"],["duration","120.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
+        "toffoli":[["name","toffoli"],["duration","40.0"],["noOfQubits",3], ["fidelity","Fidelity(0.0, 0.0)"]]
     },
     "Initialize":{
-        "init":[["duration",40.0],["fidelity","Fidelity(0.0, 0.0)"]]
+        "init":[["duration","40.0"],["fidelity","Fidelity(0.0, 0.0)"]]
     },
     "Measure":{
-        "commonMeasure":[["name","commonMeasure"],["duration",180.0],["fidelity","Fidelity(0.0, 0.0)"]],
-        "snspMeasure":[["name","snspMeasure"],["duration",11.0],["fidelity","Fidelity(0.0, 0.0)"]]
+        "commonMeasure":[["name","commonMeasure"],["duration","180.0"],["fidelity","Fidelity(0.0, 0.0)"]],
+        "snspMeasure":[["name","snspMeasure"],["duration","11.0"],["fidelity","Fidelity(0.0, 0.0)"]]
     }
 }

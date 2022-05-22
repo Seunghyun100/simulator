@@ -9,7 +9,7 @@ module CircuitBuilder
     mutable struct CircuitQubit
         id::String
         operations::Vecotr
-        function CircuitQubit(id::String, operations::Vector=[])
+        function CircuitQubit(id::String="dummy", operations::Vector=[])
             new(id, operations)
         end
     end
