@@ -20,7 +20,7 @@ module Simulator
             for core in values(architecture.components["cores"])
                 for qubitID in keys(core.qubits)
                     if qubitID == appliedQubit.id
-                        append!(appliedCores, core)
+                        push!(appliedCores, core)
                         break
                     end
                 end
@@ -40,7 +40,7 @@ module Simulator
     function scheduling()
     end
 
-    function checkEndOperation(qubit::Qubit,refTime)
+    function checkEndOperation(qubit,refTime) # (Qubit, Float64)
         qubitTime = qubit.executionTime
         if refTime > qubitTime
             return true
@@ -49,6 +49,20 @@ module Simulator
     end
 
     function checkEndOperation(appliedQubits::Vector,refTime)
+        firstOperations = []
+        for qubit in appliedQubits
+            push!(firstOperations, qubit.circuitQubit.operations[1])
+        end
+        for i in firstOperations
+            if typeof(i) !== Main.CircuitBuilder.OperationConfiguration.MultiGate
+                return false
+            end
+        end
+        for i in 1:length(firstOperations)-1
+            if firstOperations[i].id !== firstOperations[i+1].id
+                return false
+            end
+        end
         qubitTimeList = []
         for qubit in appliedQubits
             qubitTime = qubit.executionTime
@@ -65,14 +79,19 @@ module Simulator
         return false
     end
 
-    function executeOperation(qubit::Qubit, refTime, multiGateTable, architecture)
-        operation = qubit.circuitQubit.operations[1]
-        operationType = typeof(operation)
-        if operationType == SingleGate
-            qubit.executionTime += operation.duration
-            popfirst!(qubit.circuitQubit.operation)
+    function executeOperation(qubit, refTime, multiGateTable, architecture) # (Qubit, Float64, Dict, Architecture)
+        operations = qubit.circuitQubit.operations
+        if length(operations) == 0
             return
-        elseif operationType == MultiGate
+        end
+        operation = operations[1]
+        operationType = typeof(operation)
+
+        if operationType == Main.CircuitBuilder.OperationConfiguration.SingleGate
+            qubit.executionTime += operation.duration
+            popfirst!(qubit.circuitQubit.operations)
+            return
+        elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate
             operationID = operation.id
             appliedQubits = multiGateTable[operationID]
 
@@ -82,27 +101,27 @@ module Simulator
             end
 
             for i in 1:length(appliedQubits)
-                for k in 1:length(values(qubits))
-                    if qubits[k].circuitQubit.id == appliedQubits[i]
-                        appliedQubits[i] = qubits[k]
+                for k in values(qubits)
+                    if k.circuitQubit.id == appliedQubits[i]
+                        appliedQubits[i] = k
                         break
                     end
-                    @assert(k < length(qubits),"Not found qubit")
+                    # @assert(k < length(qubits),"Not found qubit")
                 end
             end
 
-            if checkNeedCommunications(appliedQubits, architecture)
+            if checkNeedCommunication(appliedQubits, architecture)
                 for i in 1:length(appliedQubits)
                     if checkEndOperation(appliedQubits[i], refTime)
                         communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
                         for communicationOperation in reverse(communicationOperations)
-                            pushfirst!(appliedQubits[i].circuitQubit.operation, communicationOperation)
+                            pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                         end
                     else
                         if i == length(appliedQubits)
                             communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
                             for communicationOperation in reverse(communicationOperations)
-                                pushfirst!(appliedQubits[i].circuitQubit.operation, communicationOperation)
+                                pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                             end
                         end
                     end
@@ -111,11 +130,11 @@ module Simulator
                 return
             else
                 if checkEndOperation(appliedQubits, refTime)
-                    for qubit in appliedQubits
-                        qubit.executionTime += operation.duration
-                        popfirst!(qubit.circuitQubit.operation)
-                        return
+                    for i in appliedQubits
+                        i.executionTime += operation.duration
+                        popfirst!(i.circuitQubit.operations)
                     end
+                    return
                 else
                     return
                 end
@@ -124,7 +143,7 @@ module Simulator
             
             # TODO: scheduling()
         
-        elseif operationType == Shuttling
+        elseif operationType == Main.CommunicationConfiguration.Shuttling
             # TODO: multi qubit shuttling
             # TODO: optimize to piplining
             currentCooordinates = operation.currentCoordinates
@@ -142,7 +161,7 @@ module Simulator
                     proportion = currentComponent.noOfPhonons/noOfQubits
 
                     delete!(currentComponent.qubits, qubit.id)
-                    currentComponent.noOfPhonons = (noOfQubits-1)*proportion + operaiton.heatingRate[1] # split
+                    currentComponent.noOfPhonons = (noOfQubits-1)*proportion + operation.heatingRate[1] # split
                     currentComponent.executionTime = qubit.executionTime
 
                     nextComponent.isShuttling = true
@@ -153,7 +172,7 @@ module Simulator
 
                     qubit.noOfPhonons = proportion + operation.heatingRate[2] # split
 
-                    popfirst!(qubit.circuitQubit.operation)
+                    popfirst!(qubit.circuitQubit.operations)
                 else # TODO: dwell time
                 end
 
@@ -171,7 +190,7 @@ module Simulator
                     nextComponent.noOfPhonons += qubit.noOfPhonons + operation.heatingRate # merge
 
                     qubit.noOfPhonons = 0.0
-                    popfirst!(qubit.circuitQubit.operation)
+                    popfirst!(qubit.circuitQubit.operations)
                 else # TODO: dwell time
                 end
 
@@ -190,7 +209,7 @@ module Simulator
                         push!(nextComponent.qubits, qubit)
                         nextComponent.executionTime = qubit.executionTime
 
-                        popfirst!(qubit.circuitQubit.operation)
+                        popfirst!(qubit.circuitQubit.operations)
                     else # TODO: dwell time
                     end
 
@@ -208,7 +227,7 @@ module Simulator
                         push!(nextComponent.qubits, qubit)
                         nextComponent.executionTime = qubit.executionTime
 
-                        popfirst!(qubit.circuitQubit.operation)
+                        popfirst!(qubit.circuitQubit.operations)
                     else # TODO: dwell time
                     end
                 end
@@ -226,7 +245,7 @@ module Simulator
                     # push!(nextComponent.qubits, qubit)
                     nextComponent.executionTime = qubit.executionTime
 
-                    popfirst!(qubit.circuitQubit.operation)
+                    popfirst!(qubit.circuitQubit.operations)
                 else # TODO: dwell time
                 end
             else
@@ -240,14 +259,14 @@ module Simulator
         multiGateTable = circuit["multiGateTable"]
 
         qubits = Dict()
-        for i in architecture.components["cores"]
+        for i in values(architecture.components["cores"])
             merge!(qubits, i.qubits)
         end
 
-        while 1
-            for i in qubits
-                if checkEndOperation(i, refTime)
-                    executeOperation(i, refTime, multiGateTable, architecture)
+        while true
+            for qubit in values(qubits)
+                if checkEndOperation(qubit, refTime)
+                    executeOperation(qubit, refTime, multiGateTable, architecture)
                 end
             end
 
@@ -256,9 +275,10 @@ module Simulator
             for i in circuitQubits
                 remainderOperation += length(i.operations)
             end
-            if remainderOperaiton == 0
+            if remainderOperation == 0
                 break
             end
+
             refTime += 0.1
         end
     end
@@ -266,14 +286,14 @@ module Simulator
     function evaluateResult(architecture)
         executionTimeList = []
         noOfPhonons = Dict()
-        cores = architecture.component["cores"]
+        cores = architecture.components["cores"]
         qubits = Dict()
-        for i in cores
+        for i in values(cores)
             merge!(qubits, i.qubits)
         end
 
-        for i in valuse(qubits)
-            time = i.executionTime + i.communicationTime + i.dwellTime
+        for i in values(qubits)
+            time = i.executionTime
             append!(executionTimeList, time)
         end
         executionTime = maximum(executionTimeList)

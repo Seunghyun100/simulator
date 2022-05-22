@@ -3,18 +3,18 @@
         "name": "example_circuit",
         "number_of_qubits": 3,
         "qubits":{
-            "q1": ["h", ["cz","q2","q1"], ["cz","q3","q1"]],
-            "q2": [["cz","q2","q1"], "h", ["cz","q3","q2"]],
-            "q3": [["cz","q3","q1"], ["cz","q3","q2"], "h"]
+            "q1": ["h", [1, "cz","q2","q1"], [2, "cz","q3","q1"]],
+            "q2": [[1, "cz","q2","q1"], "h", [3, "cz","q3","q2"]],
+            "q3": [[2, "cz","q3","q1"], [3, "cz","q3","q2"], "h"]
         }
     },
     "example_circuit2":{
         "name": "example_circuit2",
         "number_of_qubits": 3,
         "qubits":{
-            "q1": ["h", ["cz","q2","q1"], ["cz","q3","q1"]],
-            "q2": [["cz","q2","q1"], "h", ["cz","q3","q2"]],
-            "q3": [["cz","q3","q1"], ["cz","q3","q2"], "h"]
+            "q1": ["h", [1, "cz","q2","q1"], [2, "cz","q3","q1"]],
+            "q2": [[1, "cz","q2","q1"], "h", [3, "cz","q3","q2"]],
+            "q3": [[2, "cz","q3","q1"], [3, "cz","q3","q2"], "h"]
         }
     },
     "example_circuit3":{

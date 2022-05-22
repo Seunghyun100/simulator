@@ -21,7 +21,7 @@ module NonOptimizedMapper
         noOfCircuitQubits = length(circuitQubits)
 
         qubits = Dict()
-        for i in architecture.components["cores"]
+        for i in values(architecture.components["cores"])
             merge!(qubits, i.qubits)
         end
 

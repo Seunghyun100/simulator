@@ -19,7 +19,7 @@ module OperationConfiguration
         duration::Float64
         fidelity::Fidelity
         function SingleGate(name::String="None", duration::Float64=0.0, fidelity::Fidelity=Fidelity())
-            @assert(name=="None", "You must name the single gate.")
+            @assert(name!=="None", "You must name the single gate.")
             if duration ==0.0
                 @info "The duration of operation is 0"
             end
@@ -35,11 +35,11 @@ module OperationConfiguration
         id::Int64
         function MultiGate(name::String="None", duration::Float64=0.0, 
             noOfQubits::Int64=2, fidelity::Fidelity=Fidelity(), id::Int64=0)
-            @assert(name=="None", "You must name the multi gate.")
+            @assert(name!=="None", "You must name the multi gate.")
             if duration ==0.0
                 @info "The duration of operation is 0"
             end
-            @info "It it $noOfQubits-qubits gate."
+            # @info "It is $noOfQubits-qubits gate."
             new(name,duration, noOfQubits, fidelity, id)
         end
     end
@@ -78,7 +78,11 @@ module OperationConfiguration
         config = nothing
         ex = "$operation = $configType("
         for i in specification
-            ex = ex * i[2]*','
+            if i[1] == "name"
+                ex = ex *'"'* i[2]*'"'*','
+            else
+                ex = ex * i[2]*','
+            end
         end
         ex = ex * ')'
         ex = Meta.parse(ex)

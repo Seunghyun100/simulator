@@ -2,37 +2,37 @@
     "shuttling":{
         "linearTransport":{
             "type": "linearTransport",
-            "speed": 78,
-            "haeatingRate": 0.1
+            "speed": 78.0,
+            "heatingRate": 0.1
         },
         "fastRotate":{
             "type": "junctionRotate",
-            "duration": 100,
-            "heatingRate": 10
+            "duration": 100.0,
+            "heatingRate": 10.0
         },
         "junctionRotate":{
             "type": "junctionRotate",
-            "duration": 420,
+            "duration": 420.0,
             "heatingRate": 0.18
         },
         "merge":{
             "type": "merge",
-            "duration": 55,
-            "heatingRate": 2
+            "duration": 55.0,
+            "heatingRate": 2.0
         },
         "split":{
             "type": "split",
-            "duration": 55,
-            "heatingRate": [2,2]
+            "duration": 55.0,
+            "heatingRate": [2.0,2.0]
         },
         "unbalancedSplit":{
             "type": "split",
-            "duration": 55,
-            "heatingRate": [1.1, 15]
+            "duration": 55.0,
+            "heatingRate": [1.1, 15.0]
         },
         "physicalSwap":{
             "type": "physucalSwap",
-            "duration": 18,
+            "duration": 18.0,
             "heatingRate": 0.2
         }
     },

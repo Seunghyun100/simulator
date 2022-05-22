@@ -1,4 +1,5 @@
 module ArchitectureConfiguration
+    import JSON
     import ..OperationConfiguration
     include("../function/circuit_builder.jl")
 
@@ -28,15 +29,15 @@ module ArchitectureConfiguration
         id::String
         executionTime::Float64
         isCommunicationQubit::Bool
-        circuitQubit::CircuitQubit
-        runningOperation::Vector{Operation}
+        circuitQubit # ::CircuitBuilder.CircuitQubit
+        # runningOperation::Vector{Operation}
         # communicationList::Vector{CommunicationOperation}
         # communicationTime::Float64
         # dwellTime::Float64
         noOfPhonons::Float64
         function Qubit(id::String, executionTime::Float64=0.0, isCommunicationQubit::Bool=false,
-            circuitQubit::CircuitQubit = dumyCircuitQubit, runningOperation::Vector{Operation}=Operation[], noOfPhonons::Float64=0.0)
-            new(id, executionTime, isCommunicationQubit, circuitQubit, runningOperation, noOfPhonons)
+            circuitQubit = dumyCircuitQubit, noOfPhonons::Float64=0.0)
+            new(id, executionTime, isCommunicationQubit, circuitQubit, noOfPhonons)
         end
     end
 
@@ -82,10 +83,10 @@ module ArchitectureConfiguration
 
     mutable struct Architecture
         name::String
-        components::Dict{String,Dict{String, Component}} # e.g., core, junction, path, qubit
-        topology::Matrix{Component} # It is mapping components as coordinates
+        components::Dict # e.g., core, junction, path, qubit
+        topology::Matrix # It is mapping components as coordinates
         totalTime::Float64
-        function Architecture(name::String, components::Dict{String,Dict{String, Component}}, topology::Matrix{Component}, totalTime::Float64 =0.0)
+        function Architecture(name::String, components::Dict, topology::Matrix, totalTime::Float64 =0.0)
             new(name, components, topology, totalTime)
         end
     end
@@ -101,7 +102,7 @@ module ArchitectureConfiguration
     end
 
     function buildCore(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict())
-        @assert(length(qubits)>capacity,"#qubits per core do NOT exceed capacity of core.")
+        @assert(length(qubits)<capacity,"#qubits per core do NOT exceed capacity of core.")
         core = Core(id, capacity, coordinates, qubits)
         return core
     end
@@ -116,7 +117,7 @@ module ArchitectureConfiguration
     end
 
     function buildPath(id::String, length::Float64, coordinates::Tuple{Int64, Int64})
-        path = Path(id, length, coordintates)
+        path = Path(id, length, coordinates)
         return path
     end
 
@@ -157,7 +158,7 @@ module ArchitectureConfiguration
                     core = buildCore(coreID, coreCapacity, coreCoordinates, qubitDict)
                     componentList[coreID] = core
                 end
-                components["cores"] = commponentList
+                components["cores"] = componentList
 
             # Build the junction list 
             elseif componentType =="junctions"
@@ -171,7 +172,7 @@ module ArchitectureConfiguration
                     junction = buildJunction(junctionID, junctionCoordinates)
                     componentList[junctionID] = junction
                 end
-                components["junctions"] = commponentList
+                components["junctions"] = componentList
 
             # Build the path list 
             elseif componentType =="paths"
@@ -180,13 +181,13 @@ module ArchitectureConfiguration
                     componentConfig = componentConfigPair[2]
 
                     pathID = componentConfig["id"]
-                    pathLength = componentConfif["length"]
+                    pathLength = componentConfig["length"]
                     pathCoordinates = Tuple(componentConfig["coordinates"])
 
                     path = buildPath(pathID, pathLength, pathCoordinates)
                     componentList[pathID] = path
                 end
-                components["paths"] = commponentList
+                components["paths"] = componentList
             end
         end
 
@@ -200,7 +201,7 @@ module ArchitectureConfiguration
         block = Block()
         for i in 1:topologySize[1]
             for k in 1:topologySize[2]
-                toplogy[i, k] = block
+                topology[i, k] = block
             end
         end
 
@@ -212,12 +213,12 @@ module ArchitectureConfiguration
                 if componentID == "Block"
                     continue
                 end
-                if componentID ∈ components["cores"]
-                    topolgy[i, k] = components["cores"][componentID]
-                elseif componentID ∈ components["junctions"]
-                    topolgy[i, k] = components["junctions"][componentID]
-                elseif componentID ∈ components["paths"]
-                    topolgy[i, k] = components["paths"][componentID]
+                if componentID ∈ keys(components["cores"])
+                    topology[i, k] = components["cores"][componentID]
+                elseif componentID ∈ keys(components["junctions"])
+                    topology[i, k] = components["junctions"][componentID]
+                elseif componentID ∈ keys(components["paths"])
+                    topology[i, k] = components["paths"][componentID]
                 end
             end
         end

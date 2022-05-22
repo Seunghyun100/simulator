@@ -15,9 +15,9 @@ provider = nothing
 
 # whether or not simulation
 
-print("Do you simulate? (y/n)")
-local ans = readline()
-println()
+print("Do you simulate? (y/n)\n")
+ans = readline()
+# println(ans)
 if ans =="y"
     sim = true
 elseif ans =="n"
@@ -46,21 +46,23 @@ architectureConfigPath = ""
 # communicationConfigPath = ""
 
 operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
-architectureConfigurationList = HardwareConfiguration.openConfigFile(architecutureConfigPath)
+architectureConfigurationList = ArchitectureConfiguration.openConfigFile(architectureConfigPath)
 # communicationConfiguration = CommunicationConfiguration.openConfigFile(communicationConfigPath)
 
+println()
 println("What is the architecture you simulate? \n (pleas answer the architecture name)")
 for name in keys(architectureConfigurationList)
     println(name)
 end
+println()
 ans = readline()
 println()
 
-configuration = ("operation"=>operationConfiguration, "architecture"=>architectureConfigurationList[ans])
+configuration = Dict("operation"=>operationConfiguration, "architecture"=>architectureConfigurationList[ans])
 
 
 """
-This part is mapping to initial topology configuraiton to minimize the inter-core communication for input quantum circuit.
+This part is mapping to initial topology configuration to minimize the inter-core communication for input quantum circuit.
 Only generating circuit by file is yet possible.
 """
 
@@ -68,16 +70,20 @@ circuitFilePath = ""
 
 circuitList = CircuitBuilder.openCircuitFile(circuitFilePath)
 
+println()
 println("What is the quantum circuit you simulate? \n (pleas answer the circuit name)")
 for name in keys(circuitList)
     println(name)
 end
+println()
 ans = readline()
 println()
 
 circuit = circuitList[ans]
 
-Mapper.mapping(circuit, configuration["architecture"]) # TODO: optimize the mapping algorithm
+ # TODO: optimize the mapping algorithm
+Mapper = NonOptimizedMapper
+Mapper.mapping(circuit, configuration["architecture"])
 
 """
 This part is running the provider with scheduling.

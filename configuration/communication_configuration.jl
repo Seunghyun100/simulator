@@ -1,17 +1,18 @@
-module CommunicationConfiguraiton
+module CommunicationConfiguration
+    import JSON
 
     mutable struct Shuttling
         type::String
         duration::Float64
         speed::Float64
-        heatingRate::Float64
+        heatingRate
         currentCoordinates::Tuple{Int64,Int64}
         nextCoordinates::Tuple{Int64,Int64}
-        function Shuttling(type::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate::Float64=0.0,currentCoordinates::Tuple{Int64,Int64}=(0,0), nextCoordinates::Tuple{Int64,Int64}=(0,0))
+        function Shuttling(type::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate=0.0,currentCoordinates::Tuple{Int64,Int64}=(0,0), nextCoordinates::Tuple{Int64,Int64}=(0,0))
             if type=="linearTransport"
-                @assert(speend>0.0, "Speed must be larger than 0.")
+                @assert(speed>0.0, "Speed must be larger than 0.")
             else
-                @assert(duraiton>0.0, "Duration must be larger than 0.")
+                @assert(duration>0.0, "Duration must be larger than 0.")
             end
             # @assert(currentCoordinates !== (0,0)&&nextCoordinates !== (0,0), "Coordinates must be defined.")
             new(type, duration, speed, heatingRate, currentCoordinates, nextCoordinates)
@@ -20,7 +21,7 @@ module CommunicationConfiguraiton
 
 
     """
-    This part is about to build the communication operaitons.
+    This part is about to build the communication operations.
     """
 
     function generateComponent(communicationName, componentConfig)
@@ -28,11 +29,12 @@ module CommunicationConfiguraiton
             if componentConfig["type"] =="linearTransport"
                 component = Shuttling(componentConfig["type"], 0.0, componentConfig["speed"], componentConfig["heatingRate"])
             else
-                component = Shuttling(componentConfig["type"], componentConfig["duration"], componentConfig["heatingRate"])
+                component = Shuttling(componentConfig["type"], componentConfig["duration"], 0.0, componentConfig["heatingRate"])
             end
-        end
-        if communicationName == "pathRow"
+        elseif communicationName == "pathRow"
             component = componentConfig["pathRow"]
+        else
+            return
         end
         return component
     end
@@ -50,7 +52,7 @@ module CommunicationConfiguraiton
     function openConfigFile(filePath::String = "")::Dict
         if filePath === "" 
             currentPath = pwd()
-            filePath = currentPath * "/input/communication_configuraiton.json" 
+            filePath = currentPath * "/input/communication_configuration.json" 
         end
 
         configJSON = JSON.parsefile(filePath) 
@@ -59,13 +61,13 @@ module CommunicationConfiguraiton
         for communicationConfigPair in configJSON
             communicationName = communicationConfigPair[1]
             communicationConfig = communicationConfigPair[2]
-            communications[communicationName] = buildcommunication(communicationName, communicationConfig)
+            communications[communicationName] = buildCommunication(communicationName, communicationConfig)
         end
         return communications    
     end
 
     filePath = "" # Define to communication configuration json file path
-    const communicationConfiguration = openConfigurationFile(filePath)
+    const communicationConfiguration = openConfigFile(filePath)
 
     function generateCommunicationOperation(operationName::String, currentCoordinates::Tuple{Int64,Int64}, nextCoordinates::Tuple{Int64,Int64})
         dummyOperation = communicationConfiguration["shuttling"][operationName]

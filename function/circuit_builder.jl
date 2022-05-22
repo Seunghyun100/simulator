@@ -1,14 +1,15 @@
 module CircuitBuilder
-    import ..OperationConfiguration
+    import JSON
+    include("../configuration/operation_configuration.jl")
 
     operationConfigPath = ""
     operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
 
-    multiGateTable = Dict{Int64, Vector}
+    multiGateTable = Dict()
 
     mutable struct CircuitQubit
         id::String
-        operations::Vecotr
+        operations::Vector
         function CircuitQubit(id::String="dummy", operations::Vector=[])
             new(id, operations)
         end
@@ -45,7 +46,7 @@ module CircuitBuilder
         return operation
     end
 
-    function composeCircuitQubit(qubits::Vector{CircuitQubit}, qubitComposition::Tuple)
+    function composeCircuitQubit(qubits::Vector{CircuitQubit}, qubitComposition) # (Vector, Pair)
         qubitID = qubitComposition[1]
         compositions = qubitComposition[2]
         operations = []
@@ -85,13 +86,14 @@ module CircuitBuilder
             currentPath = pwd()
             filePath = currentPath * "/input/circuit.json"
         end
+        configJSON = JSON.parsefile(filePath)
 
-        @assert(configJSON = JSON.parsefile(filePath),"PathError: There's not the file")
+        # @assert(configJSON !== nothing,"PathError: There's not the file")
 
         circuits = Dict()
         for circuitConfig in values(configJSON)
             circuitName = circuitConfig["name"]
-            circuitList[circuitName] = Dict(
+            circuits[circuitName] = Dict(
                 "circuit"=>buildCircuit(circuitConfig),
                 "multiGateTable"=>multiGateTable
             )

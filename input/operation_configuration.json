@@ -22,7 +22,7 @@
         "rzz":[["name","rzz"],["duration","40.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
     
         "swap":[["name","swap"],["duration","120.0"],["noOfQubits","2"], ["fidelity","Fidelity(0.0, 0.0)"]],
-        "toffoli":[["name","toffoli"],["duration","40.0"],["noOfQubits",3], ["fidelity","Fidelity(0.0, 0.0)"]]
+        "toffoli":[["name","toffoli"],["duration","40.0"],["noOfQubits","3"], ["fidelity","Fidelity(0.0, 0.0)"]]
     },
     "Initialize":{
         "init":[["duration","40.0"],["fidelity","Fidelity(0.0, 0.0)"]]

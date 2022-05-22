@@ -2,7 +2,7 @@ module QCCDShuttlingProtocol
     include("../configuration/communication_configuration.jl")
     include("../function/circuit_builder.jl")
 
-    const pathRow = CommunicationConfiguraiton.communicationConfiguration["protocol"]["pathRow"]
+    const pathRow = CommunicationConfiguration.communicationConfiguration["protocol"]["pathRow"]
 
     """
     Only Two-qubit gate is avilable yet.
@@ -48,7 +48,7 @@ module QCCDShuttlingProtocol
         end
     end
 
-    function drawShuttlingRoute(startingCore::Core, targetCore::Core, pathRow::Int64)
+    function drawShuttlingRoute(startingCore, targetCore, pathRow::Int64) # (Core, Core, Int64)
         startingCoordinates = startingCore.coordinates
         targetCoordinates = targetCore.coordinates
         route = [(0,0), startingCoordinates] # vector of coordinates for route
@@ -132,7 +132,7 @@ module QCCDShuttlingProtocol
         return shttulingList
     end
 
-    function buildCommunicationOperations(appliedQubit, operation, multiGateTable::Dict, architecture::Architecture)
+    function buildCommunicationOperations(appliedQubit, operation, multiGateTable::Dict, architecture)
         communicationOperationList = []
 
         operationID = operation.id
@@ -163,6 +163,5 @@ module QCCDShuttlingProtocol
         return communicationOperationList
     end
 
-    # function executeShuttling()
-    # end
+end
 end
