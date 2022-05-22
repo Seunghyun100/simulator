@@ -150,9 +150,15 @@ module ArchitectureConfiguration
 
                     qubitDict = Dict()
                     for i in 1:noOfQubits
-                        qubitID = "Qubit"*string(qubitNo)
-                        qubitDict[qubitID] = generateQubit(qubitID)
-                        qubitNo += 1
+                        if i == noOfQubits
+                            qubitID = "Qubit"*string(qubitNo)
+                            qubitDict[qubitID] = generateQubit(qubitID, 0.0, true)
+                            qubitNo += 1
+                        else
+                            qubitID = "Qubit"*string(qubitNo)
+                            qubitDict[qubitID] = generateQubit(qubitID)
+                            qubitNo += 1
+                        end
                     end
 
                     core = buildCore(coreID, coreCapacity, coreCoordinates, qubitDict)

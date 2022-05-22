@@ -25,17 +25,17 @@ module QCCDShuttlingProtocol
         return  targets
     end
 
-    function checkCommunicationQubit(appliedQubit, targets)
+    function checkCommunicationQubit(appliedQubit, targets, multiGateTable)
         for target in targets
             targetCore = target[1]
             targetQubit = target[2]
             if appliedQubit == targetQubit
                 if targetQubit.isCommunicationQubit == false
-                    for qubit in targetCore.qubits
+                    for qubit in values(targetCore.qubits)
                         if qubit.isCommunicationQubit
                             composition = [length(multiGateTable)+1, "swap", targetQubit.circuitQubit.id, qubit.circuitQubit.id]
                             swap = CircuitBuilder.encodeOperation(composition)
-                            pushfirst!(qubit.circuitQubit.operation, swap)
+                            pushfirst!(qubit.circuitQubit.operations, swap)
                             qubit.isCommunicationQubit = false
                             targetQubit.isCommunicationQubit = true
                             return swap
@@ -111,18 +111,19 @@ module QCCDShuttlingProtocol
         nextComponentType = typeof(architecture.topology[nextCoordinates[1], nextCoordinates[2]])
 
         shttulingList = []
-        if currentComponentType == Core & nextComponentType == Path
+        if currentComponentType == Main.ArchitectureConfiguration.Core && nextComponentType == Main.ArchitectureConfiguration.Path
             shuttlingPair = ("split", ((currentCoordinates),(nextCoordinates)))
             push!(shttulingList, shuttlingPair)
-        elseif currentComponentType == Path
-            if nextComponentType == Junction
+        elseif currentComponentType == Main.ArchitectureConfiguration.Path
+            if nextComponentType == Main.ArchitectureConfiguration.Junction
                 shuttlingPair = ("linearTransport", ((currentCoordinates),(nextCoordinates)))
                 push!(shttulingList, shuttlingPair)
-            elseif nextComponentType == Core
+            elseif nextComponentType == Main.ArchitectureConfiguration.Core
                 shuttlingPair = ("merge", ((currentCoordinates),(nextCoordinates)))
                 push!(shttulingList, shuttlingPair)
-        elseif currentComponentType == Junction & nextComponentType == Path
-            if preCoordinates[1] !== nextCoordinates[1] & preCoordinates[2] !== nextCoordinates[2] & preCoordinates !==(0,0)
+            end
+        elseif currentComponentType == Main.ArchitectureConfiguration.Junction && nextComponentType == Main.ArchitectureConfiguration.Path
+            if preCoordinates[1] !== nextCoordinates[1] && preCoordinates[2] !== nextCoordinates[2] && preCoordinates !==(0,0)
                 shuttlingPair = ("junctionRotate", ((currentCoordinates),(currentCoordinates)))
                 push!(shttulingList, shuttlingPair)
             end
@@ -137,13 +138,15 @@ module QCCDShuttlingProtocol
 
         operationID = operation.id
         targets = checkTarget(operationID, multiGateTable::Dict, architecture)
+        startingCore = targets[1][1]
+        targetCore = targets[2][1]
         
-        if targets[1][1] == targets[2][1]
-            return
+        if startingCore == targetCore
+            error("Not necessary communication!")
         end
         
         # checkCommunicationQubit(targets, multiGateTable)
-        swap = checkCommunicationQubit(appliedQubit, targets)
+        swap = checkCommunicationQubit(appliedQubit, targets, multiGateTable)
         if swap !== nothing
             push!(communicationOperationList, swap)
         end
@@ -152,16 +155,17 @@ module QCCDShuttlingProtocol
 
         shuttlingList = []
         for i in 2:length(shuttlingRoute)-1
-            push!(shuttlingList,checkShuttlingType(shuttlingRoute[i-1], shuttlingRoute[i], shuttlingRoute[i+1], architecture))
+            shuttlingList = vcat(shuttlingList,checkShuttlingType(shuttlingRoute[i-1], shuttlingRoute[i], shuttlingRoute[i+1], architecture))
         end
 
         # TODO: build communication operation
         for shuttlingPair in shuttlingList
             operation = CommunicationConfiguration.generateCommunicationOperation(shuttlingPair[1], shuttlingPair[2][1], shuttlingPair[2][2])
-            push(communicationOperationList,operation)
+            push!(communicationOperationList,operation)
         end
         return communicationOperationList
+
+        # TODODODODODODTOTOTODOODODODODO####
     end
 
-end
 end

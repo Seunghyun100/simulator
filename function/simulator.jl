@@ -93,7 +93,7 @@ module Simulator
             return
         elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate
             operationID = operation.id
-            appliedQubits = multiGateTable[operationID]
+            appliedQubits = deepcopy(multiGateTable[operationID])
 
             qubits = Dict()
             for core in values(architecture.components["cores"])
@@ -253,7 +253,7 @@ module Simulator
         end
     end
 
-    function executeCircuitQubit(circuit, architecture)
+    function executeCircuit(circuit, architecture)
         refTime = 0.1
         circuitQubits = circuit["circuit"].qubits
         multiGateTable = circuit["multiGateTable"]
@@ -312,7 +312,7 @@ module Simulator
         architecture = configuration["architecture"]
         operationConfiguration = configuration["operation"]
 
-        executeCircuitQubit(circuit, architecture)
+        executeCircuit(circuit, architecture)
         result = evaluateResult(architecture)
         return result
     end

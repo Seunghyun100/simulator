@@ -61,7 +61,14 @@ module CommunicationConfiguration
         for communicationConfigPair in configJSON
             communicationName = communicationConfigPair[1]
             communicationConfig = communicationConfigPair[2]
-            communications[communicationName] = buildCommunication(communicationName, communicationConfig)
+            if communicationName == "protocol"
+                communications[communicationName] = Dict()
+                for i in communicationConfig
+                    communications[communicationName][i[1]] = i[2]
+                end
+            else
+                communications[communicationName] = buildCommunication(communicationName, communicationConfig)
+            end
         end
         return communications    
     end
