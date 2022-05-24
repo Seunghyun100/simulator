@@ -1,13 +1,6 @@
 import JSON
 
 """
-Input
-"""
-name = # name
-noQubits = #number of qubits
-
-
-"""
 Operation
 """
 x = "x"
@@ -40,18 +33,18 @@ function
 id = 1
 
 # two-qubit gate
-function 2(name, q1, q2)
+function two(name, q1, q2)
     output = [id,name,q1,q2]
-    id += 1
+    global id += 1
     push!(circuit["q$q1"], output)
     push!(circuit["q$q2"], output)
     return output
 end
 
 #single gate
-function 1(name, q)
+function one(name, q::Int64)
     push!(circuit["q$q"], name)
-    return
+    return name
 end
 #measurement
 
@@ -63,17 +56,41 @@ function initCircuit(no::Int64)
     return circuit
 end
 
+"""
+Input
+"""
+
+name = "bernstein-vazirani" # name
+noQubits = 180 # number of qubits
 circuit = initCircuit(noQubits)
 
 """
 Circuit
 """
 
+for i in 1:noQubits
+    one(h, i)
+end
+one(z,noQubits)
+
+# Oracle
+for i in 1:noQubits
+    if rand(Bool)
+        two(cx, i, noQubits)
+    end
+end
+
+#
+for i in 1:noQubits
+    one(h, i)
+    one(m, i)
+end
 
 
 """
 Output
 """
+
 config = Dict("name"=>name, "number_of_qubits"=>noQubits, "qubits" =>circuit)
 
 
