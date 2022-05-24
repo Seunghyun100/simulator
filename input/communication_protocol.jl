@@ -9,7 +9,7 @@ module QCCDShuttlingProtocol
     """
 
     function checkTarget(multiGateID::Int64, multiGateTable::Dict, architecture)
-        appliedQubits = multiGateTable[multiGateID]
+        appliedQubits = multiGateTable[multiGateID]["appliedQubits"]
         cores = values(architecture.components["cores"])
         targets = [] # Tuple(Core, Qubit)
         for appliedQubit in appliedQubits
@@ -34,7 +34,7 @@ module QCCDShuttlingProtocol
                     for qubit in values(targetCore.qubits)
                         if qubit.isCommunicationQubit
                             composition = [length(multiGateTable)+1, "swap", targetQubit.circuitQubit.id, qubit.circuitQubit.id]
-                            swap = CircuitBuilder.encodeOperation(composition)
+                            swap = CircuitBuilder.encodeOperation(composition, multiGateTable)
                             pushfirst!(qubit.circuitQubit.operations, swap)
                             qubit.isCommunicationQubit = false
                             targetQubit.isCommunicationQubit = true
@@ -141,8 +141,10 @@ module QCCDShuttlingProtocol
         startingCore = targets[1][1]
         targetCore = targets[2][1]
         
-        if startingCore == targetCore
+        if startingCore.id == targetCore.id
             error("Not necessary communication!")
+        elseif multiGateTable[operationID]["isPreparedCommunication"] 
+            error("Already communication is prepared!")
         end
         
         # checkCommunicationQubit(targets, multiGateTable)
@@ -163,9 +165,9 @@ module QCCDShuttlingProtocol
             operation = CommunicationConfiguration.generateCommunicationOperation(shuttlingPair[1], shuttlingPair[2][1], shuttlingPair[2][2])
             push!(communicationOperationList,operation)
         end
-        return communicationOperationList
 
-        # TODODODODODODTOTOTODOODODODODO####
+        multiGateTable[operationID]["isPreparedCommunication"] = true
+        return communicationOperationList
     end
 
 end

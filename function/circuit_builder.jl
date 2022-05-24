@@ -5,7 +5,6 @@ module CircuitBuilder
     operationConfigPath = ""
     operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
 
-    multiGateTable = Dict()
 
     mutable struct CircuitQubit
         id::String
@@ -34,24 +33,30 @@ module CircuitBuilder
     end
 
     # Multi-Gate
-    function encodeOperation(composition::Vector)
+    function encodeOperation(composition::Vector, multiGateTable)
         multiGateID = composition[1]
         operationName = composition[2]
         appliedQubits = composition[3:length(composition)]
         operationMold = operationConfiguration[operationName]
         operation = deepcopy(operationMold)
         operation.id = multiGateID
-        multiGateTable[multiGateID] = appliedQubits
+        multiGateTable[multiGateID] = Dict()
+        multiGateTable[multiGateID]["appliedQubits"] = appliedQubits
+        multiGateTable[multiGateID]["isPreparedCommunication"] = false
 
         return operation
     end
 
-    function composeCircuitQubit(qubits::Vector{CircuitQubit}, qubitComposition) # (Vector, Pair)
+    function composeCircuitQubit(qubits::Vector{CircuitQubit}, qubitComposition, multiGateTable) # (Vector, Pair)
         qubitID = qubitComposition[1]
         compositions = qubitComposition[2]
         operations = []
         for composition in compositions
-            oepration = encodeOperation(composition)
+            if typeof(composition) == Vector{Any}
+                oepration = encodeOperation(composition, multiGateTable)
+            else
+                oepration = encodeOperation(composition)
+            end
             push!(operations, oepration)
         end
         for qubit in qubits
@@ -61,23 +66,37 @@ module CircuitBuilder
         end
     end
     
-    function buildCircuit(circuitConfig)
+    function buildCircuit(circuitConfig, multiGateTable)
         circuitName = circuitConfig["name"]
         
         noOfQubits = circuitConfig["number_of_qubits"]
 
         qubits = CircuitQubit[]
 
-        for qubitComposition in circuitConfig["qubits"]
-            circuitQubit = CircuitQubit(qubitComposition[1])
+
+        qubitConfigList = []
+        qubitConfigs = circuitConfig["qubits"]
+
+        keyList = collect(keys(qubitConfigs))
+        keyPairList = []
+        for i in keyList
+            push!(keyPairList, (parse(Int64, i[2:end]), i))
+        end
+        for keyPair in sort(keyPairList)
+            push!(qubitConfigList, (keyPair[2], qubitConfigs[keyPair[2]]))
+        end
+
+
+        for qubitConfigPair in qubitConfigList
+            circuitQubit = CircuitQubit(qubitConfigPair[1])
             push!(qubits, circuitQubit)
         end
-        for qubitComposition in circuitConfig["qubits"]
-            composeCircuitQubit(qubits, qubitComposition)
+        for qubitComposition in qubitConfigList
+            composeCircuitQubit(qubits, qubitComposition, multiGateTable)
         end
         
         circuit = Circuit(circuitName, qubits)
-        return circuit
+        return (circuit, multiGateTable)
     end
 
 
@@ -90,12 +109,15 @@ module CircuitBuilder
 
         # @assert(configJSON !== nothing,"PathError: There's not the file")
 
+        multiGateTable = Dict()
+
         circuits = Dict()
         for circuitConfig in values(configJSON)
             circuitName = circuitConfig["name"]
+            circuitPair = buildCircuit(circuitConfig, multiGateTable)
             circuits[circuitName] = Dict(
-                "circuit"=>buildCircuit(circuitConfig),
-                "multiGateTable"=>multiGateTable
+                "circuit"=> circuitPair[1],
+                "multiGateTable"=> circuitPair[2]
             )
 
         end

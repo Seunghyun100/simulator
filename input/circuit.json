@@ -19,7 +19,7 @@
     },
     "example_circuit3":{
         "name": "example_circuit3",
-        "number_of_qubits": 40,
+        "number_of_qubits": 39,
         "qubits":{
             "q1": ["h", [1, "cz","q2","q1"], [2, "cz","q3","q1"]],
             "q2": [[1, "cz","q2","q1"], "h", [3, "cz","q3","q2"]],

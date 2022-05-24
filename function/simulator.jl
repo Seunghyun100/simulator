@@ -15,6 +15,9 @@ module Simulator
     CommunicationProtocol = QCCDShuttlingProtocol # architecture dependency
 
     function checkNeedCommunication(appliedQubits, architecture)
+        if String ∈ typeof.(appliedQubits)
+            return false
+        end
         appliedCores = []
         for appliedQubit in appliedQubits
             for core in values(architecture.components["cores"])
@@ -27,7 +30,7 @@ module Simulator
             end
         end
         for i in 1:length(appliedCores)-1
-            if appliedCores[i] !== appliedCores[i+1]
+            if appliedCores[i].id !== appliedCores[i+1].id
                 return true
             end
         end
@@ -49,12 +52,15 @@ module Simulator
     end
 
     function checkEndOperation(appliedQubits::Vector,refTime)
+        if String ∈ typeof.(appliedQubits)
+            return false
+        end
         firstOperations = []
         for qubit in appliedQubits
             push!(firstOperations, qubit.circuitQubit.operations[1])
         end
         for i in firstOperations
-            if typeof(i) !== Main.CircuitBuilder.OperationConfiguration.MultiGate
+            if typeof(i) !== Main.CircuitBuilder.OperationConfiguration.MultiGate && typeof(i) !== Main.Simulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
                 return false
             end
         end
@@ -91,9 +97,9 @@ module Simulator
             qubit.executionTime += operation.duration
             popfirst!(qubit.circuitQubit.operations)
             return
-        elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate
+        elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate || operationType == Main.Simulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
             operationID = operation.id
-            appliedQubits = deepcopy(multiGateTable[operationID])
+            appliedQubits = deepcopy(multiGateTable[operationID]["appliedQubits"])
 
             qubits = Dict()
             for core in values(architecture.components["cores"])
@@ -110,15 +116,15 @@ module Simulator
                 end
             end
 
-            if checkNeedCommunication(appliedQubits, architecture)
+            if checkNeedCommunication(appliedQubits, architecture) && !multiGateTable[operationID]["isPreparedCommunication"]
                 for i in 1:length(appliedQubits)
-                    if checkEndOperation(appliedQubits[i], refTime)
+                    if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"]
                         communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
                         for communicationOperation in reverse(communicationOperations)
                             pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                         end
                     else
-                        if i == length(appliedQubits)
+                        if i == length(appliedQubits) && !multiGateTable[operationID]["isPreparedCommunication"]
                             communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
                             for communicationOperation in reverse(communicationOperations)
                                 pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
@@ -131,6 +137,9 @@ module Simulator
             else
                 if checkEndOperation(appliedQubits, refTime)
                     for i in appliedQubits
+                        if typeof(i.circuitQubit.operations[1]) ==  Main.CommunicationConfiguration.Shuttling
+                            return
+                        end
                         i.executionTime += operation.duration
                         popfirst!(i.circuitQubit.operations)
                     end
@@ -143,13 +152,13 @@ module Simulator
             
             # TODO: scheduling()
         
-        elseif operationType == Main.CommunicationConfiguration.Shuttling
+        elseif operationType == Main.Simulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
             # TODO: multi qubit shuttling
             # TODO: optimize to piplining
             currentCooordinates = operation.currentCoordinates
             nextCoordinates = operation.nextCoordinates
-            currentComponent = architecture.topology[currentCooordinates[1]][currentCooordinates[2]]
-            nextComponent = architecture.topology[nextCoordinates[1]][nextCoordinates[2]]
+            currentComponent = architecture.topology[currentCooordinates[1], currentCooordinates[2]]
+            nextComponent = architecture.topology[nextCoordinates[1], nextCoordinates[2]]
             currentComponentType = typeof(currentComponent)
             nextComponentType = typeof(nextComponent)
 
@@ -184,7 +193,6 @@ module Simulator
                     currentComponent.qubits = []
                     currentComponent.executionTime = qubit.executionTime
 
-                    nextComponent.isShuttling = true
                     nextComponent.qubits[qubit.id] = qubit
                     nextComponent.executionTime = qubit.executionTime
                     nextComponent.noOfPhonons += qubit.noOfPhonons + operation.heatingRate # merge
@@ -195,7 +203,7 @@ module Simulator
                 end
 
             elseif operation.type == "linearTransport"
-                if currentComponentType == Path
+                if currentComponentType == Main.ArchitectureConfiguration.Path
                     if nextComponent.executionTime < refTime
                         qubit.executionTime += currentComponent.length/(operation.speed)
                         qubit.noOfPhonons += operation.heatingRate
@@ -213,7 +221,7 @@ module Simulator
                     else # TODO: dwell time
                     end
 
-                elseif currentComponentType == Junction
+                elseif currentComponentType == Main.ArchitectureConfiguration.Junction
                     if nextComponent.executionTime < refTime
                         qubit.executionTime += nextComponent.length/(operation.speed)
                         qubit.noOfPhonons += operation.heatingRate
@@ -279,7 +287,10 @@ module Simulator
                 break
             end
 
-            refTime += 0.1
+            if refTime%5 < 0.1
+                println(refTime)
+            end
+            refTime += 1
         end
     end
 

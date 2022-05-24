@@ -131,6 +131,24 @@ module ArchitectureConfiguration
         # build components
         qubitNo = 1
         components = Dict()
+        qubitNos = Dict()
+            
+        coreList = []
+        cores = componentsConfig["cores"]
+        for key in sort(collect(keys(cores)))
+            push!(coreList, cores[key])
+        end
+        for c in coreList
+            if c["id"][1:4] !== "Core"
+                continue
+            end
+            qubitNos[c["id"]] = []
+            for _ in 1:c["number_of_qubits"]
+                push!(qubitNos[c["id"]],qubitNo)
+                qubitNo += 1
+            end
+        end
+
 
         for componentConfigPair in componentsConfig
             componentType = componentConfigPair[1]
@@ -150,14 +168,12 @@ module ArchitectureConfiguration
 
                     qubitDict = Dict()
                     for i in 1:noOfQubits
-                        if i == noOfQubits
-                            qubitID = "Qubit"*string(qubitNo)
+                        if i == 1
+                            qubitID = "Qubit"*string(qubitNos[coreID][i])
                             qubitDict[qubitID] = generateQubit(qubitID, 0.0, true)
-                            qubitNo += 1
                         else
-                            qubitID = "Qubit"*string(qubitNo)
+                            qubitID = "Qubit"*string(qubitNos[coreID][i])
                             qubitDict[qubitID] = generateQubit(qubitID)
-                            qubitNo += 1
                         end
                     end
 
