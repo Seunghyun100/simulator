@@ -78,3 +78,7 @@ config = Dict("name"=>name, "number_of_qubits"=>noQubits, "qubits" =>circuit)
 
 
 output = JSON.json(Dict(name => config))
+
+open("$name.json","w") do f 
+    JSON.print(f, output) 
+end
