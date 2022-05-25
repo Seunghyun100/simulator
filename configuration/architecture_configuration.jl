@@ -29,15 +29,16 @@ module ArchitectureConfiguration
         id::String
         executionTime::Float64
         isCommunicationQubit::Bool
+        isShuttling::Bool
         circuitQubit # ::CircuitBuilder.CircuitQubit
         # runningOperation::Vector{Operation}
         # communicationList::Vector{CommunicationOperation}
         # communicationTime::Float64
         # dwellTime::Float64
         noOfPhonons::Float64
-        function Qubit(id::String, executionTime::Float64=0.0, isCommunicationQubit::Bool=false,
+        function Qubit(id::String, executionTime::Float64=0.0, isCommunicationQubit::Bool=false, isShuttling::Bool=false,
             circuitQubit = dumyCircuitQubit, noOfPhonons::Float64=0.0)
-            new(id, executionTime, isCommunicationQubit, circuitQubit, noOfPhonons)
+            new(id, executionTime, isCommunicationQubit, isShuttling, circuitQubit, noOfPhonons)
         end
     end
 
@@ -168,7 +169,7 @@ module ArchitectureConfiguration
 
                     qubitDict = Dict()
                     for i in 1:noOfQubits
-                        if i == 1
+                        if i == noOfQubits
                             qubitID = "Qubit"*string(qubitNos[coreID][i])
                             qubitDict[qubitID] = generateQubit(qubitID, 0.0, true)
                         else

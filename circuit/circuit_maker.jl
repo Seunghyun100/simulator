@@ -34,7 +34,7 @@ id = 1
 
 # two-qubit gate
 function two(name, q1, q2)
-    output = [id,name,q1,q2]
+    output = [id,name,"q$q1","q$q2"]
     global id += 1
     push!(circuit["q$q1"], output)
     push!(circuit["q$q2"], output)
@@ -97,5 +97,5 @@ config = Dict("name"=>name, "number_of_qubits"=>noQubits, "qubits" =>circuit)
 output = JSON.json(Dict(name => config))
 
 open("$name.json","w") do f 
-    JSON.print(f, output) 
+    JSON.write(f, output) 
 end

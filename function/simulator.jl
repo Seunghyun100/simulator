@@ -102,7 +102,9 @@ module Simulator
             appliedQubits = deepcopy(multiGateTable[operationID]["appliedQubits"])
 
             qubits = Dict()
-            for core in values(architecture.components["cores"])
+            targetPairs = []
+            coreList = values(architecture.components["cores"])
+            for core in coreList
                 merge!(qubits, core.qubits)
             end
 
@@ -110,22 +112,47 @@ module Simulator
                 for k in values(qubits)
                     if k.circuitQubit.id == appliedQubits[i]
                         appliedQubits[i] = k
-                        break
                     end
                     # @assert(k < length(qubits),"Not found qubit")
+                end
+            end
+            if String ∈ typeof.(appliedQubits)
+                return
+            end
+            for i in 1:length(appliedQubits)
+                for core in coreList
+                    for q in values(core.qubits)
+                        if q.circuitQubit.id == appliedQubits[i].circuitQubit.id
+                            push!(targetPairs, (core, appliedQubits[i]))
+                        end
+                    end
                 end
             end
 
             if checkNeedCommunication(appliedQubits, architecture) && !multiGateTable[operationID]["isPreparedCommunication"]
                 for i in 1:length(appliedQubits)
-                    if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"]
+                    isShuttling = false
+                    for q in values(targetPairs[i][1].qubits)
+                        if q.isCommunicationQubit
+                            isShuttling = q.isShuttling
+                        end
+                    end
+                    if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
                         communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
+                        push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
+                        for s in reverse(communicationOperations[2:end-1])
+                            push!(communicationOperations, s)
+                        end
                         for communicationOperation in reverse(communicationOperations)
                             pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                         end
                     else
-                        if i == length(appliedQubits) && !multiGateTable[operationID]["isPreparedCommunication"]
+                        if i == length(appliedQubits) && !multiGateTable[operationID]["isPreparedCommunication"]  && !isShuttling
                             communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
+                                push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
+                            for s in reverse(communicationOperations[2:end-1])
+                                push!(communicationOperations, s)
+                            end
                             for communicationOperation in reverse(communicationOperations)
                                 pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                             end
@@ -172,6 +199,14 @@ module Simulator
                     delete!(currentComponent.qubits, qubit.id)
                     currentComponent.noOfPhonons = (noOfQubits-1)*proportion + operation.heatingRate[1] # split
                     currentComponent.executionTime = qubit.executionTime
+                    
+                    qubitList = collect(keys(currentComponent.qubits))
+                    qubitPairList = []
+                    for i in qubitList
+                        push!(qubitPairList, (parse(Int64, i[6:end]), i))
+                    end
+                    sort!(qubitPairList)
+                    currentComponent.qubits[qubitPairList[end][2]].isCommunicationQubit = true
 
                     nextComponent.isShuttling = true
                     # TODO
@@ -193,11 +228,17 @@ module Simulator
                     currentComponent.qubits = []
                     currentComponent.executionTime = qubit.executionTime
 
+                    for i in values(nextComponent.qubits)
+                        if i.isCommunicationQubit
+                            i.isCommunicationQubit = false
+                        end
+                    end
                     nextComponent.qubits[qubit.id] = qubit
                     nextComponent.executionTime = qubit.executionTime
                     nextComponent.noOfPhonons += qubit.noOfPhonons + operation.heatingRate # merge
 
                     qubit.noOfPhonons = 0.0
+                    qubit.isShuttling = false
                     popfirst!(qubit.circuitQubit.operations)
                 else # TODO: dwell time
                 end

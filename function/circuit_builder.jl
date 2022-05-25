@@ -109,10 +109,11 @@ module CircuitBuilder
 
         # @assert(configJSON !== nothing,"PathError: There's not the file")
 
-        multiGateTable = Dict()
+        
 
         circuits = Dict()
         for circuitConfig in values(configJSON)
+            multiGateTable = Dict()
             circuitName = circuitConfig["name"]
             circuitPair = buildCircuit(circuitConfig, multiGateTable)
             circuits[circuitName] = Dict(

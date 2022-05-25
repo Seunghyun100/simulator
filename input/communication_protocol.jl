@@ -167,6 +167,7 @@ module QCCDShuttlingProtocol
         end
 
         multiGateTable[operationID]["isPreparedCommunication"] = true
+        appliedQubit.isShuttling = true
         return communicationOperationList
     end
 
