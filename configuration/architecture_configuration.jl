@@ -87,8 +87,10 @@ module ArchitectureConfiguration
         components::Dict # e.g., core, junction, path, qubit
         topology::Matrix # It is mapping components as coordinates
         totalTime::Float64
-        function Architecture(name::String, components::Dict, topology::Matrix, totalTime::Float64 =0.0)
-            new(name, components, topology, totalTime)
+        isShuttling::Bool
+        noOfShuttling::Int64
+        function Architecture(name::String, components::Dict, topology::Matrix, totalTime::Float64 =0.0, isShuttling::Bool=false, noOfShuttling::Int64=0)
+            new(name, components, topology, totalTime, isShuttling, noOfShuttling)
         end
     end
 

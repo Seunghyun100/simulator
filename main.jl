@@ -91,4 +91,4 @@ This part is running the provider with scheduling.
 # provider.run(mappedCircuit) #TODO
 
 result = Simulator.run(circuit, configuration)
-Simulator.printResult(result)
+Simulator.printResult(result...)

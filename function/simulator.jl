@@ -93,7 +93,7 @@ module Simulator
         operation = operations[1]
         operationType = typeof(operation)
 
-        if operationType == Main.CircuitBuilder.OperationConfiguration.SingleGate
+        if operationType == Main.CircuitBuilder.OperationConfiguration.SingleGate || operationType == Main.CircuitBuilder.OperationConfiguration.Measure
             qubit.executionTime += operation.duration
             popfirst!(qubit.circuitQubit.operations)
             return
@@ -137,29 +137,39 @@ module Simulator
                             isShuttling = q.isShuttling
                         end
                     end
+                    if architecture.isShuttling
+                        dwellTime = refTime
+                        appliedQubits[i].executionTime = dwellTime
+                        return
+                    end
                     if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
+                        
                         communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
-                        push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
-                        for s in reverse(communicationOperations[2:end-1])
-                            push!(communicationOperations, s)
-                        end
+                        # push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
+                        # for s in reverse(communicationOperations[2:end-1])
+                        #     push!(communicationOperations, s)
+                        # end
                         for communicationOperation in reverse(communicationOperations)
                             pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                         end
                     else
                         if i == length(appliedQubits) && !multiGateTable[operationID]["isPreparedCommunication"]  && !isShuttling
-                            communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
-                                push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
-                            for s in reverse(communicationOperations[2:end-1])
-                                push!(communicationOperations, s)
+                            if architecture.isShuttling
+                                dwellTime = refTime
+                                appliedQubits[i].executionTime = dwellTime
+                                return
                             end
+                            communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
+                            # push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
+                            # for s in reverse(communicationOperations[2:end-1])
+                            #     push!(communicationOperations, s)
+                            # end
                             for communicationOperation in reverse(communicationOperations)
                                 pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                             end
                         end
                     end
                 end
-                
                 return
             else
                 if checkEndOperation(appliedQubits, refTime)
@@ -189,6 +199,11 @@ module Simulator
             currentComponentType = typeof(currentComponent)
             nextComponentType = typeof(nextComponent)
 
+            if architecture.isShuttling && !qubit.isShuttling
+                dwellTime = refTime
+                qubit.executionTime = dwellTime
+                return
+            end
 
             if operation.type == "split"
                 if nextComponent.executionTime < refTime
@@ -206,7 +221,9 @@ module Simulator
                         push!(qubitPairList, (parse(Int64, i[6:end]), i))
                     end
                     sort!(qubitPairList)
-                    currentComponent.qubits[qubitPairList[end][2]].isCommunicationQubit = true
+                    if length(qubitPairList)>0
+                        currentComponent.qubits[qubitPairList[end][2]].isCommunicationQubit = true
+                    end
 
                     nextComponent.isShuttling = true
                     # TODO
@@ -217,10 +234,12 @@ module Simulator
                     qubit.noOfPhonons = proportion + operation.heatingRate[2] # split
 
                     popfirst!(qubit.circuitQubit.operations)
+                    println("$refTime Split! from $(currentComponent.id), $(qubit.id)")
                 else # TODO: dwell time
                 end
 
             elseif operation.type == "merge"
+                architecture.isShuttling =false
                 if nextComponent.executionTime < refTime
                     qubit.executionTime += operation.duration
 
@@ -239,7 +258,10 @@ module Simulator
 
                     qubit.noOfPhonons = 0.0
                     qubit.isShuttling = false
+                    architecture.noOfShuttling += 1
                     popfirst!(qubit.circuitQubit.operations)
+                    println("$refTime Merge! to $(nextComponent.id), $(qubit.id)")
+
                 else # TODO: dwell time
                 end
 
@@ -259,6 +281,9 @@ module Simulator
                         nextComponent.executionTime = qubit.executionTime
 
                         popfirst!(qubit.circuitQubit.operations)
+                        println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
+
+
                     else # TODO: dwell time
                     end
 
@@ -277,6 +302,8 @@ module Simulator
                         nextComponent.executionTime = qubit.executionTime
 
                         popfirst!(qubit.circuitQubit.operations)
+                        println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
+
                     else # TODO: dwell time
                     end
                 end
@@ -295,6 +322,8 @@ module Simulator
                     nextComponent.executionTime = qubit.executionTime
 
                     popfirst!(qubit.circuitQubit.operations)
+                    println("$refTime rotate at $(currentComponent.id), $(qubit.id)")
+
                 else # TODO: dwell time
                 end
             else
@@ -328,8 +357,11 @@ module Simulator
                 break
             end
 
-            if refTime%5 < 0.1
-                println(refTime)
+            # if refTime%5 < 1
+            #     println(refTime)
+            # end
+            if refTime%100 < 1
+                println(refTime, remainderOperation)
             end
             refTime += 1
         end
@@ -366,12 +398,12 @@ module Simulator
 
         executeCircuit(circuit, architecture)
         result = evaluateResult(architecture)
-        return result
+        return (result, architecture)
     end
 
-    function printResult(result)
+    function printResult(result,architecture)
         println("Execution time is $(result["executionTime"])")
-        println()
+        println("Number of shuttling is $(architecture.noOfShuttling)")
         println("Number of phonons per core are")
         for i in result["noOfPhonons"]
             println("$(i[1]): $(i[2])")

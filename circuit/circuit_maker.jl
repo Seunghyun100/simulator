@@ -60,30 +60,45 @@ end
 Input
 """
 
-name = "bernstein-vazirani" # name
-noQubits = 180 # number of qubits
+# name = "bernstein-vazirani" # name
+# noQubits = 90 # number of qubits
+# circuit = initCircuit(noQubits)
+
+# """
+# Circuit
+# """
+
+# for i in 1:noQubits
+#     one(h, i)
+# end
+# one(z,noQubits)
+
+# # Oracle
+# for i in 1:noQubits
+#     if rand(Bool)
+#         two(cx, i, noQubits)
+#     end
+# end
+
+# #
+# for i in 1:noQubits
+#     one(h, i)
+#     one(m, i)
+# end
+
+
+name = "quantum-fourier-transformation-10" # name
+noQubits = 10 # number of qubits
 circuit = initCircuit(noQubits)
 
-"""
-Circuit
-"""
-
 for i in 1:noQubits
-    one(h, i)
-end
-one(z,noQubits)
-
-# Oracle
-for i in 1:noQubits
-    if rand(Bool)
-        two(cx, i, noQubits)
+    one(h,i)
+    for k in i:noQubits
+        two(cz,i, k)
     end
 end
-
-#
-for i in 1:noQubits
-    one(h, i)
-    one(m, i)
+for i in 1:Int(noQubits/2)
+    two(swap, i, noQubits-i+1)
 end
 
 
