@@ -87,8 +87,8 @@ Input
 # end
 
 
-name = "quantum-fourier-transformation-10" # name
-noQubits = 10 # number of qubits
+name = "quantum-fourier-transformation-60" # name
+noQubits = 60 # number of qubits
 circuit = initCircuit(noQubits)
 
 for i in 1:noQubits

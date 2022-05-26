@@ -150,17 +150,17 @@ module Simulator
                     optimized from
                     """
 
-                    # if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
+                    if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
                         
-                    #     communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
-                    #     # push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
-                    #     # for s in reverse(communicationOperations[2:end-1])
-                    #     #     push!(communicationOperations, s)
-                    #     # end
-                    #     for communicationOperation in reverse(communicationOperations)
-                    #         pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
-                    #     end
-                    # else
+                        communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
+                        # push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
+                        # for s in reverse(communicationOperations[2:end-1])
+                        #     push!(communicationOperations, s)
+                        # end
+                        for communicationOperation in reverse(communicationOperations)
+                            pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
+                        end
+                    else
 
                     """
                     optimized to
@@ -173,77 +173,79 @@ module Simulator
                                 return
                             end
 
-                    """
-                    optimized from
-                    """
+                    # """
+                    # optimized from
+                    # """
 
-                    appliedCore1 = nothing
-                    appliedCore2 = nothing
-                    for core in coreList
-                        if appliedQubits[2].id ∈ keys(core.qubits)
-                            appliedCore1 = core
-                            break
-                        end
-                    end
-                    for core in coreList
-                        if appliedQubits[1].id ∈ keys(core.qubits)
-                            appliedCore2 = core
-                            break
-                        end
-                    end
+                    # appliedCore1 = nothing
+                    # appliedCore2 = nothing
+                    # for core in coreList
+                    #     if appliedQubits[2].id ∈ keys(core.qubits)
+                    #         appliedCore1 = core
+                    #         break
+                    #     end
+                    # end
+                    # for core in coreList
+                    #     if appliedQubits[1].id ∈ keys(core.qubits)
+                    #         appliedCore2 = core
+                    #         break
+                    #     end
+                    # end
 
-                    if qubit.id == "Qubit60"
-                        print(qubit.id)
-                    end
-                    if qubit == appliedQubits[2]
-                        mold = deepcopy(appliedQubits[2].circuitQubit.operations)
-                        count = 1
-                        for op in 1:length(appliedQubits[2].circuitQubit.operations)-2
-                            ck = false
-                            for qq in values(appliedCore1.qubits)
-                                if qq.circuitQubit.id == multiGateTable[mold[op].id]["appliedQubits"][1]
-                                    ck = true
-                                    count +=1
-                                end
-                            end
-                            if !ck
-                                mes = pop!(appliedQubits[2].circuitQubit.operations)
-                                hgate = pop!(appliedQubits[2].circuitQubit.operations)
+                    # if qubit.id == "Qubit60"
+                    #     print(qubit.id)
+                    # end
+                    # if qubit == appliedQubits[2]
+                    #     mold = deepcopy(appliedQubits[2].circuitQubit.operations)
+                    #     count = 1
+                    #     for op in 1:length(appliedQubits[2].circuitQubit.operations)-2
+                    #         ck = false
+                    #         for qq in values(appliedCore1.qubits)
+                    #             if qq.circuitQubit.id == multiGateTable[mold[op].id]["appliedQubits"][1]
+                    #                 ck = true
+                    #                 count +=1
+                    #             end
+                    #         end
+                    #         if !ck
+                    #             mes = pop!(appliedQubits[2].circuitQubit.operations)
+                    #             hgate = pop!(appliedQubits[2].circuitQubit.operations)
 
-                                push!(appliedQubits[2].circuitQubit.operations, mold[op])
-                                push!(appliedQubits[2].circuitQubit.operations, hgate)
-                                push!(appliedQubits[2].circuitQubit.operations, mes)
+                    #             push!(appliedQubits[2].circuitQubit.operations, mold[op])
+                    #             push!(appliedQubits[2].circuitQubit.operations, hgate)
+                    #             push!(appliedQubits[2].circuitQubit.operations, mes)
 
-                                deleteat!(appliedQubits[2].circuitQubit.operations, count)
-                            end
-                        end
-                    end
+                    #             deleteat!(appliedQubits[2].circuitQubit.operations, count)
+                    #         end
+                    #     end
+                    # end
 
                     
-                    # if appliedCore1 !== appliedCore2
-                    #     push!(appliedQubits[i].circuitQubit.operations, popfirst!(appliedQubits[i].circuitQubit.operations))
+                    # # if appliedCore1 !== appliedCore2
+                    # #     push!(appliedQubits[i].circuitQubit.operations, popfirst!(appliedQubits[i].circuitQubit.operations))
+                    # # end
+                    # for qb in values(appliedCore1.qubits)
+                    #     if qb.id == appliedQubits[2].id
+                    #         continue
+                    #     else
+                    #         if Main.CircuitBuilder.OperationConfiguration.MultiGate ∈ typeof.(qb.circuitQubit.operations)
+                    #             return
+                    #         end
+                    #     end
                     # end
-                    for qb in values(appliedCore1.qubits)
-                        if qb.id == appliedQubits[2].id
-                            continue
-                        else
-                            if Main.CircuitBuilder.OperationConfiguration.MultiGate ∈ typeof.(qb.circuitQubit.operations)
-                                return
-                            end
-                        end
-                    end
 
-                    """
-                    optimized to
-                    """
+                    # """
+                    # optimized to
+                    # """
 
-                            communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[2], operation, multiGateTable, architecture)
+                    # For optimizing to bernstein-vazirani, change the 'i' to '2'
+                    
+                            communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
                             # push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
                             # for s in reverse(communicationOperations[2:end-1])
                             #     push!(communicationOperations, s)
                             # end
                             for communicationOperation in reverse(communicationOperations)
-                                pushfirst!(appliedQubits[2].circuitQubit.operations, communicationOperation)
+                                pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                             end
                         end
 
@@ -251,7 +253,7 @@ module Simulator
                     optimized from
                     """
 
-                    # end
+                    end
                     
                     """
                     optimized to
