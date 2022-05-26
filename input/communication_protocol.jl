@@ -8,7 +8,7 @@ module QCCDShuttlingProtocol
     Only Two-qubit gate is avilable yet.
     """
 
-    function checkTarget(multiGateID::Int64, multiGateTable::Dict, architecture)
+    function checkTarget(multiGateID::Int64, multiGateTable::Dict, architecture, appliedQubitID)
         appliedQubits = multiGateTable[multiGateID]["appliedQubits"]
         cores = values(architecture.components["cores"])
         targets = [] # Tuple(Core, Qubit)
@@ -17,7 +17,11 @@ module QCCDShuttlingProtocol
                 qubits = values(core.qubits)
                 for qubit in qubits
                     if qubit.circuitQubit.id == appliedQubit
-                        push!(targets, (core, qubit))
+                        if qubit.circuitQubit.id == appliedQubitID
+                            pushfirst!(targets, (core, qubit))
+                        else
+                            push!(targets, (core, qubit))
+                        end
                     end
                 end
             end   
@@ -137,7 +141,7 @@ module QCCDShuttlingProtocol
         communicationOperationList = []
 
         operationID = operation.id
-        targets = checkTarget(operationID, multiGateTable::Dict, architecture)
+        targets = checkTarget(operationID, multiGateTable::Dict, architecture, appliedQubit.circuitQubit.id)
         startingCore = targets[1][1]
         targetCore = targets[2][1]
         

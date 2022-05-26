@@ -173,25 +173,25 @@
                     "id": "Core3",
                     "capacity": 100,
                     "coordinates": [1,3],
-                    "number_of_qubits":30
+                    "number_of_qubits":15
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [5,3],
-                    "number_of_qubits":30
+                    "number_of_qubits":15
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,5],
-                    "number_of_qubits":30
+                    "number_of_qubits":10
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [5,5],
-                    "number_of_qubits":30
+                    "number_of_qubits":10
                 }
 
             },
