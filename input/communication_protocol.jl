@@ -177,3 +177,29 @@ module QCCDShuttlingProtocol
     end
 
 end
+
+module QBusShuttlingProtocol
+    function checkTarget()
+    end
+
+    function inputShuttling()
+    end
+
+    function outputShuttling()
+    end
+
+    function pipelining()
+    end
+
+    function operateCommunicationGate()
+    end
+
+    function detectBusQubit()
+    end
+
+    function operateAfterGate()
+    end
+
+    function generateBusQubit()
+    end
+end
