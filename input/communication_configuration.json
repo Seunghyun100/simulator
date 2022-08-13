@@ -20,6 +20,11 @@
             "duration": 55.0,
             "heatingRate": 2.0
         },
+        "mergeToDetect":{
+            "type": "merge",
+            "duration": 0,
+            "heatingRate": 0
+        },
         "split":{
             "type": "split",
             "duration": 55.0,

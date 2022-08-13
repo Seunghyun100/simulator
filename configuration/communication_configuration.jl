@@ -76,6 +76,7 @@ module CommunicationConfiguration
     filePath = "" # Define to communication configuration json file path
     const communicationConfiguration = openConfigFile(filePath)
 
+    # TODO: renovate to fit Q-bus
     function generateCommunicationOperation(operationName::String, currentCoordinates::Tuple{Int64,Int64}, nextCoordinates::Tuple{Int64,Int64})
         dummyOperation = communicationConfiguration["shuttling"][operationName]
         operation = deepcopy(dummyOperation)

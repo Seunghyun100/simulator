@@ -26,14 +26,6 @@ else
     error("Pleas answer to y or n.")
 end
 
-if sim
-    include("function/simulator.jl")
-    provider = Simulator
-else
-    provider = nothing # TODO: set the actual hardware
-    error("The execution on real hardware isn't yet built")
-end
-
 
 """
 This part is setting to configuration.
@@ -60,6 +52,20 @@ println()
 
 configuration = Dict("operation"=>operationConfiguration, "architecture"=>architectureConfigurationList[ans])
 
+
+if sim
+    include("function/simulator.jl")
+    if ans == "QCCD-Grid"
+        provider = QCCDSimulator
+    elseif ans == "QCCD-Comb"
+        provider = QCCDSimulator
+    elseif ans =="Q-Bus"
+        provider = QBusSimulator
+    end
+else
+    provider = nothing # TODO: set the actual hardware
+    error("The execution on real hardware isn't yet built")
+end
 
 """
 This part is mapping to initial topology configuration to minimize the inter-core communication for input quantum circuit.

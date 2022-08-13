@@ -171,7 +171,10 @@ module ArchitectureConfiguration
 
                     qubitDict = Dict()
                     for i in 1:noOfQubits
-                        if i == noOfQubits
+                        if architectureName =="Q-bus"
+                            qubitID = "Qubit"*string(qubitNos[coreID][i])
+                            qubitDict[qubitID] = generateQubit(qubitID)
+                        elseif i == noOfQubits
                             qubitID = "Qubit"*string(qubitNos[coreID][i])
                             qubitDict[qubitID] = generateQubit(qubitID, 0.0, true)
                         else
