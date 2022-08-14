@@ -12,7 +12,7 @@ module CommunicationConfiguration
             if type=="linearTransport"
                 @assert(speed>0.0, "Speed must be larger than 0.")
             else
-                @assert(duration>0.0, "Duration must be larger than 0.")
+                @assert(duration>=0.0, "Duration must be equal or larger than 0.")
             end
             # @assert(currentCoordinates !== (0,0)&&nextCoordinates !== (0,0), "Coordinates must be defined.")
             new(type, duration, speed, heatingRate, currentCoordinates, nextCoordinates)

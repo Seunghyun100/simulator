@@ -60,7 +60,7 @@ module QCCDSimulator
             push!(firstOperations, qubit.circuitQubit.operations[1])
         end
         for i in firstOperations
-            if typeof(i) !== Main.CircuitBuilder.OperationConfiguration.MultiGate && typeof(i) !== Main.Simulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
+            if typeof(i) !== Main.CircuitBuilder.OperationConfiguration.MultiGate && typeof(i) !== Main.QCCDSimulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
                 return false
             end
         end
@@ -97,7 +97,7 @@ module QCCDSimulator
             qubit.executionTime += operation.duration
             popfirst!(qubit.circuitQubit.operations)
             return
-        elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate || operationType == Main.Simulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
+        elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate || operationType == Main.QCCDSimulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
             operationID = operation.id
             appliedQubits = deepcopy(multiGateTable[operationID]["appliedQubits"])
 
@@ -279,7 +279,7 @@ module QCCDSimulator
             
             # TODO: scheduling()
         
-        elseif operationType == Main.Simulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
+        elseif operationType == Main.QCCDSimulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
             # TODO: multi qubit shuttling
             # TODO: optimize to piplining
             currentCooordinates = operation.currentCoordinates
@@ -289,6 +289,7 @@ module QCCDSimulator
             currentComponentType = typeof(currentComponent)
             nextComponentType = typeof(nextComponent)
 
+            # A architecture can do shuttling only one thing at once
             if architecture.isShuttling && !qubit.isShuttling
                 dwellTime = refTime
                 qubit.executionTime = dwellTime
@@ -446,6 +447,8 @@ module QCCDSimulator
             if remainderOperation == 0
                 break
             end
+
+            # TODO: remove the printing part
 
             # if refTime%5 < 1
             #     println(refTime)
@@ -532,12 +535,6 @@ module QBusSimulator
         return false
     end
 
-    function communicateInterCore()
-    end
-
-    function scheduling()
-    end
-
     function checkEndOperation(qubit,refTime) # (Qubit, Float64)
         qubitTime = qubit.executionTime
         if refTime > qubitTime
@@ -555,7 +552,8 @@ module QBusSimulator
             push!(firstOperations, qubit.circuitQubit.operations[1])
         end
         for i in firstOperations
-            if typeof(i) !== Main.CircuitBuilder.OperationConfiguration.MultiGate && typeof(i) !== Main.Simulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
+            if typeof(i) !== Main.CircuitBuilder.OperationConfiguration.MultiGate 
+                # && typeof(i) !== Main.QBusSimulator.QBusShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
                 return false
             end
         end
@@ -580,19 +578,55 @@ module QBusSimulator
         return false
     end
 
-    function executeOperation(qubit, refTime, multiGateTable, architecture) # (Qubit, Float64, Dict, Architecture)
+    # TODO Q-bus
+    function executeShuttlingByLayer(architecture, shuttlingDict, shuttlingDuration, refTime)
+        cores = architecture.components["cores"]
+        appliedQubits = []
+        countingCores = Dict()
+        for i in keys(cores)
+            countingCores[i] = 0
+        end
+
+        for targetPairs in values(shuttlingDict)
+            for  targetPair in targetPairs
+                countingCores[targetPair[1].id] += 1
+                push!(appliedQubits,targetPair[2])
+            end
+        end
+
+
+        for core in values(cores)
+            noOfQubits = length(core.qubits) + countingCores[core.id]
+            proportion = core.noOfPhonons/noOfQubits
+            if countingCores[core.id] !== 0
+                core.noOfPhonons = (noOfQubits-countingCores[core.id])*proportion + 1.1 # split
+            end
+        end
+
+        for qubit in appliedQubits
+            qubit.executionTime = refTime + shuttlingDuration
+            popfirst!(qubit.circuitQubit.operations)
+        end
+        
+        shuttlingCounting = length(appliedQubits)/2
+        return shuttlingCounting
+    end
+    
+    function executeOperation(qubit, refTime, multiGateTable, architecture, shuttlingDict, operationIndex) # (Qubit, Float64, Dict, Architecture)
         operations = qubit.circuitQubit.operations
         if length(operations) == 0
             return
         end
-        operation = operations[1]
+        operation = operations[operationIndex]
         operationType = typeof(operation)
 
         if operationType == Main.CircuitBuilder.OperationConfiguration.SingleGate || operationType == Main.CircuitBuilder.OperationConfiguration.Measure
+            #  || operationType == Main.CircuitBuilder.OperationConfiguration.Measure
             qubit.executionTime += operation.duration
             popfirst!(qubit.circuitQubit.operations)
             return
-        elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate || operationType == Main.Simulator.QBusShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
+        elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate
+            #  || operationType == Main.Simulator.QBusShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
             operationID = operation.id
             appliedQubits = deepcopy(multiGateTable[operationID]["appliedQubits"])
 
@@ -624,76 +658,25 @@ module QBusSimulator
                 end
             end
 
-            if checkNeedCommunication(appliedQubits, architecture) && !multiGateTable[operationID]["isPreparedCommunication"]
-                # TODO: Add OperateMiddleGateInCore()
+            # To determine the parallelism of 2-qubit gates
+            # isControlledQubit = false
+            # if appliedQubits[1] == qubit
+            #     isControlledQubit = true
+            # end
 
-                if !checkEndOperation(appliedQubits, refTime)
+            # TODO Q-Bus
+            if checkNeedCommunication(appliedQubits, architecture)
+
+                if !checkEndOperation(appliedQubits, refTime) || haskey(shuttlingDict, operationID)
                     return
                 end
                 for i in 1:length(appliedQubits)
-                    isShuttling = false
-                    for q in values(targetPairs[i][1].qubits)
-                        if q.isCommunicationQubit
-                            isShuttling = q.isShuttling
-                        end
-                    end
-                    if architecture.isShuttling
-                        dwellTime = refTime
-                        appliedQubits[i].executionTime = dwellTime
-                        return
-                    end
-
-                    """
-                    optimized from
-                    """
-
-                    if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
-                        
-                        communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
-                        # push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
-                        # for s in reverse(communicationOperations[2:end-1])
-                        #     push!(communicationOperations, s)
-                        # end
-                        for communicationOperation in reverse(communicationOperations)
-                            pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
-                        end
-                    else
-
-                    """
-                    optimized to
-                    """
-
-                        if i == length(appliedQubits) && !multiGateTable[operationID]["isPreparedCommunication"]  && !isShuttling
-                            if architecture.isShuttling
-                                dwellTime = refTime
-                                appliedQubits[i].executionTime = dwellTime
-                                return
-                            end
-               
-
-                    # For optimizing to bernstein-vazirani, change the 'i' to '2'
-                    
-                            communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
-                            # push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
-                            # for s in reverse(communicationOperations[2:end-1])
-                            #     push!(communicationOperations, s)
-                            # end
-                            for communicationOperation in reverse(communicationOperations)
-                                pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
-                            end
-                        end
-
-                    """
-                    optimized from
-                    """
-
-                    end
-                    
-                    """
-                    optimized to
-                    """
-
+                    # communicationOperation = CommunicationProtocol.buildGateTeleportationOperations()
+                    communicationOperation =  "ShuttlingOperation"
+                    popfirst!(appliedQubits[i].circuitQubit.operations)
+                    pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
                 end
+                shuttlingDict[operationID] = targetPairs
                 return
             else
                 if checkEndOperation(appliedQubits, refTime)
@@ -709,153 +692,21 @@ module QBusSimulator
                     return
                 end
             end
-           
-            
-            # TODO: scheduling()
-        
-        elseif operationType == Main.Simulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
-            # TODO: multi qubit shuttling
-            # TODO: optimize to piplining
-            currentCooordinates = operation.currentCoordinates
-            nextCoordinates = operation.nextCoordinates
-            currentComponent = architecture.topology[currentCooordinates[1], currentCooordinates[2]]
-            nextComponent = architecture.topology[nextCoordinates[1], nextCoordinates[2]]
-            currentComponentType = typeof(currentComponent)
-            nextComponentType = typeof(nextComponent)
-
-            if architecture.isShuttling && !qubit.isShuttling
-                dwellTime = refTime
-                qubit.executionTime = dwellTime
-                return
-            end
-
-            if operation.type == "split"
-                if nextComponent.executionTime < refTime
-                    qubit.executionTime += operation.duration
-                    noOfQubits = length(currentComponent.qubits)
-                    proportion = currentComponent.noOfPhonons/noOfQubits
-
-                    delete!(currentComponent.qubits, qubit.id)
-                    currentComponent.noOfPhonons = (noOfQubits-1)*proportion + operation.heatingRate[1] # split
-                    currentComponent.executionTime = qubit.executionTime
-                    
-                    qubitList = collect(keys(currentComponent.qubits))
-                    qubitPairList = []
-                    for i in qubitList
-                        push!(qubitPairList, (parse(Int64, i[6:end]), i))
-                    end
-                    sort!(qubitPairList)
-                    if length(qubitPairList)>0
-                        currentComponent.qubits[qubitPairList[end][2]].isCommunicationQubit = true
-                    end
-
-                    nextComponent.isShuttling = true
-                    # TODO
-                    # nextComponent.direction # path
-                    push!(nextComponent.qubits, qubit)
-                    currentComponent.executionTime = qubit.executionTime
-
-                    qubit.noOfPhonons = proportion + operation.heatingRate[2] # split
-
-                    popfirst!(qubit.circuitQubit.operations)
-                    println("$refTime Split! from $(currentComponent.id), $(qubit.id)")
-                else # TODO: dwell time
-                end
-
-            elseif operation.type == "merge"
-                architecture.isShuttling =false
-                if nextComponent.executionTime < refTime
-                    qubit.executionTime += operation.duration
-
-                    currentComponent.isShuttling = false
-                    currentComponent.qubits = []
-                    currentComponent.executionTime = qubit.executionTime
-
-                    for i in values(nextComponent.qubits)
-                        if i.isCommunicationQubit
-                            i.isCommunicationQubit = false
-                        end
-                    end
-                    nextComponent.qubits[qubit.id] = qubit
-                    nextComponent.executionTime = qubit.executionTime
-                    nextComponent.noOfPhonons += qubit.noOfPhonons + operation.heatingRate # merge
-
-                    qubit.noOfPhonons = 0.0
-                    qubit.isShuttling = false
-                    architecture.noOfShuttling += 1
-                    popfirst!(qubit.circuitQubit.operations)
-                    println("$refTime Merge! to $(nextComponent.id), $(qubit.id)")
-
-                else # TODO: dwell time
-                end
-
-            elseif operation.type == "linearTransport"
-                if currentComponentType == Main.ArchitectureConfiguration.Path
-                    if nextComponent.executionTime < refTime
-                        qubit.executionTime += currentComponent.length/(operation.speed)
-                        qubit.noOfPhonons += operation.heatingRate
-
-                        currentComponent.isShuttling = false
-                        currentComponent.qubits = []
-                        # currentComponent.direction = 
-                        currentComponent.executionTime = qubit.executionTime
-
-                        nextComponent.isShuttling = true
-                        push!(nextComponent.qubits, qubit)
-                        nextComponent.executionTime = qubit.executionTime
-
-                        popfirst!(qubit.circuitQubit.operations)
-                        println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
-
-
-                    else # TODO: dwell time
-                    end
-
-                elseif currentComponentType == Main.ArchitectureConfiguration.Junction
-                    if nextComponent.executionTime < refTime
-                        qubit.executionTime += nextComponent.length/(operation.speed)
-                        qubit.noOfPhonons += operation.heatingRate
-
-                        currentComponent.isShuttling = false
-                        currentComponent.qubits = []
-                        # currentComponent.direction = 
-                        currentComponent.executionTime = qubit.executionTime
-
-                        nextComponent.isShuttling = true
-                        push!(nextComponent.qubits, qubit)
-                        nextComponent.executionTime = qubit.executionTime
-
-                        popfirst!(qubit.circuitQubit.operations)
-                        println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
-
-                    else # TODO: dwell time
-                    end
-                end
-
-            elseif operation.type == "junctionRotate"
-                if nextComponent.executionTime < refTime
-                    qubit.executionTime += operation.duration
-                    qubit.noOfPhonons += operation.heatingRate
-
-                    # currentComponent.isShuttling = false
-                    # currentComponent.qubits = []
-                    # currentComponent.executionTime = qubit.executionTime
-
-                    nextComponent.isShuttling = true
-                    # push!(nextComponent.qubits, qubit)
-                    nextComponent.executionTime = qubit.executionTime
-
-                    popfirst!(qubit.circuitQubit.operations)
-                    println("$refTime rotate at $(currentComponent.id), $(qubit.id)")
-
-                else # TODO: dwell time
-                end
-            else
-            end
         end
     end
 
-    function executeCircuit(circuit, architecture)
+    function executeCircuit(circuit, architecture, shuttlingType)
+        shuttlingDurations = Dict([
+            ("Slow Junction Rotation & Normal Detection", 705 + round((length(architecture.components["cores"])-2)*100/78,digits=1)),
+            ("Slow Junction Rotation & SNSD", 536 + round((length(architecture.components["cores"])-2)*100/78, digits=1)),
+            ("Fast Junction Rotation & Normal Detection", 385 + round((length(architecture.components["cores"])-2)*100/78, digits=1)),
+            ("Fast Junction Rotation & SNSD", 216 + round((length(architecture.components["cores"])-2)*100/78, digits=1))
+        ])
+
+        shuttlingDuration = shuttlingDurations[shuttlingType]
+        shuttlingDict = Dict()
+        shuttlingCounting = 0
+
         refTime = 0.1
         circuitQubits = circuit["circuit"].qubits
         multiGateTable = circuit["multiGateTable"]
@@ -866,12 +717,17 @@ module QBusSimulator
         end
 
         while true
+            # TODO Shuttling by layer
+            if refTime % shuttlingDuration < 1.0
+                shuttlingCounting += executeShuttlingByLayer(architecture, shuttlingDict, shuttlingDuration, refTime) ## TODO
+                shuttlingDict = Dict()
+            end
             for qubit in values(qubits)
                 if checkEndOperation(qubit, refTime)
-                    executeOperation(qubit, refTime, multiGateTable, architecture)
+                    executeOperation(qubit, refTime, multiGateTable, architecture, shuttlingDict, 1)
                 end
             end
-
+            
             # check ending
             remainderOperation = 0
             for i in circuitQubits
@@ -889,6 +745,7 @@ module QBusSimulator
             end
             refTime += 1
         end
+        return shuttlingCounting
     end
 
     function evaluateResult(architecture)
@@ -920,14 +777,36 @@ module QBusSimulator
         architecture = configuration["architecture"]
         operationConfiguration = configuration["operation"]
 
-        executeCircuit(circuit, architecture)
+        println()
+        println("What is the shuttling type? \n (answer the number)")
+
+        shuttlingTypes = Dict([
+            ("1", "Slow Junction Rotation & Normal Detection"),
+            ("2", "Slow Junction Rotation & SNSD"),
+            ("3", "Fast Junction Rotation & Normal Detection"),
+            ("4", "Fast Junction Rotation & SNSD")])
+
+        for i in 1:4
+            shuttlingType = shuttlingTypes["$i"]
+            println("$i. $shuttlingType")
+        end
+        println()
+        ans = readline()
+        shuttlingType = shuttlingTypes[ans]
+
+        shuttlingCounting = executeCircuit(circuit, architecture, shuttlingType)
         result = evaluateResult(architecture)
+        result["shuttlingCounting"] = shuttlingCounting
         return (result, architecture)
     end
 
     function printResult(result,architecture)
         println("Execution time is $(result["executionTime"])")
-        println("Number of shuttling is $(architecture.noOfShuttling)")
+        if architecture.name == "Q-bus"
+            println("Number of shuttling is $(result["shuttlingCounting"])")
+        else
+            println("Number of shuttling is $(architecture.noOfShuttling)")
+        end
         println("Number of phonons per core are")
         for i in result["noOfPhonons"]
             println("$(i[1]): $(i[2])")

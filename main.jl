@@ -59,7 +59,7 @@ if sim
         provider = QCCDSimulator
     elseif ans == "QCCD-Comb"
         provider = QCCDSimulator
-    elseif ans =="Q-Bus"
+    elseif ans =="Q-bus"
         provider = QBusSimulator
     end
 else
@@ -96,5 +96,5 @@ This part is running the provider with scheduling.
 """
 # provider.run(mappedCircuit) #TODO
 
-result = Simulator.run(circuit, configuration)
-Simulator.printResult(result...)
+result = provider.run(circuit, configuration)
+provider.printResult(result...)

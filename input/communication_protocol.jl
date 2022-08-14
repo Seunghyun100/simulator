@@ -178,9 +178,14 @@ module QCCDShuttlingProtocol
 
 end
 
+"""For now, communication simmulation of Q-bus is used to short-cut by layered-shuttling"""
 module QBusShuttlingProtocol
 
-    # TODO: renovate to fit Q-bus
+    function buildGateTeleportationOperations()
+    end
+
+
+    """Not used"""
     function checkTarget(multiGateID::Int64, multiGateTable::Dict, architecture, appliedQubitID)
         appliedQubits = multiGateTable[multiGateID]["appliedQubits"]
         cores = values(architecture.components["cores"])
@@ -206,7 +211,7 @@ module QBusShuttlingProtocol
     function checkNeedCommunication()
     end
 
-    function OperateMiddleGateInCore()
+    function operateMiddleGateInCore()
     end
 
     function inputShuttling()

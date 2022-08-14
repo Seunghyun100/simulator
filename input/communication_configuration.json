@@ -22,7 +22,7 @@
         },
         "mergeToDetect":{
             "type": "merge",
-            "duration": 0,
+            "duration": 0.0,
             "heatingRate": 0
         },
         "split":{
