@@ -722,9 +722,12 @@ module QBusSimulator
                 shuttlingCounting += executeShuttlingByLayer(architecture, shuttlingDict, shuttlingDuration, refTime) ## TODO
                 shuttlingDict = Dict()
             end
-            for qubit in values(qubits)
-                if checkEndOperation(qubit, refTime)
-                    executeOperation(qubit, refTime, multiGateTable, architecture, shuttlingDict, 1)
+            for qubitID in keys(qubits)
+                if checkEndOperation(qubitID[qubitID], refTime)
+                    executeOperation(qubitID[qubitID], refTime, multiGateTable, architecture, shuttlingDict, 1)
+                end
+                if length(qubits[qubitID].circuitQubit.operations) == 0
+                    delete!(qubits,qubitID)
                 end
             end
             
