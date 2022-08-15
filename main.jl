@@ -55,11 +55,29 @@ configuration = Dict("operation"=>operationConfiguration, "architecture"=>archit
 
 if sim
     include("function/simulator.jl")
-    if ans == "QCCD-Grid"
+    if ans == "QCCD-Grid-30"
         provider = QCCDSimulator
-    elseif ans == "QCCD-Comb"
+    elseif ans == "QCCD-Grid-20"
         provider = QCCDSimulator
-    elseif ans =="Q-bus"
+    elseif ans == "QCCD-Grid-15"
+        provider = QCCDSimulator
+    elseif ans == "QCCD-Grid-10"
+        provider = QCCDSimulator
+    elseif ans == "QCCD-Comb-30"
+        provider = QCCDSimulator
+    elseif ans == "QCCD-Comb-20"
+        provider = QCCDSimulator
+    elseif ans == "QCCD-Comb-15"
+        provider = QCCDSimulator
+    elseif ans == "QCCD-Comb-10"
+        provider = QCCDSimulator
+    elseif ans =="Q-bus-30"
+        provider = QBusSimulator
+    elseif ans =="Q-bus-20"
+        provider = QBusSimulator
+    elseif ans =="Q-bus-15"
+        provider = QBusSimulator
+    elseif ans =="Q-bus-10"
         provider = QBusSimulator
     end
 else

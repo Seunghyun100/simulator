@@ -12,7 +12,7 @@ This part is setting to provider.
 
 sim = true
 provider = nothing
-results = Dict([("Q-bus",Dict([(1,Dict()),(2,Dict()),(3,Dict()),(4,Dict())])),("QCCD-Comb",Dict()),("QCCD-Grid",Dict())])
+results = Dict()
 # whether or not simulation
 
 # print("Do you simulate? (y/n)\n")
@@ -57,11 +57,29 @@ function mainLoop(architectureName, circuitName, shuttlingTypeIndex = 4)
 
     if sim
         include("function/simulator.jl")
-        if ans == "QCCD-Grid"
+        if ans == "QCCD-Grid-30"
             provider = QCCDSimulator
-        elseif ans == "QCCD-Comb"
+        elseif ans == "QCCD-Grid-20"
             provider = QCCDSimulator
-        elseif ans =="Q-bus"
+        elseif ans == "QCCD-Grid-15"
+            provider = QCCDSimulator
+        elseif ans == "QCCD-Grid-10"
+            provider = QCCDSimulator
+        elseif ans == "QCCD-Comb-30"
+            provider = QCCDSimulator
+        elseif ans == "QCCD-Comb-20"
+            provider = QCCDSimulator
+        elseif ans == "QCCD-Comb-15"
+            provider = QCCDSimulator
+        elseif ans == "QCCD-Comb-10"
+            provider = QCCDSimulator
+        elseif ans =="Q-bus-30"
+            provider = QBusSimulator
+        elseif ans =="Q-bus-20"
+            provider = QBusSimulator
+        elseif ans =="Q-bus-15"
+            provider = QBusSimulator
+        elseif ans =="Q-bus-10"
             provider = QBusSimulator
         end
     else
@@ -94,7 +112,7 @@ function mainLoop(architectureName, circuitName, shuttlingTypeIndex = 4)
     """
     If architecture is Q-bus, Choose the shuttling and detection types
     """
-    if architectureName == "Q-bus"
+    if architectureName == "Q-bus-30"||architectureName =="Q-bus-20"||architectureName =="Q-bus-15"||architectureName =="Q-bus-10"
         println()
         println("What is the shuttling type? \n (answer the number)")
 
@@ -123,22 +141,50 @@ function mainLoop(architectureName, circuitName, shuttlingTypeIndex = 4)
     """
     # provider.run(mappedCircuit) #TODO
 
-    if architectureName == "Q-bus"
+    if architectureName == "Q-bus-30"||architectureName =="Q-bus-20"||architectureName =="Q-bus-15"||architectureName =="Q-bus-10"
         result = provider.run(circuit, configuration, shuttlingTypeIndex)
-        results[architectureName][shuttlingType] = result
+        if architectureName ∉ keys(results)
+            results[architectureName] = Dict()
+        end
+        if "$shuttlingTypeIndex" ∉ keys(results[architectureName])
+            results[architectureName]["$shuttlingTypeIndex"] = Dict()
+        end
+        results[architectureName]["$shuttlingTypeIndex"][circuitName] = result[1]
     else
         result = provider.run(circuit, configuration)
-        results[architectureName] = result
+        if architectureName ∉ keys(results)
+            results[architectureName] = Dict()
+        end
+        results[architectureName][circuitName] = result[1]
     end
 end
 
 
 # provider.printResult(result...)
 
-experiments = [("Q-bus","example")]
+experiments = []
+algorithms = ["quantum-fourier-transformation-60", "bernstein-vazirani-60","qaoa-60","grover-6x6"]
+# QCCDs = ["QCCD-Grid-30","QCCD-Grid-20","QCCD-Grid-15","QCCD-Grid-10","QCCD-Comb-30","QCCD-Comb-20","QCCD-Comb-15","QCCD-Comb-10"]
+# QBUSs = ["Q-bus-30","Q-bus-20","Q-bus-15","Q-bus-10"]
+
+# QCCDs = ["QCCD-Grid-30","QCCD-Comb-30"]
+QBUSs = ["Q-bus-30","Q-bus-20","Q-bus-15","Q-bus-10"]
+for algorithm in algorithms
+    # for arch in QCCDs
+    #     mainLoop(arch, algorithm)
+    # end
+    for arch in QBUSs
+        for i in 1:4
+            mainLoop(arch, algorithm, string(i))
+        end
+    end
+end
 
 # save the results
-output = JSON.json(result)
+using JSON
 
-open("$name.json","w") do f 
+output = JSON.json(results)
+
+open("experiment_result.json","w") do f 
     JSON.write(f, output) 
+end

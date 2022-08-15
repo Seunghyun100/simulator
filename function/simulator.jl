@@ -100,7 +100,6 @@ module QCCDSimulator
         elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate || operationType == Main.QCCDSimulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
             operationID = operation.id
             appliedQubits = deepcopy(multiGateTable[operationID]["appliedQubits"])
-
             qubits = Dict()
             targetPairs = []
             coreList = values(architecture.components["cores"])
@@ -151,7 +150,6 @@ module QCCDSimulator
                     """
 
                     if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
-                        
                         communicationOperations = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
                         # push!(communicationOperations, popfirst!(appliedQubits[i].circuitQubit.operations))
                         # for s in reverse(communicationOperations[2:end-1])
@@ -453,9 +451,9 @@ module QCCDSimulator
             # if refTime%5 < 1
             #     println(refTime)
             # end
-            if refTime%100 < 1
-                println(refTime, remainderOperation)
-            end
+            # if refTime%1000 < 1
+            #     println(refTime, remainderOperation)
+            # end
             refTime += 1
         end
     end
