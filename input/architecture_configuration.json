@@ -17,37 +17,37 @@
                 },
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,3],
                     "number_of_qubits":30
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,5],
                     "number_of_qubits":30
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,7],
                     "number_of_qubits":30
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,9],
                     "number_of_qubits":30
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,11],
                     "number_of_qubits":30
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,13],
                     "number_of_qubits":30
                 }
@@ -161,37 +161,37 @@
                     "id": "Core1",
                     "capacity": 100,
                     "coordinates": [1,1],
-                    "number_of_qubits":10
+                    "number_of_qubits":30
                 },
                 "Core2":{
                     "id": "Core2",
                     "capacity": 100,
                     "coordinates": [5,1],
-                    "number_of_qubits":10
+                    "number_of_qubits":30
                 },
                 "Core3":{
                     "id": "Core3",
                     "capacity": 100,
                     "coordinates": [1,3],
-                    "number_of_qubits":10
+                    "number_of_qubits":30
                 },
                 "Core4":{
                     "id": "Core4",
                     "capacity": 100,
                     "coordinates": [5,3],
-                    "number_of_qubits":10
+                    "number_of_qubits":30
                 },
                 "Core5":{
                     "id": "Core5",
                     "capacity": 100,
                     "coordinates": [1,5],
-                    "number_of_qubits":10
+                    "number_of_qubits":30
                 },
                 "Core6":{
                     "id": "Core6",
                     "capacity": 100,
                     "coordinates": [5,5],
-                    "number_of_qubits":10
+                    "number_of_qubits":30
                 }
 
             },
@@ -268,37 +268,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,1],
                     "number_of_qubits":30
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,3],
                     "number_of_qubits":30
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,5],
                     "number_of_qubits":30
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,7],
                     "number_of_qubits":30
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,9],
                     "number_of_qubits":30
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 32,
+                    "capacity": 100,
                     "coordinates": [1,11],
                     "number_of_qubits":30
                 }

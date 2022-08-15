@@ -723,8 +723,8 @@ module QBusSimulator
                 shuttlingDict = Dict()
             end
             for qubitID in keys(qubits)
-                if checkEndOperation(qubitID[qubitID], refTime)
-                    executeOperation(qubitID[qubitID], refTime, multiGateTable, architecture, shuttlingDict, 1)
+                if checkEndOperation(qubits[qubitID], refTime)
+                    executeOperation(qubits[qubitID], refTime, multiGateTable, architecture, shuttlingDict, 1)
                 end
                 if length(qubits[qubitID].circuitQubit.operations) == 0
                     delete!(qubits,qubitID)
@@ -776,12 +776,12 @@ module QBusSimulator
         return result
     end
 
-    function run(circuit, configuration)
+    function run(circuit, configuration, typeIndex)
         architecture = configuration["architecture"]
         operationConfiguration = configuration["operation"]
 
-        println()
-        println("What is the shuttling type? \n (answer the number)")
+        # println()
+        # println("What is the shuttling type? \n (answer the number)")
 
         shuttlingTypes = Dict([
             ("1", "Slow Junction Rotation & Normal Detection"),
@@ -789,14 +789,15 @@ module QBusSimulator
             ("3", "Fast Junction Rotation & Normal Detection"),
             ("4", "Fast Junction Rotation & SNSD")])
 
-        for i in 1:4
-            shuttlingType = shuttlingTypes["$i"]
-            println("$i. $shuttlingType")
-        end
-        println()
-        ans = readline()
-        shuttlingType = shuttlingTypes[ans]
+        # for i in 1:4
+        #     shuttlingType = shuttlingTypes["$i"]
+        #     println("$i. $shuttlingType")
+        # end
+        # println()
+        # ans = readline()
+        # shuttlingType = shuttlingTypes[ans]
 
+        shuttlingType = shuttlingTypes[typeIndex]
         shuttlingCounting = executeCircuit(circuit, architecture, shuttlingType)
         result = evaluateResult(architecture)
         result["shuttlingCounting"] = shuttlingCounting
@@ -813,6 +814,13 @@ module QBusSimulator
         println("Number of phonons per core are")
         for i in result["noOfPhonons"]
             println("$(i[1]): $(i[2])")
+        end
+
+        # save the results
+        output = JSON.json(result)
+        
+        open("$name.json","w") do f 
+            JSON.write(f, output) 
         end
     end
 

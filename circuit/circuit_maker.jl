@@ -64,45 +64,43 @@ Input
 """
 ########################
 
-
 """
 BV strat
 """
-# name = "bernstein-vazirani" # name
-# noQubits = 90 # number of qubits
-# circuit = initCircuit(noQubits)
+name = "bernstein-vazirani-180" # name
+noQubits = 180 # number of qubits
+circuit = initCircuit(noQubits)
 
-# """
-# Circuit
-# """
+"""
+Circuit
+"""
 
-# for i in 1:noQubits
-#     one(h, i)
-# end
-# one(z,noQubits)
+for i in 1:noQubits
+    one(h, i)
+end
+one(z,noQubits)
 
-# # Oracle
-# for i in 1:noQubits
-#     if rand(Bool)
-#         two(cx, i, noQubits)
-#     end
-# end
+# Oracle
+for i in 1:noQubits
+    if rand(Bool)
+        two(cx, i, noQubits)
+    end
+end
 
-# #
-# for i in 1:noQubits
-#     one(h, i)
-#     one(m, i)
-# end
+#
+for i in 1:noQubits
+    one(h, i)
+    one(m, i)
+end
 """
 BV end
 """
 
-
 """
 QFT strat
 """
-# name = "quantum-fourier-transformation-60" # name
-# noQubits = 60 # number of qubits
+# name = "quantum-fourier-transformation-180" # name
+# noQubits = 180 # number of qubits
 # circuit = initCircuit(noQubits)
 
 # for i in 1:noQubits
@@ -117,8 +115,6 @@ QFT strat
 """
 QFT end
 """
-
-
 
 """
 Grover start
@@ -312,68 +308,63 @@ Grover start
 Grover end
 """
 
-
-
 """
 QAOA start
 """
-name = "qaoa-60"
-noQubits = 60
-circuit = initCircuit(noQubits)
-function buildQAOA()
-    num = noQubits
-    weights = 0.1
-    p = 1
-    beta = [0.4]
-    gamma = [0.4]
+# name = "qaoa-180"
+# noQubits = 180
+# circuit = initCircuit(noQubits)
+# function buildQAOA()
+#     num = noQubits
+#     weights = 0.1
+#     p = 1
+#     beta = [0.4]
+#     gamma = [0.4]
     
-    # Init Quantum Circuit
-    # qc = QuantumCircuit(num)
+#     # Init Quantum Circuit
+#     # qc = QuantumCircuit(num)
     
-    # Mixer Ground State
-    for i in 1:noQubits
-        one(h,i)
-    end
-    # Evolving
-    for i in 1:p
-        costFunction()
-        mixerHamiltonian()
-    end
+#     # Mixer Ground State
+#     for i in 1:noQubits
+#         one(h,i)
+#     end
+#     # Evolving
+#     for i in 1:p
+#         costFunction()
+#         mixerHamiltonian()
+#     end
 
-    for i in 1:noQubits
-        one(m,i)
-    end
-    return
-end
+#     for i in 1:noQubits
+#         one(m,i)
+#     end
+#     return
+# end
 
+# function mixerHamiltonian()
+#     for i in 1:noQubits
+#         one(x, i)
+#     end
+# end
 
-function mixerHamiltonian()
-    for i in 1:noQubits
-        one(x, i)
-    end
-end
+#     # i1, i2 = qubit index
+# function costFunctionUnit(i1, i2)
+#     one(x,i1)
+#     one(x,i2)
+#     two(cx,i1,i2)
+# end
 
-    # i1, i2 = qubit index
-function costFunctionUnit(i1, i2)
-    one(x,i1)
-    one(x,i2)
-    two(cx,i1,i2)
-end
+# function costFunction()
+#     for i in 1:noQubits
+#         for k in i+1:noQubits
+#             costFunctionUnit(i, k)
+#         end
+#     end
+# end
 
-function costFunction()
-    for i in 1:noQubits
-        for k in i+1:noQubits
-            costFunctionUnit(i, k)
-        end
-    end
-end
-
-buildQAOA()
+# buildQAOA()
 """
 QAOA start
 """
-
-
 
 """
 RCS start
