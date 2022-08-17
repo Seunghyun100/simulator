@@ -451,9 +451,9 @@ module QCCDSimulator
             # if refTime%5 < 1
             #     println(refTime)
             # end
-            # if refTime%1000 < 1
-            #     println(refTime, remainderOperation)
-            # end
+            if refTime%100 < 1
+                println(refTime, remainderOperation)
+            end
             refTime += 1
         end
     end

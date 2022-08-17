@@ -163,11 +163,11 @@ end
 # provider.printResult(result...)
 
 experiments = []
-algorithms = ["quantum-fourier-transformation-60", "bernstein-vazirani-60","qaoa-60","grover-6x6"]
+algorithms = ["grover-5x5"]
 # QCCDs = ["QCCD-Grid-30","QCCD-Grid-20","QCCD-Grid-15","QCCD-Grid-10","QCCD-Comb-30","QCCD-Comb-20","QCCD-Comb-15","QCCD-Comb-10"]
 # QBUSs = ["Q-bus-30","Q-bus-20","Q-bus-15","Q-bus-10"]
 
-# QCCDs = ["QCCD-Grid-30","QCCD-Comb-30"]
+# QCCDs = ["QCCD-Grid-30","QCCD-Grid-20","QCCD-Grid-15","QCCD-Grid-10","QCCD-Comb-30","QCCD-Comb-20","QCCD-Comb-15"]
 QBUSs = ["Q-bus-30","Q-bus-20","Q-bus-15","Q-bus-10"]
 for algorithm in algorithms
     # for arch in QCCDs

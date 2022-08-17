@@ -1,0 +1,70 @@
+{
+    "QCCD-Comb-30":{
+        "bernstein-vazirani-60":{
+            "shuttlingCounting": 12,
+            "noOfPhonons":{"Core4":0.0,"Core1":18.795645898066795,"Core6":0.0,"Core2":62.32435410193322,"Core3":0.0,"Core5":0.0},
+            "executionTime": 13936.53846153846
+        },
+        "quantum-fourier-transformation-60":{
+            "shuttlingCounting": 30,
+            "noOfPhonons":{"Core4":0.0,"Core1":2.0,"Core6":0.0,"Core2":200.8,"Core3":0.0,"Core5":0.0},
+            "executionTime": 38313.71794871794
+        },
+        "qaoa-60":{
+            "shuttlingCounting": 30,
+            "noOfPhonons":{"Core4":0.0,"Core1":2.0,"Core6":0.0,"Core2":200.8,"Core3":0.0,"Core5":0.0},
+            "executionTime": 37498.71794871794
+        }
+    },
+    "QCCD-Comb-20":{
+        "bernstein-vazirani-60":{
+            "shuttlingCounting": 18,
+            "noOfPhonons":{"Core4":0.0,"Core1":13.612970869859415,"Core6":0.0,"Core2":13.612970869859415,"Core3":96.25405826028118,"Core5":0.0},
+            "executionTime": 20410.384615384603
+        },
+        "quantum-fourier-transformation-60":{
+            "shuttlingCounting": 60,
+            "noOfPhonons":{"Core4":0.0,"Core1":2.0,"Core6":0.0,"Core2":401.5999999999999,"Core3":0.0,"Core5":0.0},
+            "executionTime": 67534.04871794902
+        },
+        "qaoa-60":{
+            "shuttlingCounting": 60,
+            "noOfPhonons":{"Core4":0.0,"Core1":2.0,"Core6":0.0,"Core2":401.5999999999999,"Core3":0.0,"Core5":0.0},
+            "executionTime": 66983.9205128208
+        }
+    },
+    "QCCD-Comb-15":{
+        "bernstein-vazirani-60":{
+            "shuttlingCounting": 23,
+            "noOfPhonons":{"Core4":128.9430036630037,"Core1":10.539282939282938,"Core6":0.0,"Core2":8.451881451881452,"Core3":11.345831945831945,"Core5":0.0},
+            "executionTime": 25331.666666666646
+        },
+        "quantum-fourier-transformation-60":{
+            "shuttlingCounting": 90,
+            "noOfPhonons":{"Core4":602.3999999999997,"Core1":2.0,"Core6":0.0,"Core2":2.0,"Core3":2.0,"Core5":0.0},
+            "executionTime": 96826.27948717921
+        },
+        "qaoa-60":{
+            "shuttlingCounting": 90,
+            "noOfPhonons":{"Core4":602.3999999999997,"Core1":2.0,"Core6":0.0,"Core2":2.0,"Core3":2.0,"Core5":0.0},
+            "executionTime": 96371.27948717921
+        }
+    },
+    "QCCD-Comb-10":{
+        "bernstein-vazirani-60":{
+            "shuttlingCounting": 24,
+            "noOfPhonons":{"Core4":7.965079365079364,"Core1":6.5476190476190474,"Core6":135.60031746031748,"Core2":7.456349206349206,"Core3":5.305555555555555,"Core5":7.965079365079364},
+            "executionTime": 26348.3333333333
+        },
+        "quantum-fourier-transformation-60":{
+            "shuttlingCounting": 150,
+            "noOfPhonons":{"Core4":2.0,"Core1":2.0,"Core6":1004.0000000000001,"Core2":2.0,"Core3":2.0,"Core5":2.0},
+            "executionTime": 154981.76666666722
+        },
+        "qaoa-60":{
+            "shuttlingCounting": 150,
+            "noOfPhonons":{"Core4":2.0,"Core1":2.0,"Core6":1004.0000000000001,"Core2":2.0,"Core3":2.0,"Core5":2.0},
+            "executionTime": 154676.76666666722
+        }
+    }
+}
