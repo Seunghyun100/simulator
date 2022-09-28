@@ -119,191 +119,191 @@ QFT end
 """
 Grover start
 """
-name = "grover-16x16"
-rows = 16
-size = rows^2
-noQubits = size*2+1 # 73
-circuit = initCircuit(noQubits)
+# name = "grover-16x16"
+# rows = 16
+# size = rows^2
+# noQubits = size*2+1 # 73
+# circuit = initCircuit(noQubits)
 
-for i in 1:size
-    one(h,i)
-end
-one(x, noQubits)
-one(h, noQubits)
+# for i in 1:size
+#     one(h,i)
+# end
+# one(x, noQubits)
+# one(h, noQubits)
 
-for iteration in 1:Int(floor(sqrt(size)))
-    # Oracle
-    for i in 1:size
-        two(cx,i,i+size)
-        if fld(i,rows) == 0
-            if mod(i,rows) == 1
-                # two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                # two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            elseif mod(i,rows) == 0
-                two(cx,i,i+size-1)
-                # two(cx,i,i+size+1)
-                # two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            else
-                two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                # two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            end
-        elseif fld(i,rows) == rows-1
-            if mod(i,rows) == 1
-                # two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                # two(cx,i,i+size+rows)
-            elseif mod(i,rows) == 0
-                two(cx,i,i+size-1)
-                # two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                # two(cx,i,i+size+rows)
-            else
-                two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                # two(cx,i,i+size+rows)
-            end
-        else
-            if mod(i,rows) == 1
-                # two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            elseif mod(i,rows) == 0
-                if fld(i,rows) ==1
-                    two(cx,i,i+size-1)
-                    # two(cx,i,i+size+1)
-                    # two(cx,i,i+size-rows)
-                    two(cx,i,i+size+rows)
-                elseif fld(i,rows) == rows
-                    two(cx,i,i+size-1)
-                    # two(cx,i,i+size+1)
-                    two(cx,i,i+size-rows)
-                    # two(cx,i,i+size+rows)
-                else
-                    two(cx,i,i+size-1)
-                    # two(cx,i,i+size+1)
-                    two(cx,i,i+size-rows)
-                    two(cx,i,i+size+rows)
-                end
-            else
-                two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            end
-        end
-    end
+# for iteration in 1:Int(floor(sqrt(size)))
+#     # Oracle
+#     for i in 1:size
+#         two(cx,i,i+size)
+#         if fld(i,rows) == 0
+#             if mod(i,rows) == 1
+#                 # two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 # two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             elseif mod(i,rows) == 0
+#                 two(cx,i,i+size-1)
+#                 # two(cx,i,i+size+1)
+#                 # two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             else
+#                 two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 # two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             end
+#         elseif fld(i,rows) == rows-1
+#             if mod(i,rows) == 1
+#                 # two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 # two(cx,i,i+size+rows)
+#             elseif mod(i,rows) == 0
+#                 two(cx,i,i+size-1)
+#                 # two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 # two(cx,i,i+size+rows)
+#             else
+#                 two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 # two(cx,i,i+size+rows)
+#             end
+#         else
+#             if mod(i,rows) == 1
+#                 # two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             elseif mod(i,rows) == 0
+#                 if fld(i,rows) ==1
+#                     two(cx,i,i+size-1)
+#                     # two(cx,i,i+size+1)
+#                     # two(cx,i,i+size-rows)
+#                     two(cx,i,i+size+rows)
+#                 elseif fld(i,rows) == rows
+#                     two(cx,i,i+size-1)
+#                     # two(cx,i,i+size+1)
+#                     two(cx,i,i+size-rows)
+#                     # two(cx,i,i+size+rows)
+#                 else
+#                     two(cx,i,i+size-1)
+#                     # two(cx,i,i+size+1)
+#                     two(cx,i,i+size-rows)
+#                     two(cx,i,i+size+rows)
+#                 end
+#             else
+#                 two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             end
+#         end
+#     end
 
-    for i in 1:size
-        one(x,i+size)
-    end
-    for i in 1:size
-        two(cx,i+size, i+size+1)
-    end
-    for i in reverse(1:size-1)
-        two(cx,i+size, i+size+1)
-    end
-    for i in 1:size
-        one(x,i+size)
-    end
+#     for i in 1:size
+#         one(x,i+size)
+#     end
+#     for i in 1:size
+#         two(cx,i+size, i+size+1)
+#     end
+#     for i in reverse(1:size-1)
+#         two(cx,i+size, i+size+1)
+#     end
+#     for i in 1:size
+#         one(x,i+size)
+#     end
 
 
-    for i in 1:size
-        two(cx,i,i+size)
-        if fld(i,rows) == 0
-            if mod(i,rows) == 1
-                # two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                # two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            elseif mod(i,rows) == 0
-                two(cx,i,i+size-1)
-                # two(cx,i,i+size+1)
-                # two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            else
-                two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                # two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            end
-        elseif fld(i,rows) == rows-1
-            if mod(i,rows) == 1
-                # two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                # two(cx,i,i+size+rows)
-            elseif mod(i,rows) == 0
-                two(cx,i,i+size-1)
-                # two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                # two(cx,i,i+size+rows)
-            else
-                two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                # two(cx,i,i+size+rows)
-            end
-        else
-            if mod(i,rows) == 1
-                # two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            elseif mod(i,rows) == 0
-                if fld(i,rows) ==1
-                    two(cx,i,i+size-1)
-                    # two(cx,i,i+size+1)
-                    # two(cx,i,i+size-rows)
-                    two(cx,i,i+size+rows)
-                elseif fld(i,rows) == rows
-                    two(cx,i,i+size-1)
-                    # two(cx,i,i+size+1)
-                    two(cx,i,i+size-rows)
-                    # two(cx,i,i+size+rows)
-                else
-                    two(cx,i,i+size-1)
-                    # two(cx,i,i+size+1)
-                    two(cx,i,i+size-rows)
-                    two(cx,i,i+size+rows)
-                end
-            else
-                two(cx,i,i+size-1)
-                two(cx,i,i+size+1)
-                two(cx,i,i+size-rows)
-                two(cx,i,i+size+rows)
-            end
-        end
-    end
+#     for i in 1:size
+#         two(cx,i,i+size)
+#         if fld(i,rows) == 0
+#             if mod(i,rows) == 1
+#                 # two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 # two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             elseif mod(i,rows) == 0
+#                 two(cx,i,i+size-1)
+#                 # two(cx,i,i+size+1)
+#                 # two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             else
+#                 two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 # two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             end
+#         elseif fld(i,rows) == rows-1
+#             if mod(i,rows) == 1
+#                 # two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 # two(cx,i,i+size+rows)
+#             elseif mod(i,rows) == 0
+#                 two(cx,i,i+size-1)
+#                 # two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 # two(cx,i,i+size+rows)
+#             else
+#                 two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 # two(cx,i,i+size+rows)
+#             end
+#         else
+#             if mod(i,rows) == 1
+#                 # two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             elseif mod(i,rows) == 0
+#                 if fld(i,rows) ==1
+#                     two(cx,i,i+size-1)
+#                     # two(cx,i,i+size+1)
+#                     # two(cx,i,i+size-rows)
+#                     two(cx,i,i+size+rows)
+#                 elseif fld(i,rows) == rows
+#                     two(cx,i,i+size-1)
+#                     # two(cx,i,i+size+1)
+#                     two(cx,i,i+size-rows)
+#                     # two(cx,i,i+size+rows)
+#                 else
+#                     two(cx,i,i+size-1)
+#                     # two(cx,i,i+size+1)
+#                     two(cx,i,i+size-rows)
+#                     two(cx,i,i+size+rows)
+#                 end
+#             else
+#                 two(cx,i,i+size-1)
+#                 two(cx,i,i+size+1)
+#                 two(cx,i,i+size-rows)
+#                 two(cx,i,i+size+rows)
+#             end
+#         end
+#     end
 
-    # Diffuser
-    for i in 1:size
-        one(h,i)
-        one(x,i)
-    end
-    one(h,size)
-    for i in 1:size
-        two(cx,i+size, i+size+1)
-    end
-    for i in reverse(1:size-1)
-        two(cx,i+size, i+size+1)
-    end
-    one(h,size)
-    for i in 1:size
-        one(h,i)
-        one(x,i)
-    end
-end
-for i in 1:size
-    one(m, i)
-end
+#     # Diffuser
+#     for i in 1:size
+#         one(h,i)
+#         one(x,i)
+#     end
+#     one(h,size)
+#     for i in 1:size
+#         two(cx,i+size, i+size+1)
+#     end
+#     for i in reverse(1:size-1)
+#         two(cx,i+size, i+size+1)
+#     end
+#     one(h,size)
+#     for i in 1:size
+#         one(h,i)
+#         one(x,i)
+#     end
+# end
+# for i in 1:size
+#     one(m, i)
+# end
 """
 Grover end
 """
@@ -369,6 +369,27 @@ QAOA start
 """
 RCS start
 """
+name = "rcs-60" # name
+noQubits = 60 # number of qubits
+circuit = initCircuit(noQubits)
+
+for i in 1:noQubits
+    one(x,i)
+end
+for _ in 1:10
+    for i in 1:Int(noQubits/2)
+        two(cx, 2*i-1, 2i)
+    end
+    for i in 1:noQubits
+        one(x,i)
+    end
+    for i in 1:Int((noQubits/2)-1)
+        two(cx, 2*i, 2i+1)
+    end
+    for i in 1:noQubits
+        one(x,i)
+    end
+end
 
 """
 RCS start
