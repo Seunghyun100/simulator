@@ -323,7 +323,7 @@ module QCCDSimulator
                     qubit.noOfPhonons = proportion + operation.heatingRate[2] # split
 
                     popfirst!(qubit.circuitQubit.operations)
-                    println("$refTime Split! from $(currentComponent.id), $(qubit.id)")
+                    # println("$refTime Split! from $(currentComponent.id), $(qubit.id)")
                 else # TODO: dwell time
                 end
 
@@ -349,7 +349,7 @@ module QCCDSimulator
                     qubit.isShuttling = false
                     architecture.noOfShuttling += 1
                     popfirst!(qubit.circuitQubit.operations)
-                    println("$refTime Merge! to $(nextComponent.id), $(qubit.id)")
+                    # println("$refTime Merge! to $(nextComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
                 end
@@ -370,7 +370,7 @@ module QCCDSimulator
                         nextComponent.executionTime = qubit.executionTime
 
                         popfirst!(qubit.circuitQubit.operations)
-                        println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
+                        # println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
 
 
                     else # TODO: dwell time
@@ -391,7 +391,7 @@ module QCCDSimulator
                         nextComponent.executionTime = qubit.executionTime
 
                         popfirst!(qubit.circuitQubit.operations)
-                        println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
+                        # println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
 
                     else # TODO: dwell time
                     end
@@ -411,7 +411,7 @@ module QCCDSimulator
                     nextComponent.executionTime = qubit.executionTime
 
                     popfirst!(qubit.circuitQubit.operations)
-                    println("$refTime rotate at $(currentComponent.id), $(qubit.id)")
+                    # println("$refTime rotate at $(currentComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
                 end
@@ -448,12 +448,9 @@ module QCCDSimulator
 
             # TODO: remove the printing part
 
-            # if refTime%5 < 1
-            #     println(refTime)
+            # if refTime%1000 < 1
+            #     println(refTime, remainderOperation)
             # end
-            if refTime%100 < 1
-                println(refTime, remainderOperation)
-            end
             refTime += 1
         end
     end
@@ -595,7 +592,7 @@ module QBusSimulator
 
         for core in values(cores)
             noOfQubits = length(core.qubits) + countingCores[core.id]
-            proportion = core.noOfPhonons/noOfQubits
+            proportion = (core.noOfPhonons+ countingCores[core.id]*2.38)/noOfQubits
             if countingCores[core.id] !== 0
                 core.noOfPhonons = (noOfQubits-countingCores[core.id])*proportion + 1.1 # split
             end

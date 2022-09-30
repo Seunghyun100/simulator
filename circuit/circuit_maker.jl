@@ -362,38 +362,45 @@ QAOA start
 # end
 
 # buildQAOA()
-"""
-QAOA start
-"""
 
 """
 RCS start
 """
-name = "rcs-60" # name
-noQubits = 60 # number of qubits
+# name = "rcs-60" # name
+# noQubits = 60 # number of qubits
+# circuit = initCircuit(noQubits)
+
+# for i in 1:noQubits
+#     one(x,i)
+# end
+# for _ in 1:10
+#     for i in 1:Int(noQubits/2)
+#         two(cx, 2*i-1, 2i)
+#     end
+#     for i in 1:noQubits
+#         one(x,i)
+#     end
+#     for i in 1:Int((noQubits/2)-1)
+#         two(cx, 2*i, 2i+1)
+#     end
+#     for i in 1:noQubits
+#         one(x,i)
+#     end
+# end
+
+"""
+SimTest start
+"""
+name = "SimTest2" # name
+noQubits = 60
 circuit = initCircuit(noQubits)
 
-for i in 1:noQubits
-    one(x,i)
+for i in 1:30
+    two(cx, i, i+30)
 end
-for _ in 1:10
-    for i in 1:Int(noQubits/2)
-        two(cx, 2*i-1, 2i)
-    end
-    for i in 1:noQubits
-        one(x,i)
-    end
-    for i in 1:Int((noQubits/2)-1)
-        two(cx, 2*i, 2i+1)
-    end
-    for i in 1:noQubits
-        one(x,i)
-    end
+for i in 1:30
+    two(cx, i+30, i)
 end
-
-"""
-RCS start
-"""
 
 ########################
 """

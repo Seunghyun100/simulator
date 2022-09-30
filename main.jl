@@ -114,5 +114,7 @@ This part is running the provider with scheduling.
 """
 # provider.run(mappedCircuit) #TODO
 
-result = provider.run(circuit, configuration, "4")
+# result = provider.run(circuit, configuration, "4")
+result = provider.run(circuit, configuration)
+
 provider.printResult(result...)

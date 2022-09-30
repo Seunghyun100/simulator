@@ -107,6 +107,11 @@ module QCCDShuttlingProtocol
                 end
             end
         end
+        
+        for i in reverse(route[2:end-1])
+            push!(route, i)
+        end
+        # print(route)
         return route
     end
 
