@@ -10,6 +10,7 @@ module QCCDShuttlingProtocol
 
     function checkTarget(multiGateID::Int64, multiGateTable::Dict, architecture, appliedQubitID)
         appliedQubits = multiGateTable[multiGateID]["appliedQubits"]
+        
         cores = values(architecture.components["cores"])
         targets = [] # Tuple(Core, Qubit)
         for appliedQubit in appliedQubits
@@ -108,10 +109,13 @@ module QCCDShuttlingProtocol
             end
         end
         
-        for i in reverse(route[2:end-1])
-            push!(route, i)
-        end
-        # print(route)
+        """
+        Symmetric configuration
+        """
+        # for i in reverse(route[2:end-1])
+        #     push!(route, i)
+        # end
+
         return route
     end
 
@@ -178,7 +182,7 @@ module QCCDShuttlingProtocol
         multiGateTable[operationID]["isPreparedCommunication"] = true
         appliedQubit.isShuttling = true
         architecture.isShuttling = true
-        return communicationOperationList
+        return communicationOperationList, shuttlingRoute
     end
 
 end
