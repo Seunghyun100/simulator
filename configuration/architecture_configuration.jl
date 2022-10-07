@@ -47,10 +47,13 @@ module ArchitectureConfiguration
         capacity::Int64
         coordinates::Tuple{Int64,Int64}
         qubits::Dict #{String, Qubit}
+        qubitsList::Vector # To check communication qubit
         noOfPhonons::Float64
         executionTime::Float64
-        function Core(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict(), noOfPhonons::Float64=0.0, executionTime::Float64=0.0)
-            new(id, capacity, coordinates, qubits, noOfPhonons, executionTime)
+        doEmpty::Int64
+
+        function Core(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict(), qubitsList::Vector = [], noOfPhonons::Float64=0.0, executionTime::Float64=0.0, doEmpty::Int64=0)
+            new(id, capacity, coordinates, qubits, qubitsList,  noOfPhonons, executionTime, doEmpty)
         end
     end
 
@@ -104,9 +107,9 @@ module ArchitectureConfiguration
         return qubit
     end
 
-    function buildCore(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict())
+    function buildCore(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict(), qubitsList=[])
         @assert(length(qubits)<capacity,"#qubits per core do NOT exceed capacity of core.")
-        core = Core(id, capacity, coordinates, qubits)
+        core = Core(id, capacity, coordinates, qubits, qubitsList)
         return core
     end
 
@@ -170,20 +173,24 @@ module ArchitectureConfiguration
                     noOfQubits = componentConfig["number_of_qubits"]
 
                     qubitDict = Dict()
+                    qubitsList = []
                     for i in 1:noOfQubits
                         if architectureName =="Q-bus"
                             qubitID = "Qubit"*string(qubitNos[coreID][i])
                             qubitDict[qubitID] = generateQubit(qubitID)
+                            push!(qubitsList, qubitDict[qubitID])
                         elseif i == noOfQubits
                             qubitID = "Qubit"*string(qubitNos[coreID][i])
                             qubitDict[qubitID] = generateQubit(qubitID, 0.0, true)
+                            push!(qubitsList, qubitDict[qubitID])
                         else
                             qubitID = "Qubit"*string(qubitNos[coreID][i])
                             qubitDict[qubitID] = generateQubit(qubitID)
+                            push!(qubitsList, qubitDict[qubitID])
                         end
                     end
 
-                    core = buildCore(coreID, coreCapacity, coreCoordinates, qubitDict)
+                    core = buildCore(coreID, coreCapacity, coreCoordinates, qubitDict, qubitsList)
                     componentList[coreID] = core
                 end
                 components["cores"] = componentList

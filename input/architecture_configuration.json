@@ -621,37 +621,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,1],
                     "number_of_qubits":30
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [5,1],
                     "number_of_qubits":30
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,3],
                     "number_of_qubits":30
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [5,3],
                     "number_of_qubits":30
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,5],
                     "number_of_qubits":30
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [5,5],
                     "number_of_qubits":30
                 }
@@ -730,37 +730,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,1],
                     "number_of_qubits":20
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [5,1],
                     "number_of_qubits":20
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,3],
                     "number_of_qubits":20
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [5,3],
                     "number_of_qubits":20
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,5],
                     "number_of_qubits":20
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [5,5],
                     "number_of_qubits":20
                 }
@@ -839,37 +839,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,1],
                     "number_of_qubits":15
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [5,1],
                     "number_of_qubits":15
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,3],
                     "number_of_qubits":15
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [5,3],
                     "number_of_qubits":15
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,5],
                     "number_of_qubits":15
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [5,5],
                     "number_of_qubits":15
                 }
@@ -948,37 +948,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,1],
                     "number_of_qubits":10
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [5,1],
                     "number_of_qubits":10
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,3],
                     "number_of_qubits":10
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [5,3],
                     "number_of_qubits":10
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,5],
                     "number_of_qubits":10
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [5,5],
                     "number_of_qubits":10
                 }
@@ -1057,37 +1057,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,1],
                     "number_of_qubits":30
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,3],
                     "number_of_qubits":30
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,5],
                     "number_of_qubits":30
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,7],
                     "number_of_qubits":30
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,9],
                     "number_of_qubits":30
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 100,
+                    "capacity": 60,
                     "coordinates": [1,11],
                     "number_of_qubits":30
                 }
@@ -1190,37 +1190,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,1],
                     "number_of_qubits":20
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,3],
                     "number_of_qubits":20
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,5],
                     "number_of_qubits":20
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,7],
                     "number_of_qubits":20
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,9],
                     "number_of_qubits":20
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 100,
+                    "capacity": 40,
                     "coordinates": [1,11],
                     "number_of_qubits":20
                 }
@@ -1323,37 +1323,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,1],
                     "number_of_qubits":15
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,3],
                     "number_of_qubits":15
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,5],
                     "number_of_qubits":15
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,7],
                     "number_of_qubits":15
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,9],
                     "number_of_qubits":15
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 100,
+                    "capacity": 30,
                     "coordinates": [1,11],
                     "number_of_qubits":15
                 }
@@ -1456,37 +1456,37 @@
             "cores":{
                 "Core1":{
                     "id": "Core1",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,1],
                     "number_of_qubits":10
                 },
                 "Core2":{
                     "id": "Core2",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,3],
                     "number_of_qubits":10
                 },
                 "Core3":{
                     "id": "Core3",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,5],
                     "number_of_qubits":10
                 },
                 "Core4":{
                     "id": "Core4",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,7],
                     "number_of_qubits":10
                 },
                 "Core5":{
                     "id": "Core5",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,9],
                     "number_of_qubits":10
                 },
                 "Core6":{
                     "id": "Core6",
-                    "capacity": 100,
+                    "capacity": 20,
                     "coordinates": [1,11],
                     "number_of_qubits":10
                 }

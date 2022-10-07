@@ -8,14 +8,16 @@ module CommunicationConfiguration
         heatingRate
         currentCoordinates::Tuple{Int64,Int64}
         nextCoordinates::Tuple{Int64,Int64}
-        function Shuttling(type::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate=0.0,currentCoordinates::Tuple{Int64,Int64}=(0,0), nextCoordinates::Tuple{Int64,Int64}=(0,0))
+        startingCoreID::String
+        targetCoreID::String
+        function Shuttling(type::String, duration::Float64=0.0, speed::Float64=0.0, heatingRate=0.0,currentCoordinates::Tuple{Int64,Int64}=(0,0), nextCoordinates::Tuple{Int64,Int64}=(0,0), startingCoreID::String="", targetCoreID::String="")
             if type=="linearTransport"
                 @assert(speed>0.0, "Speed must be larger than 0.")
             else
                 @assert(duration>=0.0, "Duration must be equal or larger than 0.")
             end
             # @assert(currentCoordinates !== (0,0)&&nextCoordinates !== (0,0), "Coordinates must be defined.")
-            new(type, duration, speed, heatingRate, currentCoordinates, nextCoordinates)
+            new(type, duration, speed, heatingRate, currentCoordinates, nextCoordinates, startingCoreID, targetCoreID)
         end
     end
 
@@ -77,11 +79,13 @@ module CommunicationConfiguration
     const communicationConfiguration = openConfigFile(filePath)
 
     # TODO: renovate to fit Q-bus
-    function generateCommunicationOperation(operationName::String, currentCoordinates::Tuple{Int64,Int64}, nextCoordinates::Tuple{Int64,Int64})
+    function generateCommunicationOperation(operationName::String, currentCoordinates::Tuple{Int64,Int64}, nextCoordinates::Tuple{Int64,Int64}, startingCoreID, targetCoreID)
         dummyOperation = communicationConfiguration["shuttling"][operationName]
         operation = deepcopy(dummyOperation)
         operation.currentCoordinates = currentCoordinates
         operation.nextCoordinates = nextCoordinates
+        operation.startingCoreID = startingCoreID
+        operation.targetCoreID = targetCoreID
         return operation
     end
 end

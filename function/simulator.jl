@@ -12,6 +12,8 @@ module QCCDSimulator
     import ..CostCalculator
     import ..ErrorCalculator
     include("../input/communication_protocol.jl")
+    include("../configuration/operation_configuration.jl")
+
     CommunicationProtocol = QCCDShuttlingProtocol # architecture dependency
 
     function checkNeedCommunication(appliedQubits, architecture)
@@ -85,8 +87,19 @@ module QCCDSimulator
         return false
     end
 
-    function checkDoShuttlingNextComponent(id, nextCoordinates, shuttlingTable)
+
+    function checkDoShuttlingNextComponent(Coordinates, shuttlingTable, id = nothing)
         index = 0
+        if id === nothing
+            for route in shuttlingTable
+                for i in route[2]
+                    if i == Coordinates
+                        return true
+                    end
+                end
+            end
+        end        
+
         for i in 1:length(shuttlingTable)
             if shuttlingTable[i][1] == id
                 index = i
@@ -94,7 +107,7 @@ module QCCDSimulator
         end
         for route in shuttlingTable[1:index-1]
             for i in route[2]
-                if i == nextCoordinates
+                if i == Coordinates
                     return true
                 end
             end
@@ -114,19 +127,68 @@ module QCCDSimulator
             popfirst!(shuttlingTable[index][2])
         end
         if currentCoordinates != popfirst!(shuttlingTable[index][2])
-            @error("$currentCoordinates, $shuttlingTable[index][2]")
+            @error("$currentCoordinates, $(shuttlingTable[index][2])")
         end
         if length(shuttlingTable[index][2]) == 0
             deleteat!(shuttlingTable, index)
         end
     end
 
-    function checkPackedCore()
+    function checkPackedCore(targetCoreID, architecutre)
+        for core in values(architecutre.components["cores"])
+            if core.id == targetCoreID
+                if core.capacity - 1 < length(core.qubits)
+                    return true
+                end
+            end
+        end
+        return false
     end
 
-    function emptyCore()
-    end
+    function emptyCore(targetCoreID, architecture, multiGateTable, shuttlingTable)
 
+        targetCore = nothing
+        for core in values(architecture.components["cores"])
+            if core.id == targetCoreID
+                targetCore = core
+                break
+            end
+        end
+        if targetCore == nothing
+            @error("targetCore is nothing")
+        end
+
+        choose_core = []
+        for core in values(architecture.components["cores"])
+            if length(core.qubits) !=0
+                push!(choose_core, (length(core.qubits), core.id))
+            end
+        end
+
+        depotCoreID = findmin(choose_core)[1][2]
+
+        for qubit in values(targetCore.qubits)
+            operations = qubit.circuitQubit.operations
+            if OperationConfiguration.MultiGate ∉ operations && QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling ∉ operations
+                if !qubit.isShuttling
+                    for i in shuttlingTable
+                        if i[1] == qubit.id
+                            return
+                        end
+                    end
+                    communicationOperations, shuttlingRoute = CommunicationProtocol.buildCommunicationOperations2(qubit, targetCoreID, depotCoreID, architecture, multiGateTable)
+                    push!(shuttlingTable, [qubit.id, shuttlingRoute])
+                    
+                    for communicationOperation in reverse(communicationOperations)
+                        pushfirst!(qubit.circuitQubit.operations, communicationOperation)
+                    end
+
+                    targetCore.doEmpty += 1
+                    break
+                end
+            end
+        end
+    end
 
     function executeOperation(qubit, refTime, multiGateTable, architecture, shuttlingTable) # (Qubit, Float64, Dict, Architecture)
         operations = qubit.circuitQubit.operations
@@ -161,6 +223,7 @@ module QCCDSimulator
             if String ∈ typeof.(appliedQubits)
                 return
             end
+
             for i in 1:length(appliedQubits)
                 for core in coreList
                     for q in values(core.qubits)
@@ -190,7 +253,17 @@ module QCCDSimulator
 
 
                     if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
-                        communicationOperations, shuttlingRoute = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
+
+                        if checkPackedCore(targetPairs[3-i][1].id, architecture)
+                            qubit.executionTime = refTime
+                            if targetPairs[3-i][1].doEmpty == 0 # architecture.components["cores"][targetCoreID].capacity/4
+                                emptyCore(targetPairs[3-i][1].id, architecture, multiGateTable, shuttlingTable)
+                                return
+                            else
+                                targetPairs[3-i][1].doEmpty = 0
+                            end
+                        end
+                        communicationOperations, shuttlingRoute = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, shuttlingTable)
                         push!(shuttlingTable, [appliedQubits[i].id, shuttlingRoute])
 
                         for communicationOperation in reverse(communicationOperations)
@@ -204,8 +277,19 @@ module QCCDSimulator
                             #     appliedQubits[i].executionTime = dwellTime
                             #     return
                             # end
-                    
-                            communicationOperations, shuttlingRoute = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture)
+                            
+
+                            if checkPackedCore(targetPairs[3-i][1].id, architecture)
+                                qubit.executionTime = refTime
+                                if targetPairs[3-i][1].doEmpty == 0 # architecture.components["cores"][targetCoreID].capacity/4
+                                    emptyCore(targetPairs[3-i][1].id, architecture, multiGateTable, shuttlingTable)
+                                    return
+                                else
+                                    targetPairs[3-i][1].doEmpty = 0
+                                end
+                            end
+
+                            communicationOperations, shuttlingRoute = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, shuttlingTable)
                             push!(shuttlingTable, [appliedQubits[i].id, shuttlingRoute])
 
                             for communicationOperation in reverse(communicationOperations)
@@ -235,6 +319,7 @@ module QCCDSimulator
             # TODO: scheduling()
         
         elseif operationType == Main.QCCDSimulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
+
             # TODO: multi qubit shuttling
             # TODO: optimize to piplining
             currentCoordinates = operation.currentCoordinates
@@ -243,6 +328,16 @@ module QCCDSimulator
             nextComponent = architecture.topology[nextCoordinates[1], nextCoordinates[2]]
             currentComponentType = typeof(currentComponent)
             nextComponentType = typeof(nextComponent)
+            targetCoreID = operation.targetCoreID
+            startingCoreID = operation.startingCoreID
+            targetCore = nothing
+
+            for core in values(architecture.components["cores"])
+                if core.id == targetCoreID
+                    targetCore = core
+                    break
+                end
+            end
 
             # A architecture can do shuttling only one thing at once
             # if architecture.isShuttling && !qubit.isShuttling
@@ -252,24 +347,31 @@ module QCCDSimulator
             # end
 
             if operation.type == "split"
-                if !checkDoShuttlingNextComponent(qubit.id, nextCoordinates, shuttlingTable)
+                if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id)
                     qubit.executionTime += operation.duration
                     noOfQubits = length(currentComponent.qubits)
                     proportion = currentComponent.noOfPhonons/noOfQubits
 
+                    currentComponent.qubitsList[end-1].isCommunicationQubit = true
+                    currentComponent.qubitsList = currentComponent.qubitsList[1:end-1]
+                    
                     delete!(currentComponent.qubits, qubit.id)
                     currentComponent.noOfPhonons = (noOfQubits-1)*proportion + operation.heatingRate[1] # split
                     currentComponent.executionTime = qubit.executionTime
                     
-                    qubitList = collect(keys(currentComponent.qubits))
-                    qubitPairList = []
-                    for i in qubitList
-                        push!(qubitPairList, (parse(Int64, i[6:end]), i))
-                    end
-                    sort!(qubitPairList)
-                    if length(qubitPairList)>0
-                        currentComponent.qubits[qubitPairList[end][2]].isCommunicationQubit = true
-                    end
+                    """
+                    old swap protocol
+                    """
+                    # qubitList = collect(keys(currentComponent.qubits))
+                    # qubitPairList = []
+                    # for i in qubitList
+                    #     push!(qubitPairList, (parse(Int64, i[6:end]), i))
+                    # end
+                    # sort!(qubitPairList)
+                    # if length(qubitPairList)>0
+                    #     currentComponent.qubits[qubitPairList[end][2]].isCommunicationQubit = true
+                    # end
+
 
                     nextComponent.isShuttling = true
                     # TODO
@@ -282,7 +384,8 @@ module QCCDSimulator
                     popfirst!(qubit.circuitQubit.operations)
                     deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable)
 
-                    # println("$refTime Split! from $(currentComponent.id), $(qubit.id)")
+                    println("$refTime Split! from $(currentComponent.id), $(qubit.id)")
+
                 else # TODO: dwell time
                     qubit.executionTime = nextComponent.executionTime
                     return
@@ -290,7 +393,7 @@ module QCCDSimulator
 
             elseif operation.type == "merge"
                 architecture.isShuttling =false
-                if !checkDoShuttlingNextComponent(qubit.id, nextCoordinates, shuttlingTable)
+                if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id)
                     qubit.executionTime += operation.duration
 
                     currentComponent.isShuttling = false
@@ -303,6 +406,7 @@ module QCCDSimulator
                         end
                     end
                     nextComponent.qubits[qubit.id] = qubit
+                    push!(nextComponent.qubitsList, qubit)
                     nextComponent.executionTime = qubit.executionTime
                     nextComponent.noOfPhonons += qubit.noOfPhonons + operation.heatingRate # merge
 
@@ -313,7 +417,7 @@ module QCCDSimulator
                     deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable)
                     deleteShuttlingRoute(qubit.id, nextCoordinates, shuttlingTable)
 
-                    # println("$refTime Merge! to $(nextComponent.id), $(qubit.id)")
+                    println("$refTime Merge! to $(nextComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
                     qubit.executionTime = nextComponent.executionTime
@@ -322,7 +426,7 @@ module QCCDSimulator
 
             elseif operation.type == "linearTransport"
                 if currentComponentType == Main.ArchitectureConfiguration.Path
-                    if !checkDoShuttlingNextComponent(qubit.id, nextCoordinates, shuttlingTable)
+                    if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id)
                         qubit.executionTime += currentComponent.length/(operation.speed)
                         qubit.noOfPhonons += operation.heatingRate
 
@@ -347,7 +451,7 @@ module QCCDSimulator
                     end
 
                 elseif currentComponentType == Main.ArchitectureConfiguration.Junction
-                    if !checkDoShuttlingNextComponent(qubit.id, nextCoordinates, shuttlingTable)
+                    if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id)
                         qubit.executionTime += nextComponent.length/(operation.speed)
                         qubit.noOfPhonons += operation.heatingRate
 
@@ -372,7 +476,7 @@ module QCCDSimulator
                 end
 
             elseif operation.type == "junctionRotate"
-                if !checkDoShuttlingNextComponent(qubit.id, nextCoordinates, shuttlingTable)
+                if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id)
                     qubit.executionTime += operation.duration
                     qubit.noOfPhonons += operation.heatingRate
 
