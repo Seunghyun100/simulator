@@ -364,7 +364,7 @@ QAOA start
 # buildQAOA()
 
 """
-RCS start
+RCS start (may be wrong)
 """
 # name = "rcs-60" # name
 # noQubits = 60 # number of qubits
@@ -391,17 +391,49 @@ RCS start
 """
 SimTest start
 """
-name = "SimTest2" # name
+# name = "SimTest2" # name
+# noQubits = 60
+# circuit = initCircuit(noQubits)
+
+# for i in 1:30
+#     two(cx, i, i+30)
+# end
+# for i in 1:30
+#     two(cx, i+30, i)
+# end
+
+"""
+RCS
+"""
+name = "rcs60"
 noQubits = 60
 circuit = initCircuit(noQubits)
 
-for i in 1:30
-    two(cx, i, i+30)
+gateSet = ["x", "y", "z", "h", "s", "t", "cx"]
+for i in 1
+    qq = 0
+    for c in 1:100
+        set = deepcopy(gateSet)
+        for i in 1:7
+            qqq = qq % 60 + 1
+            gate = rand(set)
+            deleteat!(set, findall(x->x==gate, set))
+            if gate != "cx"
+                one(gate,qqq)
+            else
+                t = rand((-1,1))
+                if qqq == 1
+                    two(gate,qqq,qqq+1)
+                elseif qqq == 60
+                    two(gate,qqq,qqq-1)
+                else
+                    two(gate,qqq,qqq+t)
+                end
+            end
+            qq += 1
+        end
+    end
 end
-for i in 1:30
-    two(cx, i+30, i)
-end
-
 ########################
 """
 Output
