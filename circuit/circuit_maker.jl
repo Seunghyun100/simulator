@@ -412,7 +412,7 @@ circuit = initCircuit(noQubits)
 gateSet = ["x", "y", "z", "h", "s", "t", "cx"]
 for i in 1
     qq = 0
-    for c in 1:100
+    for c in 1:200
         set = deepcopy(gateSet)
         for i in 1:7
             qqq = qq % 60 + 1

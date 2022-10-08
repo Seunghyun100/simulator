@@ -16,7 +16,9 @@ provider = nothing
 # whether or not simulation
 
 print("Do you simulate? (y/n)\n")
-ans = readline()
+# ans = readline()
+println("y")
+ans = "y"
 # println(ans)
 if ans =="y"
     sim = true
@@ -55,30 +57,11 @@ configuration = Dict("operation"=>operationConfiguration, "architecture"=>archit
 
 if sim
     include("function/simulator.jl")
-    if ans == "QCCD-Grid-30"
-        provider = QCCDSimulator
-    elseif ans == "QCCD-Grid-20"
-        provider = QCCDSimulator
-    elseif ans == "QCCD-Grid-15"
-        provider = QCCDSimulator
-    elseif ans == "QCCD-Grid-10"
-        provider = QCCDSimulator
-    elseif ans == "QCCD-Comb-30"
-        provider = QCCDSimulator
-    elseif ans == "QCCD-Comb-20"
-        provider = QCCDSimulator
-    elseif ans == "QCCD-Comb-15"
-        provider = QCCDSimulator
-    elseif ans == "QCCD-Comb-10"
-        provider = QCCDSimulator
-    elseif ans =="Q-bus-30"
+    if ans[1:1] == "b"
         provider = QBusSimulator
-    elseif ans =="Q-bus-20"
-        provider = QBusSimulator
-    elseif ans =="Q-bus-15"
-        provider = QBusSimulator
-    elseif ans =="Q-bus-10"
-        provider = QBusSimulator
+        println("QBusSimulator")
+    else
+        provider = QCCDSimulator
     end
 else
     provider = nothing # TODO: set the actual hardware
