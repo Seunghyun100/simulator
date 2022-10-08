@@ -115,7 +115,7 @@ module QCCDSimulator
         return false
     end
 
-    function deleteShuttlingRoute(id, currentCoordinates, shuttlingTable)
+    function deleteShuttlingRoute(id, currentCoordinates, shuttlingTable, time = false)
         index = 0
         for i in 1:length(shuttlingTable)
             if shuttlingTable[i][1] == id
@@ -126,7 +126,10 @@ module QCCDSimulator
         if shuttlingTable[index][2][1] == (0,0)
             popfirst!(shuttlingTable[index][2])
         end
-        if currentCoordinates != popfirst!(shuttlingTable[index][2])
+
+        if time != false
+            shuttlingTable[index][3] = time
+        elseif currentCoordinates != popfirst!(shuttlingTable[index][2])
             @error("$currentCoordinates, $(shuttlingTable[index][2])")
         end
         if length(shuttlingTable[index][2]) == 0
@@ -134,10 +137,20 @@ module QCCDSimulator
         end
     end
 
+    function deleteShuttlingRoutByTime(shuttlingTable, refTime)
+        c = 0
+        for i in 1:length(shuttlingTable)
+            if shuttlingTable[i-c][3] < refTime-2 && shuttlingTable[i-c][3]!= false
+                deleteat!(shuttlingTable, i-c)
+                c += 1
+            end
+        end
+    end
+
     function checkPackedCore(targetCoreID, architecutre)
         for core in values(architecutre.components["cores"])
             if core.id == targetCoreID
-                if core.capacity - 1 < length(core.qubits)
+                if core.capacity - 3 < length(core.qubits)
                     return true
                 end
             end
@@ -159,13 +172,18 @@ module QCCDSimulator
         end
 
         choose_core = []
-        for core in values(architecture.components["cores"])
-            if length(core.qubits) !=0
+        for i in 1:architecture.noOfCores
+            core = architecture.components["cores"]["Core$i"]
+            if core.isPreparedCommunication == false
                 push!(choose_core, (length(core.qubits), core.id))
             end
         end
+        if length(choose_core) != 0
+            depotCoreID = findmin(choose_core)[1][2]
+        else
+            return 
+        end
 
-        depotCoreID = findmin(choose_core)[1][2]
 
         for qubit in values(targetCore.qubits)
             operations = qubit.circuitQubit.operations
@@ -176,8 +194,12 @@ module QCCDSimulator
                             return
                         end
                     end
-                    communicationOperations, shuttlingRoute = CommunicationProtocol.buildCommunicationOperations2(qubit, targetCoreID, depotCoreID, architecture, multiGateTable)
-                    push!(shuttlingTable, [qubit.id, shuttlingRoute])
+                    tmp = CommunicationProtocol.buildCommunicationOperations2(qubit, targetCoreID, depotCoreID, architecture, multiGateTable, shuttlingTable)
+                    if tmp == false
+                        return
+                    end
+                    communicationOperations, shuttlingRoute = tmp
+                    push!(shuttlingTable, [qubit.id, shuttlingRoute, false])
                     
                     for communicationOperation in reverse(communicationOperations)
                         pushfirst!(qubit.circuitQubit.operations, communicationOperation)
@@ -263,8 +285,13 @@ module QCCDSimulator
                                 targetPairs[3-i][1].doEmpty = 0
                             end
                         end
-                        communicationOperations, shuttlingRoute = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, shuttlingTable)
-                        push!(shuttlingTable, [appliedQubits[i].id, shuttlingRoute])
+                        tmp = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, shuttlingTable)
+                        if tmp == false
+                            qubit.executionTime = refTime
+                            return
+                        end
+                        communicationOperations, shuttlingRoute = tmp
+                        push!(shuttlingTable, [appliedQubits[i].id, shuttlingRoute, false])
 
                         for communicationOperation in reverse(communicationOperations)
                             pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
@@ -289,8 +316,13 @@ module QCCDSimulator
                                 end
                             end
 
-                            communicationOperations, shuttlingRoute = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, shuttlingTable)
-                            push!(shuttlingTable, [appliedQubits[i].id, shuttlingRoute])
+                            tmp = CommunicationProtocol.buildCommunicationOperations(appliedQubits[i], operation, multiGateTable, architecture, shuttlingTable)
+                            if tmp == false
+                                qubit.executionTime = refTime
+                                return
+                            end
+                            communicationOperations, shuttlingRoute = tmp
+                            push!(shuttlingTable, [appliedQubits[i].id, shuttlingRoute, false])
 
                             for communicationOperation in reverse(communicationOperations)
                                 pushfirst!(appliedQubits[i].circuitQubit.operations, communicationOperation)
@@ -302,10 +334,23 @@ module QCCDSimulator
                 return
             else
                 if checkEndOperation(appliedQubits, refTime)
+                    if operation.name == "swap"
+                        targetCore = targetPairs[1][1]
+                        for i in 1:length(targetCore.qubitsList)
+                            if targetCore.qubitsList[i].id == targetPairs[1][2].id
+                                targetCore.qubitsList[i] = targetCore.qubitsList[end]
+                                targetCore.qubitsList[end] = targetPairs[1][2]
+                                targetCore.qubitsList[i].isCommunicationQubit = false
+                                targetCore.qubitsList[end].isCommunicationQubit = true
+                                break
+                            end
+                        end
+                    end
                     for i in appliedQubits
                         if typeof(i.circuitQubit.operations[1]) ==  Main.CommunicationConfiguration.Shuttling
                             return
                         end
+                        
                         i.executionTime += operation.duration
                         popfirst!(i.circuitQubit.operations)
                     end
@@ -331,10 +376,17 @@ module QCCDSimulator
             targetCoreID = operation.targetCoreID
             startingCoreID = operation.startingCoreID
             targetCore = nothing
+            startingCore = nothing
 
             for core in values(architecture.components["cores"])
                 if core.id == targetCoreID
                     targetCore = core
+                    break
+                end
+            end
+            for core in values(architecture.components["cores"])
+                if core.id == startingCoreID
+                    startingCore = core
                     break
                 end
             end
@@ -347,13 +399,17 @@ module QCCDSimulator
             # end
 
             if operation.type == "split"
-                if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id)
+                if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id) && !targetCore.isPreparedCommunication
                     qubit.executionTime += operation.duration
                     noOfQubits = length(currentComponent.qubits)
                     proportion = currentComponent.noOfPhonons/noOfQubits
 
-                    currentComponent.qubitsList[end-1].isCommunicationQubit = true
-                    currentComponent.qubitsList = currentComponent.qubitsList[1:end-1]
+                    if length(currentComponent.qubitsList) != 1
+                        currentComponent.qubitsList[end-1].isCommunicationQubit = true
+                        currentComponent.qubitsList = currentComponent.qubitsList[1:end-1]
+                    else
+                        currentComponent.qubitsList = []
+                    end
                     
                     delete!(currentComponent.qubits, qubit.id)
                     currentComponent.noOfPhonons = (noOfQubits-1)*proportion + operation.heatingRate[1] # split
@@ -381,10 +437,12 @@ module QCCDSimulator
 
                     qubit.noOfPhonons = proportion + operation.heatingRate[2] # split
 
+                    startingCore.isPreparedCommunication = false
+
                     popfirst!(qubit.circuitQubit.operations)
                     deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable)
 
-                    println("$refTime Split! from $(currentComponent.id), $(qubit.id)")
+                    println("$(qubit.executionTime) Split! from $(currentComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
                     qubit.executionTime = nextComponent.executionTime
@@ -394,6 +452,7 @@ module QCCDSimulator
             elseif operation.type == "merge"
                 architecture.isShuttling =false
                 if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id)
+
                     qubit.executionTime += operation.duration
 
                     currentComponent.isShuttling = false
@@ -414,10 +473,10 @@ module QCCDSimulator
                     qubit.isShuttling = false
                     architecture.noOfShuttling += 1
                     popfirst!(qubit.circuitQubit.operations)
-                    deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable)
-                    deleteShuttlingRoute(qubit.id, nextCoordinates, shuttlingTable)
+                    deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
+                    deleteShuttlingRoute(qubit.id, nextCoordinates, shuttlingTable, qubit.executionTime)
 
-                    println("$refTime Merge! to $(nextComponent.id), $(qubit.id)")
+                    println("$(qubit.executionTime) Merge! to $(nextComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
                     qubit.executionTime = nextComponent.executionTime
@@ -516,6 +575,7 @@ module QCCDSimulator
             for qubit in values(qubits)
                 if checkEndOperation(qubit, refTime)
                     executeOperation(qubit, refTime, multiGateTable, architecture, shuttlingTable)
+                    deleteShuttlingRoutByTime(shuttlingTable, refTime)
                 end
             end
 

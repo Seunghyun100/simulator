@@ -51,9 +51,10 @@ module ArchitectureConfiguration
         noOfPhonons::Float64
         executionTime::Float64
         doEmpty::Int64
+        isPreparedCommunication::Bool
 
-        function Core(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict(), qubitsList::Vector = [], noOfPhonons::Float64=0.0, executionTime::Float64=0.0, doEmpty::Int64=0)
-            new(id, capacity, coordinates, qubits, qubitsList,  noOfPhonons, executionTime, doEmpty)
+        function Core(id::String, capacity::Int64, coordinates::Tuple{Int64, Int64}, qubits::Dict=Dict(), qubitsList::Vector = [], noOfPhonons::Float64=0.0, executionTime::Float64=0.0, doEmpty::Int64=0, isPreparedCommunication::Bool=false)
+            new(id, capacity, coordinates, qubits, qubitsList,  noOfPhonons, executionTime, doEmpty, isPreparedCommunication)
         end
     end
 
@@ -89,11 +90,12 @@ module ArchitectureConfiguration
         name::String
         components::Dict # e.g., core, junction, path, qubit
         topology::Matrix # It is mapping components as coordinates
+        noOfCores::Int64
         totalTime::Float64
         isShuttling::Bool
         noOfShuttling::Int64
-        function Architecture(name::String, components::Dict, topology::Matrix, totalTime::Float64 =0.0, isShuttling::Bool=false, noOfShuttling::Int64=0)
-            new(name, components, topology, totalTime, isShuttling, noOfShuttling)
+        function Architecture(name::String, components::Dict, topology::Matrix, noOfCores::Int64, totalTime::Float64 =0.0, isShuttling::Bool=false, noOfShuttling::Int64=0)
+            new(name, components, topology, noOfCores, totalTime, isShuttling, noOfShuttling)
         end
     end
 
@@ -131,6 +133,7 @@ module ArchitectureConfiguration
         # build the Component list
         architectureName = architectureConfig["name"]
         componentsConfig = architectureConfig["components"]
+        noOfCores = architectureConfig["number_of_cores"]
 
         components = Dict()
         
@@ -259,7 +262,7 @@ module ArchitectureConfiguration
         end
 
         # Build the architecture
-        architecture = Architecture(architectureName, components, topology)
+        architecture = Architecture(architectureName, components, topology, noOfCores)
         return architecture
     end    
 

@@ -151,7 +151,8 @@
             "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
             ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
             ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
-        }
+        },
+        "number_of_cores": 2
     },
     "Q-bus-20":{
         "name": "Q-bus",
@@ -305,7 +306,8 @@
             "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
             ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
             ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
-        }
+        },
+        "number_of_cores": 3
     },
     "Q-bus-15":{
         "name": "Q-bus",
@@ -459,7 +461,8 @@
             "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
             ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
             ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
-        }
+        },
+        "number_of_cores": 4
     },
     "Q-bus-10":{
         "name": "Q-bus",
@@ -613,7 +616,8 @@
             "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
             ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
             ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
-        }
+        },
+        "number_of_cores": 6
     },
     "QCCD-Grid-30":{
         "name": "QCCD-Grid",
@@ -722,7 +726,8 @@
             ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
             ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
             ["Core2", "Block", "Core4","Block", "Core6"]] 
-        }
+        },
+        "number_of_cores": 2
     },
     "QCCD-Grid-20":{
         "name": "QCCD-Grid",
@@ -831,7 +836,8 @@
             ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
             ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
             ["Core2", "Block", "Core4","Block", "Core6"]] 
-        }
+        },
+        "number_of_cores": 3
     },
     "QCCD-Grid-15":{
         "name": "QCCD-Grid",
@@ -940,7 +946,8 @@
             ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
             ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
             ["Core2", "Block", "Core4","Block", "Core6"]] 
-        }
+        },
+        "number_of_cores": 4
     },
     "QCCD-Grid-10":{
         "name": "QCCD-Grid",
@@ -1049,7 +1056,8 @@
             ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
             ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
             ["Core2", "Block", "Core4","Block", "Core6"]] 
-        }
+        },
+        "number_of_cores": 6
     },
     "QCCD-Comb-30":{
         "name": "Q-bus",
@@ -1182,7 +1190,8 @@
             ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
             ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
             
-        }
+        },
+        "number_of_cores": 2
     },
     "QCCD-Comb-20":{
         "name": "Q-bus",
@@ -1315,7 +1324,8 @@
             ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
             ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
             
-        }
+        },
+        "number_of_cores": 3
     },
     "QCCD-Comb-15":{
         "name": "Q-bus",
@@ -1448,7 +1458,8 @@
             ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
             ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
             
-        }
+        },
+        "number_of_cores": 4
     },
     "QCCD-Comb-10":{
         "name": "Q-bus",
@@ -1581,6 +1592,7 @@
             ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
             ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
             
-        }
+        },
+        "number_of_cores": 6
     }
 }

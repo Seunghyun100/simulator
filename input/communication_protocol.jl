@@ -47,25 +47,35 @@ module QCCDShuttlingProtocol
             targetCore = target[1]
             targetQubit = target[2]
             if appliedQubit == targetQubit
+                if checkDoShuttlingNextComponent(targetCore.coordinates, shuttlingTable)
+                    return false
+                end
+                if targetCore.isPreparedCommunication
+                    return false
+                end
                 if targetQubit.isCommunicationQubit == false
-                    if checkDoShuttlingNextComponent(targetCore.coordinates, shuttlingTable)
-                        return
-                    end
                     for qubit in values(targetCore.qubits)
                         if qubit.isCommunicationQubit
                             composition = [length(multiGateTable)+1, "swap", targetQubit.circuitQubit.id, qubit.circuitQubit.id]
                             swap = CircuitBuilder.encodeOperation(composition, multiGateTable)
                             pushfirst!(qubit.circuitQubit.operations, swap)
 
-                            @assert(targetCore.qubitsList[end] == qubit, "targetCore: $(targetCore.id), targetQubit: $(targetQubit.id), endQubit: $(targetCore.qubitsList[end].id), qubit: $(qubit.id), qubitsList: $(targetCore.qubitsList), \n qubits: $(keys(targetCore.qubits))")
-                            for i in 1:length(targetCore.qubitsList)
-                                if targetCore.qubitsList[i] == targetQubit
-                                    targetCore.qubitsList[i] = qubit
-                                    targetCore.qubitsList[end] = targetQubit
+                            if targetCore.qubitsList[end] != qubit
+                                println("targetCore: $(targetCore.id), targetQubit: $(targetQubit.id), endQubit: $(targetCore.qubitsList[end].id), qubit: $(qubit.id), qubits: $(keys(targetCore.qubits))")
+                                for i in targetCore.qubitsList
+                                    print(i.id)
                                 end
+                                @assert(1==2, "checkCommunicationQubit")
                             end
-                            qubit.isCommunicationQubit = false
-                            targetQubit.isCommunicationQubit = true
+                            # for i in 1:length(targetCore.qubitsList)
+                            #     if targetCore.qubitsList[i] == targetQubit
+                            #         targetCore.qubitsList[i] = qubit
+                            #         targetCore.qubitsList[end] = targetQubit
+                            #     end
+                            # end
+                            # qubit.isCommunicationQubit = false
+                            # targetQubit.isCommunicationQubit = true
+                            targetCore.isPreparedCommunication = true
                             return swap
                         end
                     end
@@ -76,22 +86,37 @@ module QCCDShuttlingProtocol
         end
     end
 
-    function checkCommunicationQubit2(appliedQubit, targetCore, multiGateTable)
+    function checkCommunicationQubit2(appliedQubit, targetCore, multiGateTable, shuttlingTable)
+        if checkDoShuttlingNextComponent(targetCore.coordinates, shuttlingTable)
+            return false
+        end
+        if targetCore.isPreparedCommunication
+            return false
+        end
         if !appliedQubit.isCommunicationQubit
             for qubit in values(targetCore.qubits)
                 if qubit.isCommunicationQubit
+
                     composition = [length(multiGateTable)+1, "swap", appliedQubit.circuitQubit.id, qubit.circuitQubit.id]
                     swap = CircuitBuilder.encodeOperation(composition, multiGateTable)
                     pushfirst!(qubit.circuitQubit.operations, swap)
-                    @assert(targetCore.qubitsList[end] == qubit, "targetCore.qubitsList != qubit")
-                        for i in 1:length(targetCore.qubitsList)
-                            if targetCore.qubitsList[i] == appliedQubit
-                                targetCore.qubitsList[i] = qubit
-                                targetCore.qubitsList[end] = appliedQubit
-                            end
+                    if targetCore.qubitsList[end] != qubit
+                        println("targetCore: $(targetCore.id), endQubit: $(targetCore.qubitsList[end].id), qubit: $(qubit.id), qubits: $(keys(targetCore.qubits))")
+                        for i in targetCore.qubitsList
+                            print(i.id)
+                            print(" ")
                         end
-                    qubit.isCommunicationQubit = false
-                    appliedQubit.isCommunicationQubit = true
+                        @assert(1==2, "checkCommunicationQubit2")
+                    end
+                    #     for i in 1:length(targetCore.qubitsList)
+                    #         if targetCore.qubitsList[i] == appliedQubit
+                    #             targetCore.qubitsList[i] = qubit
+                    #             targetCore.qubitsList[end] = appliedQubit
+                    #         end
+                    #     end
+                    # qubit.isCommunicationQubit = false
+                    # appliedQubit.isCommunicationQubit = true
+                    targetCore.isPreparedCommunication = true
                     return swap
                 end
             end
@@ -209,7 +234,9 @@ module QCCDShuttlingProtocol
         
         # checkCommunicationQubit(targets, multiGateTable)
         swap = checkCommunicationQubit(appliedQubit, targets, multiGateTable, shuttlingTable)
-        if swap !== nothing
+        if swap == false
+            return false
+        elseif swap !== nothing
             push!(communicationOperationList, swap)
         end
 
@@ -233,7 +260,7 @@ module QCCDShuttlingProtocol
     end
 
 
-    function buildCommunicationOperations2(appliedQubit, startingCoreID, targetCoreID, architecture, multiGateTable)
+    function buildCommunicationOperations2(appliedQubit, startingCoreID, targetCoreID, architecture, multiGateTable, shuttlingTable)
         communicationOperationList = []
         startingCore = nothing
         targetCore = nothing
@@ -250,8 +277,10 @@ module QCCDShuttlingProtocol
             error("Not necessary communication!")
         end
         
-        swap = checkCommunicationQubit2(appliedQubit, startingCore, multiGateTable)
-        if swap !== nothing
+        swap = checkCommunicationQubit2(appliedQubit, startingCore, multiGateTable,shuttlingTable)
+        if swap == false
+            return false
+        elseif swap !== nothing
             push!(communicationOperationList, swap)
         end
 
