@@ -99,19 +99,21 @@ BV end
 """
 QFT strat
 """
-# name = "quantum-fourier-transformation-180" # name
-# noQubits = 180 # number of qubits
-# circuit = initCircuit(noQubits)
+name = "qft60" # name
+noQubits = 60 # number of qubits
+circuit = initCircuit(noQubits)
 
-# for i in 1:noQubits
-#     one(h,i)
-#     for k in i:noQubits
-#         two(cz,i, k)
-#     end
-# end
-# for i in 1:Int(noQubits/2)
-#     two(swap, i, noQubits-i+1)
-# end
+for i in 1:noQubits
+    one(h,i)
+    for k in i:noQubits
+        if k != i
+            two(cz, i, k)
+        end
+    end
+end
+for i in 1:Int(noQubits/2)
+    two(swap, i, noQubits-i+1)
+end
 """
 QFT end
 """
@@ -405,35 +407,35 @@ SimTest start
 """
 RCS
 """
-name = "rcs60"
-noQubits = 60
-circuit = initCircuit(noQubits)
+# name = "rcs60"
+# noQubits = 60
+# circuit = initCircuit(noQubits)
 
-gateSet = ["x", "y", "z", "h", "s", "t", "cx"]
-for i in 1
-    qq = 0
-    for c in 1:200
-        set = deepcopy(gateSet)
-        for i in 1:7
-            qqq = qq % 60 + 1
-            gate = rand(set)
-            deleteat!(set, findall(x->x==gate, set))
-            if gate != "cx"
-                one(gate,qqq)
-            else
-                t = rand((-1,1))
-                if qqq == 1
-                    two(gate,qqq,qqq+1)
-                elseif qqq == 60
-                    two(gate,qqq,qqq-1)
-                else
-                    two(gate,qqq,qqq+t)
-                end
-            end
-            qq += 1
-        end
-    end
-end
+# gateSet = ["x", "y", "z", "h", "s", "t", "cx"]
+# for i in 1
+#     qq = 0
+#     for c in 1:200
+#         set = deepcopy(gateSet)
+#         for i in 1:7
+#             qqq = qq % 60 + 1
+#             gate = rand(set)
+#             deleteat!(set, findall(x->x==gate, set))
+#             if gate != "cx"
+#                 one(gate,qqq)
+#             else
+#                 t = rand((-1,1))
+#                 if qqq == 1
+#                     two(gate,qqq,qqq+1)
+#                 elseif qqq == 60
+#                     two(gate,qqq,qqq-1)
+#                 else
+#                     two(gate,qqq,qqq+t)
+#                 end
+#             end
+#             qq += 1
+#         end
+#     end
+# end
 ########################
 """
 Output

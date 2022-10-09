@@ -140,8 +140,12 @@ module QCCDSimulator
     function deleteShuttlingRoutByTime(shuttlingTable, refTime)
         c = 0
         for i in 1:length(shuttlingTable)
-            if shuttlingTable[i-c][3] < refTime-2 && shuttlingTable[i-c][3]!= false
-                deleteat!(shuttlingTable, i-c)
+            if shuttlingTable[i-c][3] < refTime && shuttlingTable[i-c][3]!= false
+                popfirst!(shuttlingTable[i-c][2])
+                shuttlingTable[i-c][3] = false
+                if length(shuttlingTable[i-c][2]) == 1
+                    deleteat!(shuttlingTable, i-c)
+                end
                 c += 1
             end
         end
@@ -150,7 +154,7 @@ module QCCDSimulator
     function checkPackedCore(targetCoreID, architecutre)
         for core in values(architecutre.components["cores"])
             if core.id == targetCoreID
-                if core.capacity - 3 < length(core.qubits)
+                if core.capacity - 7 < length(core.qubits)
                     return true
                 end
             end
@@ -405,6 +409,32 @@ module QCCDSimulator
                     proportion = currentComponent.noOfPhonons/noOfQubits
 
                     if length(currentComponent.qubitsList) != 1
+                        if qubit.id != currentComponent.qubitsList[end].id
+                            println("qubit: $(qubit.id) $(qubit.isCommunicationQubit), endqubit: $(currentComponent.qubitsList[end].id) $(currentComponent.qubitsList[end].isCommunicationQubit)")
+                            println("qubit")
+                            for op in qubit.circuitQubit.operations
+                                if typeof(op) == Main.QCCDSimulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
+                                    print("$(op.type) ")
+                                else 
+                                    print("$(op.name) ")
+                                end
+                            end
+                            println("\nend")
+                            for op in currentComponent.qubitsList[end].circuitQubit.operations
+                                if typeof(op) == Main.QCCDSimulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
+                                    print("$(op.type) ")
+                                else 
+                                    print("$(op.name) ")
+                                end
+                            end
+                            println()
+                            for  qqq in values(currentComponent.qubitsList)
+                                if qqq.isCommunicationQubit
+                                    println("qubit: $(qqq.id) $(qqq.isCommunicationQubit)")
+                                end
+                            end
+                            @assert(false)
+                        end
                         currentComponent.qubitsList[end-1].isCommunicationQubit = true
                         currentComponent.qubitsList = currentComponent.qubitsList[1:end-1]
                     else
@@ -440,7 +470,7 @@ module QCCDSimulator
                     startingCore.isPreparedCommunication = false
 
                     popfirst!(qubit.circuitQubit.operations)
-                    deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable)
+                    deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
 
                     println("$(qubit.executionTime) Split! from $(currentComponent.id), $(qubit.id)")
 
@@ -461,11 +491,13 @@ module QCCDSimulator
 
                     for i in values(nextComponent.qubits)
                         if i.isCommunicationQubit
+                            @assert(i.id == nextComponent.qubitsList[end].id, "commqubit: $(i.id), endqubit: $(nextComponent.qubitsList[end].id)")
                             i.isCommunicationQubit = false
                         end
                     end
                     nextComponent.qubits[qubit.id] = qubit
                     push!(nextComponent.qubitsList, qubit)
+                    @assert(qubit.id == nextComponent.qubitsList[end].id, "qubit: $(qubit.id), endqubit: $(nextComponent.qubitsList[end].id)")
                     nextComponent.executionTime = qubit.executionTime
                     nextComponent.noOfPhonons += qubit.noOfPhonons + operation.heatingRate # merge
 
@@ -474,7 +506,7 @@ module QCCDSimulator
                     architecture.noOfShuttling += 1
                     popfirst!(qubit.circuitQubit.operations)
                     deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
-                    deleteShuttlingRoute(qubit.id, nextCoordinates, shuttlingTable, qubit.executionTime)
+                    # deleteShuttlingRoute(qubit.id, nextCoordinates, shuttlingTable, qubit.executionTime)
 
                     println("$(qubit.executionTime) Merge! to $(nextComponent.id), $(qubit.id)")
 
@@ -499,7 +531,7 @@ module QCCDSimulator
                         nextComponent.executionTime = qubit.executionTime
 
                         popfirst!(qubit.circuitQubit.operations)
-                        deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable)
+                        deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
 
                         # println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
 
@@ -524,7 +556,7 @@ module QCCDSimulator
                         nextComponent.executionTime = qubit.executionTime
 
                         popfirst!(qubit.circuitQubit.operations)
-                        deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable)
+                        deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
 
                         # println("$refTime transport from $(currentComponent.id) to $(nextComponent.id), $(qubit.id)")
 
@@ -818,7 +850,7 @@ module QBusSimulator
             else
                 if checkEndOperation(appliedQubits, refTime)
                     for i in appliedQubits
-                        if typeof(i.circuitQubit.operations[1]) ==  Main.CommunicationConfiguration.Shuttling
+                        if typeof(i.circuitQubit.operations[1]) ==  Main.QCCDSimulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
                             return
                         end
                         i.executionTime += operation.duration

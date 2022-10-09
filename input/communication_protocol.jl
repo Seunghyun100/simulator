@@ -65,7 +65,7 @@ module QCCDShuttlingProtocol
                                 for i in targetCore.qubitsList
                                     print(i.id)
                                 end
-                                @assert(1==2, "checkCommunicationQubit")
+                                @assert(false, "checkCommunicationQubit")
                             end
                             # for i in 1:length(targetCore.qubitsList)
                             #     if targetCore.qubitsList[i] == targetQubit
@@ -80,6 +80,7 @@ module QCCDShuttlingProtocol
                         end
                     end
                 else
+                    targetCore.isPreparedCommunication = true
                     return
                 end
             end
@@ -106,7 +107,7 @@ module QCCDShuttlingProtocol
                             print(i.id)
                             print(" ")
                         end
-                        @assert(1==2, "checkCommunicationQubit2")
+                        @assert(false, "checkCommunicationQubit2")
                     end
                     #     for i in 1:length(targetCore.qubitsList)
                     #         if targetCore.qubitsList[i] == appliedQubit
@@ -121,6 +122,7 @@ module QCCDShuttlingProtocol
                 end
             end
         else
+            targetCore.isPreparedCommunication = true
             return
         end
     end
@@ -231,6 +233,10 @@ module QCCDShuttlingProtocol
         elseif multiGateTable[operationID]["isPreparedCommunication"] 
             error("Already communication is prepared!")
         end
+
+        if startingCore.isPreparedCommunication
+            return false
+        end
         
         # checkCommunicationQubit(targets, multiGateTable)
         swap = checkCommunicationQubit(appliedQubit, targets, multiGateTable, shuttlingTable)
@@ -277,6 +283,9 @@ module QCCDShuttlingProtocol
             error("Not necessary communication!")
         end
         
+        if startingCore.isPreparedCommunication
+            return false
+        end
         swap = checkCommunicationQubit2(appliedQubit, startingCore, multiGateTable,shuttlingTable)
         if swap == false
             return false

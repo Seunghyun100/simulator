@@ -1325,7 +1325,7 @@
         "number_of_cores": 6
     },
     "comb1":{
-        "name": "Q-bus",
+        "name": "QCCD-Grid",
         "components":{
             "cores":{
                 "Core1":{
@@ -1459,7 +1459,7 @@
         "number_of_cores": 2
     },
     "comb2":{
-        "name": "Q-bus",
+        "name": "QCCD-Grid",
         "components":{
             "cores":{
                 "Core1":{
@@ -1593,7 +1593,7 @@
         "number_of_cores": 2
     },
     "comb3":{
-        "name": "Q-bus",
+        "name": "QCCD-Grid",
         "components":{
             "cores":{
                 "Core1":{
@@ -1727,7 +1727,7 @@
         "number_of_cores": 3
     },
     "comb4":{
-        "name": "Q-bus",
+        "name": "QCCD-Grid",
         "components":{
             "cores":{
                 "Core1":{
@@ -1861,7 +1861,7 @@
         "number_of_cores": 4
     },
     "comb6":{
-        "name": "Q-bus",
+        "name": "QCCD-Grid",
         "components":{
             "cores":{
                 "Core1":{
