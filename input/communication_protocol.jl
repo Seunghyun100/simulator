@@ -48,9 +48,11 @@ module QCCDShuttlingProtocol
             targetQubit = target[2]
             if appliedQubit == targetQubit
                 if checkDoShuttlingNextComponent(targetCore.coordinates, shuttlingTable)
+                    println("checkComm1 - do shuttling, qubit: $(targetQubit.id), core: $(targetCore.id)")
                     return false
                 end
                 if targetCore.isPreparedCommunication
+                    println("checkComm1 - isPreapared, qubit: $(targetQubit.id), core: $(targetCore.id)")
                     return false
                 end
                 if targetQubit.isCommunicationQubit == false
@@ -89,9 +91,11 @@ module QCCDShuttlingProtocol
 
     function checkCommunicationQubit2(appliedQubit, targetCore, multiGateTable, shuttlingTable)
         if checkDoShuttlingNextComponent(targetCore.coordinates, shuttlingTable)
+            println("checkComm2 - do shuttling, qubit: $(appliedQubit.id), core: $(targetCore.id)")
             return false
         end
         if targetCore.isPreparedCommunication
+            println("checkComm2 - isPrepared, qubit: $(appliedQubit.id), core: $(targetCore.id)")
             return false
         end
         if !appliedQubit.isCommunicationQubit
