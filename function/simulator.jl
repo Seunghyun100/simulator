@@ -105,9 +105,11 @@ module QCCDSimulator
                 index = i
             end
         end
+        @assert(index != 0,"index is 0, id is $(id)")
         for route in shuttlingTable[1:index-1]
             for i in route[2]
                 if i == Coordinates
+                    println("dodod shuttling id: $(id), route: $(route)")
                     return true
                 end
             end
@@ -154,7 +156,7 @@ module QCCDSimulator
     function checkPackedCore(targetCoreID, architecutre)
         for core in values(architecutre.components["cores"])
             if core.id == targetCoreID
-                if core.capacity - 7 < length(core.qubits)
+                if core.capacity - 5 < length(core.qubits)
                     return true
                 end
             end
@@ -480,9 +482,8 @@ module QCCDSimulator
                 end
 
             elseif operation.type == "merge"
-                architecture.isShuttling =false
                 if !checkDoShuttlingNextComponent(nextCoordinates, shuttlingTable, qubit.id)
-
+                    architecture.isShuttling =false
                     qubit.executionTime += operation.duration
 
                     currentComponent.isShuttling = false
