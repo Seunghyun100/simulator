@@ -94,6 +94,7 @@ module QCCDSimulator
             for route in shuttlingTable
                 for i in route[2]
                     if i == Coordinates
+                        println("id is nothing, ")
                         return true
                     end
                 end
@@ -109,7 +110,7 @@ module QCCDSimulator
         for route in shuttlingTable[1:index-1]
             for i in route[2]
                 if i == Coordinates
-                    println("dodod shuttling id: $(id), route: $(route)")
+                    # println("dodod shuttling id: $(id), route: $(route)") # debug
                     return true
                 end
             end
@@ -128,7 +129,7 @@ module QCCDSimulator
         if shuttlingTable[index][2][1] == (0,0)
             popfirst!(shuttlingTable[index][2])
         end
-
+        @assert(index!=0, "deleteShuttling error -> index is 0, id:$id, curr:$currentCoordinates")
         if time != false
             shuttlingTable[index][3] = time
         elseif currentCoordinates != popfirst!(shuttlingTable[index][2])
@@ -142,10 +143,10 @@ module QCCDSimulator
     function deleteShuttlingRoutByTime(shuttlingTable, refTime)
         c = 0
         for i in 1:length(shuttlingTable)
-            if shuttlingTable[i-c][3] < refTime && shuttlingTable[i-c][3]!= false
+            if shuttlingTable[i-c][3]-refTime<1 && shuttlingTable[i-c][3]!= false
                 popfirst!(shuttlingTable[i-c][2])
                 shuttlingTable[i-c][3] = false
-                if length(shuttlingTable[i-c][2]) == 1
+                if length(shuttlingTable[i-c][2]) == 1 || length(shuttlingTable[i-c][2]) == 0
                     deleteat!(shuttlingTable, i-c)
                 end
                 c += 1
@@ -188,7 +189,7 @@ module QCCDSimulator
             depotCoreID = findmin(choose_core)[1][2]
         else
             return 
-        end
+        end 
 
 
         for qubit in values(targetCore.qubits)
@@ -233,6 +234,8 @@ module QCCDSimulator
         elseif operationType == Main.CircuitBuilder.OperationConfiguration.MultiGate || operationType == Main.QCCDSimulator.QCCDShuttlingProtocol.CircuitBuilder.OperationConfiguration.MultiGate
             operationID = operation.id
             appliedQubits = deepcopy(multiGateTable[operationID]["appliedQubits"])
+            # appliedQubits = multiGateTable[operationID]["appliedQubits"]
+
             qubits = Dict()
             targetPairs = []
             coreList = values(architecture.components["cores"])
@@ -256,7 +259,7 @@ module QCCDSimulator
                 for core in coreList
                     for q in values(core.qubits)
                         if q.circuitQubit.id == appliedQubits[i].circuitQubit.id
-                            push!(targetPairs, (core, appliedQubits[i]))
+                            push!(targetPairs, (core, q))
                         end
                     end
                 end
@@ -342,13 +345,43 @@ module QCCDSimulator
                 if checkEndOperation(appliedQubits, refTime)
                     if operation.name == "swap"
                         targetCore = targetPairs[1][1]
-                        for i in 1:length(targetCore.qubitsList)
-                            if targetCore.qubitsList[i].id == targetPairs[1][2].id
-                                targetCore.qubitsList[i] = targetCore.qubitsList[end]
-                                targetCore.qubitsList[end] = targetPairs[1][2]
-                                targetCore.qubitsList[i].isCommunicationQubit = false
-                                targetCore.qubitsList[end].isCommunicationQubit = true
-                                break
+                        if targetCore.qubitsList[end] == targetPairs[2][2]
+                            for i in 1:length(targetCore.qubitsList)
+                                if targetCore.qubitsList[i].id == targetPairs[1][2].id
+                                    targetCore.qubitsList[i] = targetCore.qubitsList[end]
+                                    targetCore.qubitsList[end] = targetPairs[1][2]
+                                    targetCore.qubitsList[i].isCommunicationQubit = false
+                                    targetCore.qubitsList[end].isCommunicationQubit = true
+                                    targetCore.qubitsList[i].executionTime += operation.duration
+                                    targetCore.qubitsList[end].executionTime += operation.duration
+                                    break
+                                end
+                            end
+                        elseif targetCore.qubitsList[end] == targetPairs[1][2]
+                            for i in 1:length(targetCore.qubitsList)
+                                if targetCore.qubitsList[i].id == targetPairs[2][2].id
+                                    targetCore.qubitsList[i] = targetCore.qubitsList[end]
+                                    targetCore.qubitsList[end] = targetPairs[2][2]
+                                    targetCore.qubitsList[i].isCommunicationQubit = false
+                                    targetCore.qubitsList[end].isCommunicationQubit = true
+                                    targetCore.qubitsList[i].executionTime += operation.duration
+                                    targetCore.qubitsList[end].executionTime += operation.duration
+                                    break
+                                end
+                            end
+                        else
+                            for i in 1:length(targetCore.qubitsList)
+                                for k in 1:length(targetCore.qubitsList)
+                                    if targetCore.qubitsList[i].id == targetPairs[1][2].id
+                                        if targetCore.qubitsList[k].id == targetPairs[2][2].id
+                                            targetCore.qubitsList[i] = targetCore.qubitsList[k]
+                                            targetCore.qubitsList[k] = targetPairs[1][2]
+                                            targetCore.qubitsList[i].executionTime += operation.duration
+                                            targetCore.qubitsList[k].executionTime += operation.duration
+                                            break
+                                        end
+                                    end
+                                end
                             end
                         end
                     end
@@ -474,7 +507,7 @@ module QCCDSimulator
                     popfirst!(qubit.circuitQubit.operations)
                     deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
 
-                    println("$(qubit.executionTime) Split! from $(currentComponent.id), $(qubit.id)")
+                    # println("$(qubit.executionTime) Split! from $(currentComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
                     qubit.executionTime = nextComponent.executionTime
@@ -509,9 +542,10 @@ module QCCDSimulator
                     deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
                     # deleteShuttlingRoute(qubit.id, nextCoordinates, shuttlingTable, qubit.executionTime)
 
-                    println("$(qubit.executionTime) Merge! to $(nextComponent.id), $(qubit.id)")
+                    # println("$(qubit.executionTime) Merge! to $(nextComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
+                    # println("dwell, $(nextComponent.executionTime)")
                     qubit.executionTime = nextComponent.executionTime
                     return
                 end
