@@ -45,9 +45,9 @@ architectureConfigurationList = ArchitectureConfiguration.openConfigFile(archite
 
 println()
 println("What is the architecture you simulate? \n (pleas answer the architecture name)")
-for name in keys(architectureConfigurationList)
-    println(name)
-end
+# for name in keys(architectureConfigurationList)
+#     println(name)
+# end
 println()
 ans = readline()
 println()
@@ -79,16 +79,16 @@ circuitList = CircuitBuilder.openCircuitFile(circuitFilePath)
 
 println()
 println("What is the quantum circuit you simulate? \n (pleas answer the circuit name)")
-for name in keys(circuitList)
-    println(name)
-end
+# for name in keys(circuitList)
+#     println(name)
+# end
 println()
 ans = readline()
 println()
 
 circuit = circuitList[ans]
 
- # TODO: optimize the mapping algorithm
+ # TODO: optimize the mapping algorithm채ㅡㅠ
 Mapper = NonOptimizedMapper
 Mapper.mapping(circuit, configuration["architecture"])
 

@@ -1,0 +1,671 @@
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+comb4
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+qft
+
+Execution time is 261858.33076923134
+Number of shuttling is 458    
+Number of phonons per core are
+Core4: 409.9388329024827      
+Core1: 401.13962141757156     
+Core6: 0.0
+Core2: 1044.644405971495      
+Core3: 1303.3571397084538     
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+comb3
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+qft
+
+Execution time is 243184.48717949132
+Number of shuttling is 396    
+Number of phonons per core are
+Core4: 0.0
+Core1: 536.0470924866311      
+Core6: 0.0
+Core2: 469.74550719507056     
+Core3: 1713.3674003183003     
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+comb2
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+qft
+
+Execution time is 83130.12820512829
+Number of shuttling is 70     
+Number of phonons per core are
+Core4: 0.0
+Core1: 29.467931050375757     
+Core6: 0.0
+Core2: 443.7320689496243      
+Core3: 0.0
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+grid3
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+qft
+
+Execution time is 236547.8435897468
+Number of shuttling is 387    
+Number of phonons per core are
+Core4: 0.0
+Core1: 500.0457209128066      
+Core6: 0.0
+Core2: 430.4190870322354      
+Core3: 1659.8951920549596     
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+grid2
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+qft
+
+Execution time is 27363.92051282047
+Number of shuttling is 78     
+Number of phonons per core are
+Core4: 0.0
+Core1: 28.84115725496851      
+Core6: 0.0
+Core2: 454.7588427450315      
+Core3: 0.0
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+comb6
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+bv60
+
+Execution time is 37645.023076923164
+Number of shuttling is 36     
+Number of phonons per core are
+Core4: 20.86480158792449      
+Core1: 103.28511471832532     
+Core6: 72.83947165184436      
+Core2: 33.22059143324469      
+Core3: 14.271853992118775     
+Core5: 18.678166616542246     
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+grid3
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+bv60
+
+Execution time is 22727.307692307677
+Number of shuttling is 18
+Number of phonons per core are
+Core4: 0.0
+Core1: 13.612970869859415
+Core6: 0.0
+Core2: 13.612970869859415
+Core3: 94.45405826028119
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate? 
+ (pleas answer the architecture name)
+
+grid3
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate? 
+ (pleas answer the circuit name)
+
+rcs60
+
+Execution time is 4750.512820512823
+Number of shuttling is 8
+Number of phonons per core are
+Core4: 0.0
+Core1: 14.501147486772487
+Core6: 0.0
+Core2: 31.100489940128107
+Core3: 5.678362573099415
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+comb4
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+bv60
+
+Execution time is 39746.7923076924
+Number of shuttling is 37     
+Number of phonons per core are
+Core4: 138.07763241420935     
+Core1: 41.00425693672199      
+Core6: 0.0
+Core2: 16.48608356537862      
+Core3: 60.95202708368998      
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate? 
+ (pleas answer the architecture name)
+
+comb3
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate? 
+ (pleas answer the circuit name)
+
+rcs60
+
+Execution time is 6790.769230769235
+Number of shuttling is 8
+Number of phonons per core are
+Core4: 0.0
+Core1: 15.560925264550265
+Core6: 0.0
+Core2: 32.84071216235033
+Core3: 5.678362573099415
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate? 
+ (pleas answer the architecture name)
+
+grid6
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate? 
+ (pleas answer the circuit name)
+
+rcs60
+
+Execution time is 7204.615384615389
+Number of shuttling is 17
+Number of phonons per core are
+Core4: 19.23625344352617
+Core1: 4.632727272727273
+Core6: 15.169513314967862
+Core2: 15.402792368125704
+Core3: 21.742258136924804
+Core5: 34.256455463728194
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+comb3
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+bv60
+
+Execution time is 22750.3846153846
+Number of shuttling is 18     
+Number of phonons per core are
+Core4: 0.0
+Core1: 13.612970869859415     
+Core6: 0.0
+Core2: 13.612970869859415     
+Core3: 96.25405826028118      
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate? 
+ (pleas answer the architecture name)
+
+comb2
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate? 
+ (pleas answer the circuit name)
+
+rcs60
+
+Execution time is 1500.128205128205
+Number of shuttling is 1
+Number of phonons per core are
+Core4: 0.0
+Core1: 2.0
+Core6: 0.0
+Core2: 4.760000000000001
+Core3: 0.0
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate? 
+ (pleas answer the architecture name)
+
+grid4
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate? 
+ (pleas answer the circuit name)
+
+rcs60
+
+Execution time is 2551.6666666666665
+Number of shuttling is 11
+Number of phonons per core are
+Core4: 15.863705899363794
+Core1: 7.097069597069597
+Core6: 0.0
+Core2: 19.440430402930403
+Core3: 26.35879410063621
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate? 
+ (pleas answer the architecture name)
+
+grid2
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate? 
+ (pleas answer the circuit name)
+
+rcs60
+
+Execution time is 695.0
+Number of shuttling is 1
+Number of phonons per core are
+Core4: 0.0
+Core1: 2.0
+Core6: 0.0
+Core2: 4.2
+Core3: 0.0
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+comb2
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+bv60
+
+Execution time is 15616.538461538457
+Number of shuttling is 12     
+Number of phonons per core are
+Core4: 0.0
+Core1: 18.795645898066795     
+Core6: 0.0
+Core2: 62.32435410193322      
+Core3: 0.0
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate? 
+ (pleas answer the architecture name)  
+
+grid6
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator. 
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.  
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate? 
+ (pleas answer the circuit name)
+
+bv60
+
+Execution time is 38730.94615384622
+Number of shuttling is 36     
+Number of phonons per core are
+Core4: 20.26549236784536      
+Core1: 96.03252873866319      
+Core6: 69.05524046349268      
+Core2: 31.288509602900405     
+Core3: 13.616550675287744     
+Core5: 17.901678151810557     
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+grid2
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+bv60
+
+Execution time is 5505.769230769232
+Number of shuttling is 12     
+Number of phonons per core are
+Core4: 0.0
+Core1: 18.795645898066795     
+Core6: 0.0
+Core2: 55.604354101933204     
+Core3: 0.0
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+comb6
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+rcs60
+
+Execution time is 7912.051282051288
+Number of shuttling is 16     
+Number of phonons per core are
+Core4: 22.1734435261708       
+Core1: 5.192727272727273      
+Core6: 16.758795224977042     
+Core2: 15.402792368125704     
+Core3: 21.742258136924804     
+Core5: 26.88998347107438      
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate? 
+ (pleas answer the architecture name)  
+
+comb4
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator. 
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.  
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate? 
+ (pleas answer the circuit name)
+
+rcs60
+
+Execution time is 6875.769230769235
+Number of shuttling is 11     
+Number of phonons per core are
+Core4: 16.97081116252169      
+Core1: 7.097069597069597      
+Core6: 0.0
+Core2: 21.645430402930405     
+Core3: 28.646688837478315     
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus2\simulator\main.jl 
+
+Do you simulate? (y/n)
+y
+
+What is the architecture you simulate?
+ (pleas answer the architecture name)
+
+grid4
+
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+
+What is the quantum circuit you simulate?
+ (pleas answer the circuit name)
+
+qft
+
+Execution time is 227040.79230769238
+Number of shuttling is 440    
+Number of phonons per core are
+Core4: 497.4290555140087      
+Core1: 516.8055296591269      
+Core6: 0.0
+Core2: 426.0965089033901      
+Core3: 1436.6289059234753     
+Core5: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 

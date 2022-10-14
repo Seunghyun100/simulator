@@ -221,6 +221,11 @@ module QCCDSimulator
 
     function executeOperation(qubit, refTime, multiGateTable, architecture, shuttlingTable) # (Qubit, Float64, Dict, Architecture)
         operations = qubit.circuitQubit.operations
+
+        for i in values(architecture.components["cores"])
+            @assert(length(i.qubits)<=i.capacity, "core: $(i.id), qubits: $(length(i.qubits)), capacity: $(i.capacity)")
+        end
+
         if length(operations) == 0
             return
         end
@@ -281,7 +286,31 @@ module QCCDSimulator
                     #     appliedQubits[i].executionTime = dwellTime
                     #     return
                     # end
+                    i2 = i%2 + 1
+                    op1 = targetPairs[i][2].circuitQubit.operations
+                    op2 = targetPairs[i2][2].circuitQubit.operations
+                    ids = []
+                    ids2 = []
+                    for k in op1
+                        if typeof(k) == Main.CircuitBuilder.OperationConfiguration.MultiGate
+                            push!(ids, k.id)
+                        end
+                    end
+                    for k in op2
+                        if typeof(k) == Main.CircuitBuilder.OperationConfiguration.MultiGate
+                            push!(ids2, k.id)
+                        end
+                    end
+                    in1 = findall(x->x==operationID, ids)[1]
+                    in2 = findall(x->x==operationID, ids2)[1]
 
+                    if in1 == 0 || in2 == 0
+                        return
+                    end
+
+                    if in1 > in2
+                        break
+                    end
 
                     if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
 
@@ -654,6 +683,7 @@ module QCCDSimulator
             if remainderOperation == 0
                 break
             end
+
 
             # TODO: remove the printing part
 
