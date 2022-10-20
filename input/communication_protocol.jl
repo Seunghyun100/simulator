@@ -279,6 +279,11 @@ module QCCDShuttlingProtocol
             end
         end
 
+        if startingCore == nothing || targetCore == nothing
+            println("startingCoreID: $(startingCoreID), $(startingCore.id), targetCoreID: $(targetCoreID), $(targetCore.id), appliedQubit: $(appliedQubit.id), $(appliedQubit.circuitQubit.id)")
+            error("Core is not found!")
+        end
+
         if startingCore.id == targetCore.id
             error("Not necessary communication!")
         end

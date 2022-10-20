@@ -191,7 +191,6 @@ module QCCDSimulator
             return 
         end 
 
-
         for qubit in values(targetCore.qubits)
             operations = qubit.circuitQubit.operations
             if OperationConfiguration.MultiGate ∉ operations && QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling ∉ operations

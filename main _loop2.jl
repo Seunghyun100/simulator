@@ -1,9 +1,5 @@
-include("compiler/mapper.jl")
-include("configuration/operation_configuration.jl")
-include("configuration/architecture_configuration.jl")
-include("configuration/communication_configuration.jl")
-include("function/circuit_builder.jl")
-include("function/simulator.jl")
+
+
 using JSON
 
 
@@ -11,76 +7,87 @@ using JSON
 This part is setting to provider.
 """
 
-sim = true
-provider = nothing
+# sim = true
+# provider = nothing
 
-# whether or not simulation
+# # whether or not simulation
 
-# print("Do you simulate? (y/n)\n")
-# ans = readline()
-# println("y")
-ans = "y"
-# println(ans)
-if ans =="y"
-    sim = true
-elseif ans =="n"
-    sim = false
-else
-    error("Pleas answer to y or n.")
-end
+# # print("Do you simulate? (y/n)\n")
+# # ans = readline()
+# # println("y")
+# ans = "y"
+# # println(ans)
+# if ans =="y"
+#     sim = true
+# elseif ans =="n"
+#     sim = false
+# else
+#     error("Pleas answer to y or n.")
+# end
 
-if sim
-    include("function/simulator.jl")
-else
-    provider = nothing # TODO: set the actual hardware
-    error("The execution on real hardware isn't yet built")
-end
+# if sim
+#     include("function/simulator.jl")
+# else
+#     provider = nothing # TODO: set the actual hardware
+#     error("The execution on real hardware isn't yet built")
+# end
 
-"""
-This part is setting to configuration.
-Only configuration by file is yet possible.
-"""
-
-# TODO: how set the configuration of circuit and hardware
-operationConfigPath = ""
-architectureConfigPath = ""
-# communicationConfigPath = ""
-circuitFilePath = ""
-
-operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
-architectureConfigurationList = ArchitectureConfiguration.openConfigFile(architectureConfigPath)
-# communicationConfiguration = CommunicationConfiguration.openConfigFile(communicationConfigPath)
-
-
-for i in 2:10
+for cir in ["bv","qft","rcs"]
     resultsSet = Dict()
-    for arch in ["comb","bus","single-core"]
-        resultsSet[arch] = Dict()
-        if arch != "single-core"
-            archName = "$arch$i"
-        else
-            archName = arch
-        end
-        QbusCheck = false     
-        println()   
-        println("architecture: $archName")
-        configuration = Dict("operation"=>operationConfiguration, "architecture"=>architectureConfigurationList[archName])
-        if archName[1:1] == "c"
-            provider = QCCDSimulator
-        else
-            provider = QBusSimulator
-            QbusCheck = true
-        end
-        """
-        This part is mapping to initial topology configuration to minimize the inter-core communication for input quantum circuit.
-        Only generating circuit by file is yet possible.
-        """
-        for cir in ["bv","qft","rcs"]
-            cirName = "$cir$i"
-            println("Circuit: $cirName")
+    for i in 2:10
+        for arch in ["comb","bus","single-core"]
+            if arch != "single-core"
+                archName = "$arch$i"
+            else
+                archName = arch
+            end
 
+            cirName = "$cir$i"
+            resultsSet[cirName] = Dict()
+            println("######################")
+            println("Circuit: $cirName")
+            include("function/circuit_builder.jl")
+            circuitFilePath = ""
             circuitList = CircuitBuilder.openCircuitFile(circuitFilePath)
             circuit = circuitList[cirName]
+
+            QbusCheck = false     
+            println()   
+            println("architecture: $archName")
+
+            """
+            This part is setting to configuration.
+            Only configuration by file is yet possible.
+            """
+
+            include("compiler/mapper.jl")
+            include("configuration/operation_configuration.jl")
+            include("configuration/architecture_configuration.jl")
+            include("configuration/communication_configuration.jl")
+            include("function/simulator.jl")
+
+
+            # TODO: how set the configuration of circuit and hardware
+            operationConfigPath = ""
+            architectureConfigPath = ""
+            # communicationConfigPath = ""
+
+            operationConfiguration = OperationConfiguration.openConfigFile(operationConfigPath)
+            architectureConfigurationList = ArchitectureConfiguration.openConfigFile(architectureConfigPath)
+            # communicationConfiguration = CommunicationConfiguration.openConfigFile(communicationConfigPath)
+
+            configuration = Dict("operation"=>operationConfiguration, "architecture"=>architectureConfigurationList[archName])
+            if archName[1:1] == "c"
+                provider = QCCDSimulator
+            else
+                provider = QBusSimulator
+                QbusCheck = true
+            end
+            """
+            This part is mapping to initial topology configuration to minimize the inter-core communication for input quantum circuit.
+            Only generating circuit by file is yet possible.
+            """
+
 
             Mapper = NonOptimizedMapper
             Mapper.mapping(circuit, configuration["architecture"])
@@ -96,7 +103,7 @@ for i in 2:10
             else
                 result = provider.run(circuit, configuration)
             end
-            resultsSet["$arch"]["$cir"] = result
+            resultsSet[cirName][archName] = result
             provider.printResult(result...)
             end
         end
