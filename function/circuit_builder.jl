@@ -51,11 +51,16 @@ module CircuitBuilder
         qubitID = qubitComposition[1]
         compositions = qubitComposition[2]
         operations = []
+        noOperations1 = 0
+        noOperations2 = 0
+
         for composition in compositions
             if typeof(composition) == Vector{Any}
                 oepration = encodeOperation(composition, multiGateTable)
+                noOperations2 += 0.5
             else
                 oepration = encodeOperation(composition)
+                noOperations1 += 1
             end
             push!(operations, oepration)
         end
@@ -64,6 +69,7 @@ module CircuitBuilder
                 qubit.operations = operations
             end
         end
+        return [noOperations1, noOperations2]
     end
     
     function buildCircuit(circuitConfig, multiGateTable)
@@ -72,7 +78,7 @@ module CircuitBuilder
         noOfQubits = circuitConfig["number_of_qubits"]
 
         qubits = CircuitQubit[]
-
+        totalNoOperation = [0,0]
 
         qubitConfigList = []
         qubitConfigs = circuitConfig["qubits"]
@@ -92,10 +98,14 @@ module CircuitBuilder
             push!(qubits, circuitQubit)
         end
         for qubitComposition in qubitConfigList
-            composeCircuitQubit(qubits, qubitComposition, multiGateTable)
+            totalNoOperation += composeCircuitQubit(qubits, qubitComposition, multiGateTable)
         end
         
         circuit = Circuit(circuitName, qubits)
+        
+        # check for performance calculation
+        # println("$circuitName: No.Operations $totalNoOperation , No.Qubits $(length(qubits))")
+        
         return (circuit, multiGateTable)
     end
 

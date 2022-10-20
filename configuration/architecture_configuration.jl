@@ -144,7 +144,10 @@ module ArchitectureConfiguration
             
         coreList = []
         cores = componentsConfig["cores"]
-        for key in sort(collect(keys(cores)))
+        sortCoreList = sort(collect(keys(cores)))
+        core10 = splice!(sortCoreList,findall(x->x=="Core10", sortCoreList))
+        sortCoreList = vcat(sortCoreList, core10)
+        for key in sortCoreList
             push!(coreList, cores[key])
         end
         for c in coreList

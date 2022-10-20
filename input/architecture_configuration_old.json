@@ -1,0 +1,1997 @@
+{
+    "bus1":{
+        "name": "Q-bus",
+        "components":{
+            "cores":{
+                "BusStore":{
+                    "id": "BusStore",
+                    "capacity": 1000,
+                    "coordinates": [3,1],
+                    "number_of_qubits":0
+                },
+                "BusDetector":{
+                    "id": "BusDetector",
+                    "capacity": 1000,
+                    "coordinates": [3,15],
+                    "number_of_qubits":0
+                },
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 100,
+                    "coordinates": [1,3],
+                    "number_of_qubits":60
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 100,
+                    "coordinates": [1,5],
+                    "number_of_qubits":30
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 100,
+                    "coordinates": [1,7],
+                    "number_of_qubits":30
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 100,
+                    "coordinates": [1,9],
+                    "number_of_qubits":30
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 100,
+                    "coordinates": [1,11],
+                    "number_of_qubits":30
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 100,
+                    "coordinates": [1,13],
+                    "number_of_qubits":30
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,3]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,5]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,7]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,9]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,11]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,13]
+                }
+            },
+            "paths": {
+                "Entrance_BusStore":{
+                    "id": "Entrance_BusStore",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Entrance_BusDetector":{
+                    "id": "Entrance_BusDetector",
+                    "length": 100.0,
+                    "coordinates": [3,14]
+                },
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,13]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,12]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,15],
+            "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
+            ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
+            ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
+        },
+        "number_of_cores": 2
+    },
+    "bus2":{
+        "name": "Q-bus",
+        "components":{
+            "cores":{
+                "BusStore":{
+                    "id": "BusStore",
+                    "capacity": 1000,
+                    "coordinates": [3,1],
+                    "number_of_qubits":0
+                },
+                "BusDetector":{
+                    "id": "BusDetector",
+                    "capacity": 1000,
+                    "coordinates": [3,15],
+                    "number_of_qubits":0
+                },
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 100,
+                    "coordinates": [1,3],
+                    "number_of_qubits":30
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 100,
+                    "coordinates": [1,5],
+                    "number_of_qubits":30
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 100,
+                    "coordinates": [1,7],
+                    "number_of_qubits":30
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 100,
+                    "coordinates": [1,9],
+                    "number_of_qubits":30
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 100,
+                    "coordinates": [1,11],
+                    "number_of_qubits":30
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 100,
+                    "coordinates": [1,13],
+                    "number_of_qubits":30
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,3]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,5]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,7]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,9]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,11]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,13]
+                }
+            },
+            "paths": {
+                "Entrance_BusStore":{
+                    "id": "Entrance_BusStore",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Entrance_BusDetector":{
+                    "id": "Entrance_BusDetector",
+                    "length": 100.0,
+                    "coordinates": [3,14]
+                },
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,13]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,12]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,15],
+            "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
+            ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
+            ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
+        },
+        "number_of_cores": 2
+    },
+    "bus3":{
+        "name": "Q-bus",
+        "components":{
+            "cores":{
+                "BusStore":{
+                    "id": "BusStore",
+                    "capacity": 1000,
+                    "coordinates": [3,1],
+                    "number_of_qubits":0
+                },
+                "BusDetector":{
+                    "id": "BusDetector",
+                    "capacity": 1000,
+                    "coordinates": [3,15],
+                    "number_of_qubits":0
+                },
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 100,
+                    "coordinates": [1,3],
+                    "number_of_qubits":20
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 100,
+                    "coordinates": [1,5],
+                    "number_of_qubits":20
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 100,
+                    "coordinates": [1,7],
+                    "number_of_qubits":20
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 100,
+                    "coordinates": [1,9],
+                    "number_of_qubits":20
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 100,
+                    "coordinates": [1,11],
+                    "number_of_qubits":20
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 100,
+                    "coordinates": [1,13],
+                    "number_of_qubits":20
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,3]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,5]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,7]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,9]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,11]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,13]
+                }
+            },
+            "paths": {
+                "Entrance_BusStore":{
+                    "id": "Entrance_BusStore",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Entrance_BusDetector":{
+                    "id": "Entrance_BusDetector",
+                    "length": 100.0,
+                    "coordinates": [3,14]
+                },
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,13]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,12]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,15],
+            "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
+            ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
+            ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
+        },
+        "number_of_cores": 3
+    },
+    "bus4":{
+        "name": "Q-bus",
+        "components":{
+            "cores":{
+                "BusStore":{
+                    "id": "BusStore",
+                    "capacity": 1000,
+                    "coordinates": [3,1],
+                    "number_of_qubits":0
+                },
+                "BusDetector":{
+                    "id": "BusDetector",
+                    "capacity": 1000,
+                    "coordinates": [3,15],
+                    "number_of_qubits":0
+                },
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 100,
+                    "coordinates": [1,3],
+                    "number_of_qubits":15
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 100,
+                    "coordinates": [1,5],
+                    "number_of_qubits":15
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 100,
+                    "coordinates": [1,7],
+                    "number_of_qubits":15
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 100,
+                    "coordinates": [1,9],
+                    "number_of_qubits":15
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 100,
+                    "coordinates": [1,11],
+                    "number_of_qubits":15
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 100,
+                    "coordinates": [1,13],
+                    "number_of_qubits":15
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,3]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,5]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,7]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,9]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,11]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,13]
+                }
+            },
+            "paths": {
+                "Entrance_BusStore":{
+                    "id": "Entrance_BusStore",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Entrance_BusDetector":{
+                    "id": "Entrance_BusDetector",
+                    "length": 100.0,
+                    "coordinates": [3,14]
+                },
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,13]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,12]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,15],
+            "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
+            ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
+            ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
+        },
+        "number_of_cores": 4
+    },
+    "bus6":{
+        "name": "Q-bus",
+        "components":{
+            "cores":{
+                "BusStore":{
+                    "id": "BusStore",
+                    "capacity": 1000,
+                    "coordinates": [3,1],
+                    "number_of_qubits":0
+                },
+                "BusDetector":{
+                    "id": "BusDetector",
+                    "capacity": 1000,
+                    "coordinates": [3,15],
+                    "number_of_qubits":0
+                },
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 100,
+                    "coordinates": [1,3],
+                    "number_of_qubits":10
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 100,
+                    "coordinates": [1,5],
+                    "number_of_qubits":10
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 100,
+                    "coordinates": [1,7],
+                    "number_of_qubits":10
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 100,
+                    "coordinates": [1,9],
+                    "number_of_qubits":10
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 100,
+                    "coordinates": [1,11],
+                    "number_of_qubits":10
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 100,
+                    "coordinates": [1,13],
+                    "number_of_qubits":10
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,3]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,5]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,7]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,9]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,11]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,13]
+                }
+            },
+            "paths": {
+                "Entrance_BusStore":{
+                    "id": "Entrance_BusStore",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Entrance_BusDetector":{
+                    "id": "Entrance_BusDetector",
+                    "length": 100.0,
+                    "coordinates": [3,14]
+                },
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,13]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,12]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,15],
+            "map":[["Block","Block","Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Block"],
+            ["Block","Block","Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6","Block","Block"],
+            ["BusStore","Entrance_BusStore","Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Entrance_BusDetector","BusDetector"]]
+        },
+        "number_of_cores": 6
+    },
+    "grid1":{
+        "name": "QCCD-Grid",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 100,
+                    "coordinates": [1,1],
+                    "number_of_qubits":60
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 60,
+                    "coordinates": [5,1],
+                    "number_of_qubits":30
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 60,
+                    "coordinates": [1,3],
+                    "number_of_qubits":30
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 60,
+                    "coordinates": [5,3],
+                    "number_of_qubits":30
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 60,
+                    "coordinates": [1,5],
+                    "number_of_qubits":30
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 60,
+                    "coordinates": [5,5],
+                    "number_of_qubits":30
+                }
+
+            },
+            "junctions":{
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                }
+
+            },
+            "paths":{
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [4,1]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [4,3]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [4,5]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                }
+            }
+        },
+        "topology":{
+            "size":[5,5],
+            "map":[["Core1", "Block", "Core3","Block", "Core5"],
+            ["Entrance_Core1", "Block", "Entrance_Core3","Block", "Entrance_Core5"],
+            ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
+            ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
+            ["Core2", "Block", "Core4","Block", "Core6"]] 
+        },
+        "number_of_cores": 2
+    },
+    "grid2":{
+        "name": "QCCD-Grid",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 60,
+                    "coordinates": [1,1],
+                    "number_of_qubits":30
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 60,
+                    "coordinates": [5,1],
+                    "number_of_qubits":30
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 60,
+                    "coordinates": [1,3],
+                    "number_of_qubits":30
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 60,
+                    "coordinates": [5,3],
+                    "number_of_qubits":30
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 60,
+                    "coordinates": [1,5],
+                    "number_of_qubits":30
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 60,
+                    "coordinates": [5,5],
+                    "number_of_qubits":30
+                }
+
+            },
+            "junctions":{
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                }
+
+            },
+            "paths":{
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [4,1]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [4,3]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [4,5]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                }
+            }
+        },
+        "topology":{
+            "size":[5,5],
+            "map":[["Core1", "Block", "Core3","Block", "Core5"],
+            ["Entrance_Core1", "Block", "Entrance_Core3","Block", "Entrance_Core5"],
+            ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
+            ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
+            ["Core2", "Block", "Core4","Block", "Core6"]] 
+        },
+        "number_of_cores": 2
+    },
+    "grid3":{
+        "name": "QCCD-Grid",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 40,
+                    "coordinates": [1,1],
+                    "number_of_qubits":20
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 40,
+                    "coordinates": [5,1],
+                    "number_of_qubits":20
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 40,
+                    "coordinates": [1,3],
+                    "number_of_qubits":20
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 40,
+                    "coordinates": [5,3],
+                    "number_of_qubits":20
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 40,
+                    "coordinates": [1,5],
+                    "number_of_qubits":20
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 40,
+                    "coordinates": [5,5],
+                    "number_of_qubits":20
+                }
+
+            },
+            "junctions":{
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                }
+
+            },
+            "paths":{
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [4,1]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [4,3]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [4,5]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                }
+            }
+        },
+        "topology":{
+            "size":[5,5],
+            "map":[["Core1", "Block", "Core3","Block", "Core5"],
+            ["Entrance_Core1", "Block", "Entrance_Core3","Block", "Entrance_Core5"],
+            ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
+            ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
+            ["Core2", "Block", "Core4","Block", "Core6"]] 
+        },
+        "number_of_cores": 3
+    },
+    "grid4":{
+        "name": "QCCD-Grid",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 30,
+                    "coordinates": [1,1],
+                    "number_of_qubits":15
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 30,
+                    "coordinates": [5,1],
+                    "number_of_qubits":15
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 30,
+                    "coordinates": [1,3],
+                    "number_of_qubits":15
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 30,
+                    "coordinates": [5,3],
+                    "number_of_qubits":15
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 30,
+                    "coordinates": [1,5],
+                    "number_of_qubits":15
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 30,
+                    "coordinates": [5,5],
+                    "number_of_qubits":15
+                }
+
+            },
+            "junctions":{
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                }
+
+            },
+            "paths":{
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [4,1]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [4,3]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [4,5]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                }
+            }
+        },
+        "topology":{
+            "size":[5,5],
+            "map":[["Core1", "Block", "Core3","Block", "Core5"],
+            ["Entrance_Core1", "Block", "Entrance_Core3","Block", "Entrance_Core5"],
+            ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
+            ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
+            ["Core2", "Block", "Core4","Block", "Core6"]] 
+        },
+        "number_of_cores": 4
+    },
+    "grid6":{
+        "name": "QCCD-Grid",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 20,
+                    "coordinates": [1,1],
+                    "number_of_qubits":10
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 20,
+                    "coordinates": [5,1],
+                    "number_of_qubits":10
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 20,
+                    "coordinates": [1,3],
+                    "number_of_qubits":10
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 20,
+                    "coordinates": [5,3],
+                    "number_of_qubits":10
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 20,
+                    "coordinates": [1,5],
+                    "number_of_qubits":10
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 20,
+                    "coordinates": [5,5],
+                    "number_of_qubits":10
+                }
+
+            },
+            "junctions":{
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                }
+
+            },
+            "paths":{
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [4,1]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [4,3]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [4,5]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                }
+            }
+        },
+        "topology":{
+            "size":[5,5],
+            "map":[["Core1", "Block", "Core3","Block", "Core5"],
+            ["Entrance_Core1", "Block", "Entrance_Core3","Block", "Entrance_Core5"],
+            ["Junction1", "Path1", "Junction2","Path2", "Junction3"],
+            ["Entrance_Core2", "Block", "Entrance_Core4","Block", "Entrance_Core6"],
+            ["Core2", "Block", "Core4","Block", "Core6"]] 
+        },
+        "number_of_cores": 6
+    },
+    "comb1":{
+        "name": "QCCD-Comb",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 100,
+                    "coordinates": [1,1],
+                    "number_of_qubits":60
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 60,
+                    "coordinates": [1,3],
+                    "number_of_qubits":30
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 60,
+                    "coordinates": [1,5],
+                    "number_of_qubits":30
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 60,
+                    "coordinates": [1,7],
+                    "number_of_qubits":30
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 60,
+                    "coordinates": [1,9],
+                    "number_of_qubits":30
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 60,
+                    "coordinates": [1,11],
+                    "number_of_qubits":30
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,7]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,9]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,11]
+                }
+            },
+            "paths": {
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,11],
+            "map":[["Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6"],
+            ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
+            ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
+            
+        },
+        "number_of_cores": 2
+    },
+    "comb2":{
+        "name": "QCCD-Comb",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 60,
+                    "coordinates": [1,1],
+                    "number_of_qubits":30
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 60,
+                    "coordinates": [1,3],
+                    "number_of_qubits":30
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 60,
+                    "coordinates": [1,5],
+                    "number_of_qubits":30
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 60,
+                    "coordinates": [1,7],
+                    "number_of_qubits":30
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 60,
+                    "coordinates": [1,9],
+                    "number_of_qubits":30
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 60,
+                    "coordinates": [1,11],
+                    "number_of_qubits":30
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,7]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,9]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,11]
+                }
+            },
+            "paths": {
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,11],
+            "map":[["Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6"],
+            ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
+            ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
+            
+        },
+        "number_of_cores": 2
+    },
+    "comb3":{
+        "name": "QCCD-Comb",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 40,
+                    "coordinates": [1,1],
+                    "number_of_qubits":20
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 40,
+                    "coordinates": [1,3],
+                    "number_of_qubits":20
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 40,
+                    "coordinates": [1,5],
+                    "number_of_qubits":20
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 40,
+                    "coordinates": [1,7],
+                    "number_of_qubits":20
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 40,
+                    "coordinates": [1,9],
+                    "number_of_qubits":20
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 40,
+                    "coordinates": [1,11],
+                    "number_of_qubits":20
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,7]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,9]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,11]
+                }
+            },
+            "paths": {
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,11],
+            "map":[["Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6"],
+            ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
+            ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
+            
+        },
+        "number_of_cores": 3
+    },
+    "comb4":{
+        "name": "QCCD-Comb",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 30,
+                    "coordinates": [1,1],
+                    "number_of_qubits":15
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 30,
+                    "coordinates": [1,3],
+                    "number_of_qubits":15
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 30,
+                    "coordinates": [1,5],
+                    "number_of_qubits":15
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 30,
+                    "coordinates": [1,7],
+                    "number_of_qubits":15
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 30,
+                    "coordinates": [1,9],
+                    "number_of_qubits":15
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 30,
+                    "coordinates": [1,11],
+                    "number_of_qubits":15
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,7]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,9]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,11]
+                }
+            },
+            "paths": {
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,11],
+            "map":[["Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6"],
+            ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
+            ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
+            
+        },
+        "number_of_cores": 4
+    },
+    "comb6":{
+        "name": "QCCD-Comb",
+        "components":{
+            "cores":{
+                "Core1":{
+                    "id": "Core1",
+                    "capacity": 20,
+                    "coordinates": [1,1],
+                    "number_of_qubits":10
+                },
+                "Core2":{
+                    "id": "Core2",
+                    "capacity": 20,
+                    "coordinates": [1,3],
+                    "number_of_qubits":10
+                },
+                "Core3":{
+                    "id": "Core3",
+                    "capacity": 20,
+                    "coordinates": [1,5],
+                    "number_of_qubits":10
+                },
+                "Core4":{
+                    "id": "Core4",
+                    "capacity": 20,
+                    "coordinates": [1,7],
+                    "number_of_qubits":10
+                },
+                "Core5":{
+                    "id": "Core5",
+                    "capacity": 20,
+                    "coordinates": [1,9],
+                    "number_of_qubits":10
+                },
+                "Core6":{
+                    "id": "Core6",
+                    "capacity": 20,
+                    "coordinates": [1,11],
+                    "number_of_qubits":10
+                }
+            },
+            "junctions": {
+                "Junction1":{
+                    "id": "Junction1",
+                    "coordinates": [3,1]
+                },
+                "Junction2":{
+                    "id": "Junction2",
+                    "coordinates": [3,3]
+                },
+                "Junction3":{
+                    "id": "Junction3",
+                    "coordinates": [3,5]
+                },
+                "Junction4":{
+                    "id": "Junction4",
+                    "coordinates": [3,7]
+                },
+                "Junction5":{
+                    "id": "Junction5",
+                    "coordinates": [3,9]
+                },
+                "Junction6":{
+                    "id": "Junction6",
+                    "coordinates": [3,11]
+                }
+            },
+            "paths": {
+                "Entrance_Core1":{
+                    "id": "Entrance_Core1",
+                    "length": 100.0,
+                    "coordinates": [2,1]
+                },
+                "Entrance_Core2":{
+                    "id": "Entrance_Core2",
+                    "length": 100.0,
+                    "coordinates": [2,3]
+                },
+                "Entrance_Core3":{
+                    "id": "Entrance_Core3",
+                    "length": 100.0,
+                    "coordinates": [2,5]
+                },
+                "Entrance_Core4":{
+                    "id": "Entrance_Core4",
+                    "length": 100.0,
+                    "coordinates": [2,7]
+                },
+                "Entrance_Core5":{
+                    "id": "Entrance_Core5",
+                    "length": 100.0,
+                    "coordinates": [2,9]
+                },
+                "Entrance_Core6":{
+                    "id": "Entrance_Core6",
+                    "length": 100.0,
+                    "coordinates": [2,11]
+                },
+                "Path1":{
+                    "id": "Path1",
+                    "length": 100.0,
+                    "coordinates": [3,2]
+                },
+                "Path2":{
+                    "id": "Path2",
+                    "length": 100.0,
+                    "coordinates": [3,4]
+                },
+                "Path3":{
+                    "id": "Path3",
+                    "length": 100.0,
+                    "coordinates": [3,6]
+                },
+                "Path4":{
+                    "id": "Path4",
+                    "length": 100.0,
+                    "coordinates": [3,8]
+                },
+                "Path5":{
+                    "id": "Path5",
+                    "length": 100.0,
+                    "coordinates": [3,10]
+                }
+            }
+        },
+        "topology":{
+            "size":[3,11],
+            "map":[["Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6"],
+            ["Entrance_Core1","Block","Entrance_Core2","Block","Entrance_Core3","Block","Entrance_Core4","Block","Entrance_Core5","Block","Entrance_Core6"],
+            ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6"]]
+            
+        },
+        "number_of_cores": 6
+    }
+}

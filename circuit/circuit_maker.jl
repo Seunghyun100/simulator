@@ -65,55 +65,50 @@ Input
 ########################
 
 """
-BV strat
+BV
 """
-# name = "bernstein-vazirani-180" # name
-# noQubits = 180 # number of qubits
-# circuit = initCircuit(noQubits)
-
-# """
-# Circuit
-# """
-
-# for i in 1:noQubits
-#     one(h, i)
-# end
-# one(z,noQubits)
-
-# # Oracle
-# for i in 1:noQubits
-#     if rand(Bool)
-#         two(cx, i, noQubits)
-#     end
-# end
-
-# #
-# for i in 1:noQubits
-#     one(h, i)
-#     one(m, i)
-# end
-"""
-BV end
-"""
-
-"""
-QFT strat
-"""
-name = "qft60" # name
-noQubits = 60 # number of qubits
+c = 10
+name = "bv$c" # name
+noQubits = c*20 # number of qubits
 circuit = initCircuit(noQubits)
 
 for i in 1:noQubits
-    one(h,i)
-    for k in i:noQubits
-        if k != i
-            two(cz, i, k)
-        end
+    one(h, i)
+end
+one(z,noQubits)
+
+# Oracle
+for i in 1:noQubits
+    if rand(Bool)
+        two(cx, i, noQubits)
     end
 end
-for i in 1:Int(noQubits/2)
-    two(swap, i, noQubits-i+1)
+
+#
+for i in 1:noQubits
+    one(h, i)
+    one(m, i)
 end
+
+"""
+QFT
+"""
+# c = 10
+# name = "qft$c" # name
+# noQubits = c*20 # number of qubits
+# circuit = initCircuit(noQubits)
+
+# for i in 1:noQubits
+#     one(h,i)
+#     for k in i:noQubits
+#         if k != i
+#             two(cz, i, k)
+#         end
+#     end
+# end
+# for i in 1:Int(noQubits/2)
+#     two(swap, i, noQubits-i+1)
+# end
 """
 QFT end
 """
@@ -407,17 +402,18 @@ SimTest start
 """
 RCS
 """
-# name = "rcs60"
-# noQubits = 60
+# c = 10
+# name = "rcs$c"
+# noQubits = c*20
 # circuit = initCircuit(noQubits)
 
 # gateSet = ["x", "y", "z", "h", "s", "t", "cx"]
 # for i in 1
 #     qq = 0
-#     for c in 1:200
+#     for c in 1:noQubits*20
 #         set = deepcopy(gateSet)
 #         for i in 1:7
-#             qqq = qq % 60 + 1
+#             qqq = qq % noQubits + 1
 #             gate = rand(set)
 #             deleteat!(set, findall(x->x==gate, set))
 #             if gate != "cx"
@@ -426,7 +422,7 @@ RCS
 #                 t = rand((-1,1))
 #                 if qqq == 1
 #                     two(gate,qqq,qqq+1)
-#                 elseif qqq == 60
+#                 elseif qqq == noQubits
 #                     two(gate,qqq,qqq-1)
 #                 else
 #                     two(gate,qqq,qqq+t)
@@ -436,7 +432,7 @@ RCS
 #         end
 #     end
 # end
-########################
+#######################
 """
 Output
 """

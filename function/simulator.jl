@@ -286,6 +286,7 @@ module QCCDSimulator
                     #     appliedQubits[i].executionTime = dwellTime
                     #     return
                     # end
+                    
                     i2 = i%2 + 1
                     op1 = targetPairs[i][2].circuitQubit.operations
                     op2 = targetPairs[i2][2].circuitQubit.operations
@@ -301,6 +302,7 @@ module QCCDSimulator
                             push!(ids2, k.id)
                         end
                     end
+
                     in1 = findall(x->x==operationID, ids)[1]
                     in2 = findall(x->x==operationID, ids2)[1]
 
@@ -472,9 +474,11 @@ module QCCDSimulator
                     noOfQubits = length(currentComponent.qubits)
                     proportion = currentComponent.noOfPhonons/noOfQubits
 
+                    # debug
                     if length(currentComponent.qubitsList) != 1
                         if qubit.id != currentComponent.qubitsList[end].id
-                            println("qubit: $(qubit.id) $(qubit.isCommunicationQubit), endqubit: $(currentComponent.qubitsList[end].id) $(currentComponent.qubitsList[end].isCommunicationQubit)")
+                            println("qubit: $(qubit.
+                            id) $(qubit.isCommunicationQubit), endqubit: $(currentComponent.qubitsList[end].id) $(currentComponent.qubitsList[end].isCommunicationQubit)")
                             println("qubit")
                             for op in qubit.circuitQubit.operations
                                 if typeof(op) == Main.QCCDSimulator.QCCDShuttlingProtocol.CommunicationConfiguration.Shuttling
@@ -977,9 +981,9 @@ module QBusSimulator
             # if refTime%5 < 1
             #     println(refTime)
             # end
-            if refTime%100 < 1
-                println(refTime, remainderOperation)
-            end
+            # if refTime%100 < 1
+            #     println(refTime, remainderOperation)
+            # end
             refTime += 1
         end
         return shuttlingCounting
@@ -1051,11 +1055,11 @@ module QBusSimulator
         end
 
         # save the results
-        output = JSON.json(result)
+        # output = JSON.json(result)
         
-        open("$name.json","w") do f 
-            JSON.write(f, output) 
-        end
+        # open("$name.json","w") do f 
+        #     JSON.write(f, output) 
+        # end
     end
 
 end
