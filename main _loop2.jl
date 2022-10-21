@@ -111,7 +111,7 @@ for cir in ["bv","qft","rcs"]
 
     # save the results to json file
     output = JSON.json(resultsSet)
-    open("result_$i.json","w") do f 
+    open("result_$cir.json","w") do f 
         JSON.write(f, output) 
     end
 end

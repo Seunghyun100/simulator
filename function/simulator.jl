@@ -154,10 +154,17 @@ module QCCDSimulator
         end
     end
 
-    function checkPackedCore(targetCoreID, architecutre)
+    function checkPackedCore(targetCoreID, architecutre, shuttlingTable)
         for core in values(architecutre.components["cores"])
             if core.id == targetCoreID
-                if core.capacity - 5 < length(core.qubits)
+                shuttlingCount = 0
+                for i in shuttlingTable
+                    shuttlingToCore = architecture.topology[i[2][end][1]][i[2][end][2]]
+                    if shuttlingToCore.id == targetCoreID
+                        shuttlingCount += 1
+                    end
+                end
+                if core.capacity - 1 < length(core.qubits) + shuttlingCount
                     return true
                 end
             end
@@ -315,7 +322,7 @@ module QCCDSimulator
 
                     if checkEndOperation(appliedQubits[i], refTime) && !multiGateTable[operationID]["isPreparedCommunication"] && !isShuttling
 
-                        if checkPackedCore(targetPairs[3-i][1].id, architecture)
+                        if checkPackedCore(targetPairs[3-i][1].id, architecture, shuttlingTable)
                             qubit.executionTime = refTime
                             if targetPairs[3-i][1].doEmpty == 0 # architecture.components["cores"][targetCoreID].capacity/4
                                 emptyCore(targetPairs[3-i][1].id, architecture, multiGateTable, shuttlingTable)
@@ -345,7 +352,7 @@ module QCCDSimulator
                             # end
                             
 
-                            if checkPackedCore(targetPairs[3-i][1].id, architecture)
+                            if checkPackedCore(targetPairs[3-i][1].id, architecture, shuttlingTable)
                                 qubit.executionTime = refTime
                                 if targetPairs[3-i][1].doEmpty == 0 # architecture.components["cores"][targetCoreID].capacity/4
                                     emptyCore(targetPairs[3-i][1].id, architecture, multiGateTable, shuttlingTable)
