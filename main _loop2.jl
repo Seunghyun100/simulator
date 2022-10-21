@@ -32,7 +32,7 @@ This part is setting to provider.
 #     error("The execution on real hardware isn't yet built")
 # end
 
-for cir in ["bv","qft","rcs"]
+for cir in ["qft"]
     resultsSet = Dict()
     for i in 2:10
         for arch in ["comb","bus","single-core"]

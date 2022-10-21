@@ -154,17 +154,17 @@ module QCCDSimulator
         end
     end
 
-    function checkPackedCore(targetCoreID, architecutre, shuttlingTable)
-        for core in values(architecutre.components["cores"])
+    function checkPackedCore(targetCoreID, architecture, shuttlingTable)
+        for core in values(architecture.components["cores"])
             if core.id == targetCoreID
                 shuttlingCount = 0
                 for i in shuttlingTable
-                    shuttlingToCore = architecture.topology[i[2][end][1]][i[2][end][2]]
+                    shuttlingToCore = architecture.topology[i[2][end][1], i[2][end][2]]
                     if shuttlingToCore.id == targetCoreID
                         shuttlingCount += 1
                     end
                 end
-                if core.capacity - 1 < length(core.qubits) + shuttlingCount
+                if core.capacity - 3 < length(core.qubits) + shuttlingCount
                     return true
                 end
             end
@@ -188,6 +188,9 @@ module QCCDSimulator
         choose_core = []
         for i in 1:architecture.noOfCores
             core = architecture.components["cores"]["Core$i"]
+            if core.id == targetCoreID
+                continue
+            end
             if core.isPreparedCommunication == false
                 push!(choose_core, (length(core.qubits), core.id))
             end

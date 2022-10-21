@@ -280,7 +280,7 @@ module QCCDShuttlingProtocol
         end
 
         if startingCore == nothing || targetCore == nothing
-            println("startingCoreID: $(startingCoreID), $(startingCore.id), targetCoreID: $(targetCoreID), $(targetCore.id), appliedQubit: $(appliedQubit.id), $(appliedQubit.circuitQubit.id)")
+            println("startingCoreID: $(startingCoreID), targetCoreID: $(targetCoreID), appliedQubit: $(appliedQubit.id), $(appliedQubit.circuitQubit.id)")
             error("Core is not found!")
         end
 
