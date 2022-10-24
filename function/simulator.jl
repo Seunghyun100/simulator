@@ -1053,7 +1053,7 @@ module QBusSimulator
 
     function printResult(result,architecture)
         println("Execution time is $(result["executionTime"])")
-        if architecture.name == "Q-bus"
+        if architecture.name[1:3] == "bus"
             println("Number of shuttling is $(result["shuttlingCounting"])")
         else
             println("Number of shuttling is $(architecture.noOfShuttling)")

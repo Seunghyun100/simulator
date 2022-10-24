@@ -1,0 +1,503 @@
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\20.10.22\2\simulator-master\main _loop2.jl 
+
+
+######################
+Circuit: rcs2
+architecture: comb2
+Execution time is 23537.307692307673
+Number of shuttling is 20     
+Number of phonons per core are
+Core1: 72.84225267930569      
+Core2: 62.35774732069428      
+
+######################
+Circuit: rcs2
+WARNING: replacing module CircuitBuilder.
+architecture: bus2
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 10027.7
+Number of shuttling is 0
+Number of phonons per core are
+Core1: 45.322774819884636
+BusDetector: 0.0
+Core2: 45.322774819884636
+BusStore: 0.0
+
+######################
+Circuit: rcs2
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3785.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+
+######################
+Circuit: rcs3
+WARNING: replacing module CircuitBuilder.
+architecture: comb3
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 27190.792307692285
+Number of shuttling is 38
+Number of phonons per core are
+Core1: 58.5638302681151
+Core2: 123.75778689599271
+Core3: 74.55838283589217
+
+######################
+Circuit: rcs3
+WARNING: replacing module CircuitBuilder.
+architecture: bus3
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 11519.9
+Number of shuttling is 0
+Number of phonons per core are
+Core1: 50.81628003901738
+BusDetector: 0.0
+Core2: 57.12641573263071
+Core3: 41.32268970086895
+BusStore: 0.0
+
+######################
+Circuit: rcs3
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3550.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+
+######################
+Circuit: rcs4
+WARNING: replacing module CircuitBuilder.
+architecture: comb4
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 37551.66666666669
+Number of shuttling is 72
+Number of phonons per core are
+Core4: 111.7430587245113
+Core1: 87.43238143498951
+Core2: 143.16423683997934
+Core3: 144.3803230005199
+
+######################
+Circuit: rcs4
+WARNING: replacing module CircuitBuilder.
+architecture: bus4
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 13055.2
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 42.72160923892281
+Core1: 41.32268970086895
+BusDetector: 0.0
+Core2: 62.15727184386562
+Core3: 61.41678401342315
+BusStore: 0.0
+
+######################
+Circuit: rcs4
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3605.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+
+######################
+Circuit: rcs5
+WARNING: replacing module CircuitBuilder.
+architecture: comb5
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 36024.99999999999
+Number of shuttling is 83
+Number of phonons per core are
+Core4: 117.35824306782814
+Core1: 131.76244683598492
+Core2: 134.5474571393961
+Core3: 93.54998671567712
+Core5: 83.86186624111365
+
+######################
+Circuit: rcs5
+WARNING: replacing module CircuitBuilder.
+architecture: bus5
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 9351.5
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 53.42260746775886
+Core1: 39.853824185912394
+BusDetector: 0.0
+Core2: 55.26281514202817
+Core3: 54.33295866721166
+Core5: 34.99169572321683
+BusStore: 0.0
+
+######################
+Circuit: rcs5
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3635.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+
+######################
+Circuit: rcs6
+WARNING: replacing module CircuitBuilder.
+architecture: comb6
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 33246.741025641015
+Number of shuttling is 95
+Number of phonons per core are
+Core4: 74.86101353152532
+Core1: 65.68697747965433
+Core6: 90.91577016546788
+Core2: 94.42618065468629
+Core3: 152.3387010936306
+Core5: 163.97135707503548
+
+######################
+Circuit: rcs6
+WARNING: replacing module CircuitBuilder.
+architecture: bus6
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 13154.800000000001
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 59.568358215366516
+Core1: 42.72160923892281
+Core6: 39.853824185912394
+BusDetector: 0.0
+Core2: 54.01350032021937
+Core3: 52.61459369760897
+Core5: 59.140419141790176
+BusStore: 0.0
+
+######################
+Circuit: rcs6
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3765.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+
+######################
+Circuit: rcs7
+WARNING: replacing module CircuitBuilder.
+architecture: comb7
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 40196.76666666671
+Number of shuttling is 133
+Number of phonons per core are
+Core4: 62.25766401474421
+Core1: 72.48807613634145
+Core6: 159.30452036437023
+Core2: 152.77650373139332
+Core7: 89.20495320718969
+Core3: 233.01237791461483
+Core5: 130.03590463134606
+
+######################
+Circuit: rcs7
+WARNING: replacing module CircuitBuilder.
+architecture: bus7
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 11270.1
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 58.07092361036569
+Core1: 48.77819874301665
+Core6: 56.592823159700814
+BusDetector: 0.0
+Core2: 56.018219745160884
+Core3: 54.64593148895496
+Core7: 45.322774819884636
+Core5: 59.537577783646704
+BusStore: 0.0
+
+######################
+Circuit: rcs7
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3825.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+
+######################
+Circuit: rcs8
+WARNING: replacing module CircuitBuilder.
+architecture: comb8
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 57801.07435897463
+Number of shuttling is 185
+Number of phonons per core are
+Core4: 178.46326674931234
+Core1: 90.94377188111257
+Core6: 133.40818893336032
+Core2: 130.36111382320732
+Core7: 189.5773503798141
+Core3: 310.66652618529315
+Core8: 66.41175086318346
+Core5: 156.16803118471645
+
+######################
+Circuit: rcs8
+WARNING: replacing module CircuitBuilder.
+architecture: bus8
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 11808.4
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 62.08581160577972
+Core1: 42.72160923892281
+Core6: 54.98153258893443
+BusDetector: 0.0
+Core2: 50.570006924883664
+Core3: 59.761153939180495
+Core7: 58.123364928794295
+Core8: 48.77819874301665
+Core5: 57.163049768269275
+BusStore: 0.0
+
+######################
+Circuit: rcs8
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3760.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+
+######################
+Circuit: rcs9
+WARNING: replacing module CircuitBuilder.
+architecture: comb9
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.

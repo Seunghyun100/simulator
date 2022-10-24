@@ -32,10 +32,10 @@ This part is setting to provider.
 #     error("The execution on real hardware isn't yet built")
 # end
 
-for cir in ["qft"]
+for cir in ["bv"]
     resultsSet = Dict()
-    for i in 2:10
-        for arch in ["comb","bus","single-core"]
+    for i in 2:3
+        for arch in ["bus"]
             if arch != "single-core"
                 archName = "$arch$i"
             else
@@ -99,17 +99,20 @@ for cir in ["qft"]
             """
             # provider.run(mappedCircuit) #TODO
             if QbusCheck
-                result = provider.run(circuit, configuration, "4")
+                output = provider.run(circuit, configuration, "4")
             else
-                result = provider.run(circuit, configuration)
+                output = provider.run(circuit, configuration)
             end
-            resultsSet[cirName][archName] = result
-            provider.printResult(result...)
-            end
+            resultsSet[cirName][archName] = output[1]
+
+            provider.printResult(output...)
         end
     end
 
     # save the results to json file
+
+    println("key: $(keys(resultsSet))")
+    
     output = JSON.json(resultsSet)
     open("result_$cir.json","w") do f 
         JSON.write(f, output) 
