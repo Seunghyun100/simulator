@@ -727,6 +727,7 @@ module QCCDSimulator
         end
         
         result = Dict()
+        result["shuttlingCounting"] = architecture.noOfShuttling
         result["executionTime"] = executionTime
         result["noOfPhonons"] = noOfPhonons
         return result

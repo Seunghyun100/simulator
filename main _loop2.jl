@@ -35,15 +35,15 @@ This part is setting to provider.
 for cir in ["bv"]
     resultsSet = Dict()
     for i in 2:3
-        for arch in ["bus"]
+        cirName = "$cir$i"
+        resultsSet[cirName] = Dict()
+        for arch in ["bus", "comb", "single-core"]
             if arch != "single-core"
                 archName = "$arch$i"
             else
                 archName = arch
             end
 
-            cirName = "$cir$i"
-            resultsSet[cirName] = Dict()
             println("######################")
             println("Circuit: $cirName")
             include("function/circuit_builder.jl")
@@ -104,17 +104,15 @@ for cir in ["bv"]
                 output = provider.run(circuit, configuration)
             end
             resultsSet[cirName][archName] = output[1]
-
+            println(resultsSet)
             provider.printResult(output...)
         end
     end
 
     # save the results to json file
-
-    println("key: $(keys(resultsSet))")
     
     output = JSON.json(resultsSet)
     open("result_$cir.json","w") do f 
         JSON.write(f, output) 
     end
-end
+end 
