@@ -2529,9 +2529,9 @@
         "topology":{
             "size":[3,17],
             "map":[["Core1","Block","Core2","Block","Core3","Block","Core4","Block","Core5","Block","Core6","Block","Core7","Block","Core8","Block","Core9"],
-                   ["Block","Block","Block","Block","Block","Block","Block","Block","Block","Block","Block","Block","Block","Block","Block","Block","Block"],
-                   ["Entrance_Core1","Path1","Entrance_Core2","Path2","Entrance_Core3","Path3","Entrance_Core4","Path4","Entrance_Core5","Path5","Entrance_Core6","Path6","Entrance_Core7","Path7","Entrance_Core8","Path8","Entrance_Core9"]]
-        },
+            ["Entrance_Core1", "Block", "Entrance_Core2", "Block", "Entrance_Core3", "Block", "Entrance_Core4", "Block", "Entrance_Core5", "Block", "Entrance_Core6", "Block", "Entrance_Core7", "Block", "Entrance_Core8", "Block", "Entrance_Core9"],
+            ["Junction1","Path1","Junction2","Path2","Junction3","Path3","Junction4","Path4","Junction5","Path5","Junction6","Path6","Junction7","Path7","Junction8","Path8","Junction9"]]
+               },
         "number_of_cores": 9
     },
     "comb10":{
