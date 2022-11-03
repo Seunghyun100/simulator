@@ -2,7 +2,7 @@ using JSON
 using DataFrames
 using CSV
 
-input = "bv" # input algorithm name
+input = "qft" # input algorithm name
 
 j = JSON.parsefile("result_$input.json")
 
@@ -11,6 +11,12 @@ for i in keys(j)
     push!(circuits, i)
 end
 circuits = sort!(circuits)
+for i in 1:length(circuits)
+    if circuits[i][end-1:end] == "10"
+        e = popat!(circuits, i)
+        push!(circuits, e)
+    end
+end
 
 architectures = ["single-core", "bus", "comb"]
 

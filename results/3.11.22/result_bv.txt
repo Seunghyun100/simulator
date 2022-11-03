@@ -1,0 +1,236 @@
+Dd
+
+Circuit: bv11
+
+architecture: bus11
+Execution time is 45765.2
+Number of shuttling is 98.0
+Number of phonons per core are
+Core11: 29.363174261588874
+Core3: 27.296332974668317
+Core1: 31.331594534846545
+Core8: 20.454829959800406
+BusDetector: 0.0
+Core2: 27.296332974668317
+Core10: 70.10725471925805
+Core9: 25.12614962340173
+Core7: 33.20628050937766
+Core4: 20.454829959800406
+Core6: 29.363174261588874
+Core5: 22.847457104571816
+BusStore: 0.0
+######################
+Circuit: bv11
+WARNING: replacing module CircuitBuilder.
+
+architecture: comb11
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 177275.48461538556
+Number of shuttling is 182
+Number of phonons per core are
+Core11: 125.42044221956002
+Core3: 116.33553172546675
+Core1: 143.54469842819992
+Core8: 51.844385478193615
+Core2: 129.37343108845917
+Core10: 221.3568016452699
+Core9: 70.77596346989316
+Core7: 205.59652500272077
+Core4: 86.75742328522726
+Core6: 123.49402861248197
+Core5: 98.62076904452667
+######################
+Circuit: bv12
+WARNING: replacing module CircuitBuilder.
+
+architecture: bus12
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 50025.5
+Number of shuttling is 107.0
+Number of phonons per core are
+Core11: 22.847457104571816
+Core3: 20.454829959800406
+Core1: 33.20628050937766
+Core8: 25.12614962340173
+BusDetector: 0.0
+Core2: 25.12614962340173
+Core10: 70.31791110698767
+Core9: 20.454829959800406
+Core7: 27.296332974668317
+Core4: 33.20628050937766
+Core12: 27.296332974668317
+Core6: 27.296332974668317
+Core5: 29.363174261588874
+BusStore: 0.0
+######################
+Circuit: bv12
+WARNING: replacing module CircuitBuilder.
+
+architecture: comb12
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 185635.6384615402
+Number of shuttling is 189
+Number of phonons per core are
+Core11: 222.2205015701107
+Core3: 172.74871327092694
+Core1: 100.95492914538342
+Core8: 84.32043138722176
+Core2: 212.7612604425558
+Core10: 128.038048538409
+Core9: 22.814255028531903
+Core7: 93.02074461597562
+Core4: 120.57206014487609
+Core12: 91.29780326753894
+Core6: 93.00487998392741
+Core5: 104.88637260454179
+######################
+Circuit: bv13
+WARNING: replacing module CircuitBuilder.
+
+architecture: bus13
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 52669.799999999996
+Number of shuttling is 112.0
+Number of phonons per core are
+Core11: 25.12614962340173
+Core3: 36.69209116496841
+Core1: 27.296332974668317
+Core8: 20.454829959800406
+BusDetector: 0.0
+Core2: 20.454829959800406
+Core10: 70.40062335440783
+Core9: 27.296332974668317
+Core7: 25.12614962340173
+Core4: 17.942571457790425
+Core12: 22.847457104571816
+Core6: 25.12614962340173
+Core5: 31.331594534846545
+BusStore: 0.0
+Core13: 27.296332974668317
+######################
+Circuit: bv13
+WARNING: replacing module CircuitBuilder.
+
+architecture: comb13
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 214941.92051282062
+Number of shuttling is 220
+Number of phonons per core are
+Core11: 92.00530576776332
+Core3: 169.51696887996906
+Core1: 106.34873918743659
+Core8: 69.65693039518231
+Core2: 93.60523078631974
+Core10: 262.7547039719745
+Core9: 103.37009453779432
+Core7: 106.57015468418216
+Core4: 77.99066651976233
+Core12: 89.87839774778794
+Core6: 109.56763981532043
+Core5: 256.58922461149444
+Core13: 100.54594309501255
+######################
+Circuit: bv14
+WARNING: replacing module CircuitBuilder.
+
+architecture: bus14
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 57965.0
+Number of shuttling is 123.0
+Number of phonons per core are
+Core11: 25.12614962340173
+Core3: 25.12614962340173
+Core1: 20.454829959800406
+Core8: 27.296332974668317
+BusDetector: 0.0
+Core2: 36.69209116496841
+Core10: 70.524960675686
+Core9: 20.454829959800406
+Core7: 20.454829959800406
+Core4: 29.363174261588874
+Core12: 31.331594534846545
+Core6: 34.99169572321683
+Core5: 25.12614962340173
+BusStore: 0.0
+Core13: 22.847457104571816
+Core14: 15.304700030679946
+######################
+Circuit: bv14
+WARNING: replacing module CircuitBuilder.
+
+architecture: comb14
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 193594.48461538556
+Number of shuttling is 195
+Number of phonons per core are
+Core11: 153.83817177240905
+Core3: 88.11588592282791
+Core1: 45.4525311817291
+Core8: 133.06283184633344
+Core2: 158.7377277761925
+Core10: 89.16257258321151
+Core9: 11.557753452258096
+Core7: 44.44762229218024
+Core4: 196.71471979963545
+Core12: 99.81064071457243
+Core6: 118.95800850106728
+Core5: 75.56676133064637
+Core13: 60.56574044172211
+Core14: 189.80903238521407
+ *  Terminal will be reused by tasks, press any key to close it.

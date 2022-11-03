@@ -1,0 +1,296 @@
+######################
+Circuit: qft11
+architecture: single-core
+Execution time is 17610.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: qft12
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 19210.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: qft13
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 20810.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: qft14
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 22410.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: bv11
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 4595.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: bv12
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 4795.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: bv13
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 5035.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: bv14
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 5355.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: rcs11
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3565.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: rcs12
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3780.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: rcs13
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3795.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+######################
+Circuit: rcs14
+WARNING: replacing module CircuitBuilder.
+architecture: single-core
+WARNING: replacing module NonOptimizedMapper.
+WARNING: replacing module OperationConfiguration.
+WARNING: replacing module ArchitectureConfiguration.
+WARNING: replacing module CommunicationConfiguration.
+WARNING: replacing module Scheduler.
+WARNING: replacing module CostCalculator.
+WARNING: replacing module ErrorCalculator.
+WARNING: replacing module QCCDSimulator.
+WARNING: replacing module QBusSimulator.
+Execution time is 3730.0
+Number of shuttling is 0
+Number of phonons per core are
+Core4: 0.0
+Core1: 0.0
+Core6: 0.0
+BusDetector: 0.0
+Core2: 0.0
+Core3: 0.0
+Core5: 0.0
+BusStore: 0.0
+ *  Terminal will be reused by tasks, press any key to close it.
+흰색_확인_표시
+두_눈
+두_손을_들고_있는_사람
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -549,7 +549,7 @@ module QCCDSimulator
                     popfirst!(qubit.circuitQubit.operations)
                     deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
 
-                    # println("$(qubit.executionTime) Split! from $(currentComponent.id), $(qubit.id)")
+                    println("$(qubit.executionTime) Split! from $(currentComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
                     qubit.executionTime = nextComponent.executionTime
@@ -584,7 +584,7 @@ module QCCDSimulator
                     deleteShuttlingRoute(qubit.id, currentCoordinates, shuttlingTable, qubit.executionTime)
                     # deleteShuttlingRoute(qubit.id, nextCoordinates, shuttlingTable, qubit.executionTime)
 
-                    # println("$(qubit.executionTime) Merge! to $(nextComponent.id), $(qubit.id)")
+                    println("$(qubit.executionTime) Merge! to $(nextComponent.id), $(qubit.id)")
 
                 else # TODO: dwell time
                     # println("dwell, $(nextComponent.executionTime)")

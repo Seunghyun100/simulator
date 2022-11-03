@@ -67,33 +67,33 @@ Input
 """
 BV
 """
-c = 10
-name = "bv$c" # name
-noQubits = c*20 # number of qubits
-circuit = initCircuit(noQubits)
+# c = 10
+# name = "bv$c" # name
+# noQubits = c*20 # number of qubits
+# circuit = initCircuit(noQubits)
 
-for i in 1:noQubits
-    one(h, i)
-end
-one(z,noQubits)
+# for i in 1:noQubits
+#     one(h, i)
+# end
+# one(z,noQubits)
 
-# Oracle
-for i in 1:noQubits
-    if rand(Bool)
-        two(cx, i, noQubits)
-    end
-end
+# # Oracle
+# for i in 1:noQubits
+#     if rand(Bool)
+#         two(cx, i, noQubits)
+#     end
+# end
 
-#
-for i in 1:noQubits
-    one(h, i)
-    one(m, i)
-end
+# #
+# for i in 1:noQubits
+#     one(h, i)
+#     one(m, i)
+# end
 
 """
 QFT
 """
-# c = 10
+# c = 14
 # name = "qft$c" # name
 # noQubits = c*20 # number of qubits
 # circuit = initCircuit(noQubits)
@@ -402,36 +402,36 @@ SimTest start
 """
 RCS
 """
-# c = 10
-# name = "rcs$c"
-# noQubits = c*20
-# circuit = initCircuit(noQubits)
+c = 14
+name = "rcs$c"
+noQubits = c*20
+circuit = initCircuit(noQubits)
 
-# gateSet = ["x", "y", "z", "h", "s", "t", "cx"]
-# for i in 1
-#     qq = 0
-#     for c in 1:noQubits*20
-#         set = deepcopy(gateSet)
-#         for i in 1:7
-#             qqq = qq % noQubits + 1
-#             gate = rand(set)
-#             deleteat!(set, findall(x->x==gate, set))
-#             if gate != "cx"
-#                 one(gate,qqq)
-#             else
-#                 t = rand((-1,1))
-#                 if qqq == 1
-#                     two(gate,qqq,qqq+1)
-#                 elseif qqq == noQubits
-#                     two(gate,qqq,qqq-1)
-#                 else
-#                     two(gate,qqq,qqq+t)
-#                 end
-#             end
-#             qq += 1
-#         end
-#     end
-# end
+gateSet = ["x", "y", "z", "h", "s", "t", "cx"]
+for i in 1
+    qq = 0
+    for c in 1:noQubits*20
+        set = deepcopy(gateSet)
+        for i in 1:7
+            qqq = qq % noQubits + 1
+            gate = rand(set)
+            deleteat!(set, findall(x->x==gate, set))
+            if gate != "cx"
+                one(gate,qqq)
+            else
+                t = rand((-1,1))
+                if qqq == 1
+                    two(gate,qqq,qqq+1)
+                elseif qqq == noQubits
+                    two(gate,qqq,qqq-1)
+                else
+                    two(gate,qqq,qqq+t)
+                end
+            end
+            qq += 1
+        end
+    end
+end
 #######################
 """
 Output

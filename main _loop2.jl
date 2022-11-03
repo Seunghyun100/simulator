@@ -32,12 +32,12 @@ This part is setting to provider.
 #     error("The execution on real hardware isn't yet built")
 # end
 
-for cir in ["bv"]
+for cir in ["rcs"]
     resultsSet = Dict()
-    for i in 2:3
+    for i in 9:9
         cirName = "$cir$i"
         resultsSet[cirName] = Dict()
-        for arch in ["bus", "comb", "single-core"]
+        for arch in ["comb"]
             if arch != "single-core"
                 archName = "$arch$i"
             else

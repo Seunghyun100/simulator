@@ -104,7 +104,7 @@ module CircuitBuilder
         circuit = Circuit(circuitName, qubits)
         
         # check for performance calculation
-        # println("$circuitName: No.Operations $totalNoOperation , No.Qubits $(length(qubits))")
+        println("$circuitName: No.Operations $totalNoOperation , No.Qubits $(length(qubits))")
         
         return (circuit, multiGateTable)
     end

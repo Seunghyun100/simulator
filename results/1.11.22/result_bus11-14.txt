@@ -1,0 +1,197 @@
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\24.10.22\simulator-master\main _loop2.jl 
+
+######################
+Circuit: qft14
+
+architecture: bus14
+Execution time is 244660.0
+Number of shuttling is 36540.0
+Number of phonons per core are
+Core11: 64.46607786344308     
+Core3: 64.46607786344308      
+Core1: 53.658394114134055
+Core8: 54.15954870104675
+BusDetector: 0.0
+Core2: 64.46607786344308
+Core10: 53.658394114134055
+Core9: 54.159572124660656
+Core7: 54.15954870102443
+Core4: 54.15954870102443
+Core12: 64.46607786344308
+Core6: 54.15954870102443
+Core5: 54.15954870102443
+BusStore: 0.0
+Core13: 64.46607786344308
+Core14: 64.46607786344308
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\24.10.22\simulator-master\main _loop2.jl 
+
+######################
+Circuit: qft13
+
+architecture: bus13
+Execution time is 224788.80000000002
+Number of shuttling is 31320.0
+Number of phonons per core are
+Core11: 64.46607786344308     
+Core3: 64.46607786344308      
+Core1: 53.658394114134055
+Core8: 54.15954870104675
+BusDetector: 0.0
+Core2: 64.46607786344308
+Core10: 53.658394114134055
+Core9: 54.159572124660656
+Core7: 54.15954870102443
+Core4: 54.15954870102443
+Core12: 64.46607786344308
+Core6: 54.15954870102443
+Core5: 54.15954870102443
+BusStore: 0.0
+Core13: 64.46607786344308
+ *  Terminal will be reused by tasks, press any key to close it. 
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\24.10.22\simulator-master\main _loop2.jl 
+
+######################
+Circuit: qft12
+
+architecture: bus12
+Execution time is 205020.5
+Number of shuttling is 26520.0
+Number of phonons per core are
+Core11: 64.46607786344308     
+Core3: 64.46607786344308      
+Core1: 53.658394114134055
+Core8: 54.15954870104675
+BusDetector: 0.0
+Core2: 64.46607786344308
+Core10: 53.658394114134055
+Core9: 54.159572124660656
+Core7: 54.15954870102443
+Core4: 64.46607786344308
+Core12: 64.46607786344308
+Core6: 54.15954870102443
+Core5: 54.15954870102443
+BusStore: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\24.10.22\simulator-master\main _loop2.jl 
+
+######################
+Circuit: qft11
+
+architecture: bus11
+Execution time is 185461.2
+Number of shuttling is 22100.0
+Number of phonons per core are
+Core11: 64.46607786344308     
+Core3: 64.46607786344308      
+Core1: 53.658394114134055
+Core8: 54.15954870104675
+BusDetector: 0.0
+Core2: 64.46607786344308
+Core10: 53.658394114134055
+Core9: 54.159572124660656
+Core7: 54.15954870102443
+Core4: 64.46607786344308
+Core6: 54.15954870102443
+Core5: 54.15954870102443
+BusStore: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\24.10.22\simulator-master\main _loop2.jl 
+
+######################
+Circuit: rcs11
+
+architecture: bus11
+Execution time is 13346.2
+Number of shuttling is 196.0
+Number of phonons per core are
+Core11: 56.79964703299085
+Core3: 52.90545314031517
+Core1: 33.20628050937766
+Core8: 58.7877695190794
+BusDetector: 0.0
+Core2: 53.646595979437784
+Core10: 39.853824185912394
+Core9: 57.380521991679096
+Core7: 52.655431581911536
+Core4: 57.81566140204043
+Core6: 57.88917087480173
+Core5: 58.27465495801476
+BusStore: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\24.10.22\simulator-master\main _loop2.jl 
+
+######################
+Circuit: rcs12
+
+architecture: bus12
+Execution time is 13023.5
+Number of shuttling is 240.0  
+Number of phonons per core are
+Core11: 51.05203673365974     
+Core3: 54.638508648334415     
+Core1: 39.853824185912394
+Core8: 61.673920720531704
+BusDetector: 0.0
+Core2: 58.34453085605216
+Core10: 51.76312384668322
+Core9: 61.018127661690414
+Core7: 57.615922276907305
+Core4: 53.57317586691092
+Core12: 59.600791058729676
+Core6: 60.18094258660704
+Core5: 61.47242958042655
+BusStore: 0.0
+ *  Terminal will be reused by tasks, press any key to close it. 
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\24.10.22\simulator-master\main _loop2.jl 
+
+######################
+Circuit: rcs13
+
+architecture: bus13
+Execution time is 16061.800000000001
+Number of shuttling is 270.0  
+Number of phonons per core are
+Core11: 60.74176883396081     
+Core3: 58.90880953237926      
+Core1: 45.322774819884636
+Core8: 66.29861397710516
+BusDetector: 0.0
+Core2: 52.816447564477734
+Core10: 41.32268970086895
+Core9: 61.09232629696355
+Core7: 65.43822801136072
+Core4: 56.25933488322912
+Core12: 64.82828238385973
+Core6: 62.61262124114655
+Core5: 60.34459749839401
+BusStore: 0.0
+Core13: 59.628000713160866
+ *  Terminal will be reused by tasks, press any key to close it. 
+ *  Executing task: C:\Users\QuETI\AppData\Local\Programs\Julia-1.7.3\bin\julia.exe --color=yes --project=C:\Users\QuETI\.julia\environments\v1.7 c:\Users\QuETI\code\qbus-sim\24.10.22\simulator-master\main _loop2.jl 
+
+######################
+Circuit: rcs14
+
+architecture: bus14
+Execution time is 13104.0
+Number of shuttling is 262.0  
+Number of phonons per core are
+Core11: 55.65327230061912     
+Core3: 60.072575131129014     
+Core1: 39.853824185912394
+Core8: 52.72994540002145
+BusDetector: 0.0
+Core2: 56.601270673882844
+Core10: 51.76312384668322
+Core9: 58.311206748400544
+Core7: 52.30878121140226
+Core4: 57.60221104099289
+Core12: 58.66799705621375
+Core6: 52.45348321764287
+Core5: 57.53276923773466
+BusStore: 0.0
+Core13: 60.70215289059312
+Core14: 56.38612056778937
+ *  Terminal will be reused by tasks, press any key to close it. 

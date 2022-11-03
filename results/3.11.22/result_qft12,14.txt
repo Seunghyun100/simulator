@@ -1,0 +1,49 @@
+######################
+Circuit: qft14
+architecture: comb14
+Execution time is 1.7909768435897422e6
+Number of shuttling is 6373
+Number of phonons per core are
+Core11: 3034.8363836968992
+Core3: 2576.282898565774
+Core1: 2730.2375358422346
+Core8: 2508.8993917127573
+Core2: 4935.548698685467
+Core10: 1508.8268026654962
+Core9: 4394.583220526679
+Core7: 3678.241738762633
+Core4: 4098.59673745999
+Core12: 2621.617519740071
+Core6: 4667.438572302938
+Core5: 3627.3387877608616
+Core13: 4851.007567447232
+Core14: 1951.8241448307674
+ *  Terminal will be reused by tasks, press any key to close it.
+흰색_확인_표시
+두_눈
+두_손을_들고_있는_사람
+
+
+
+
+
+9:10
+######################
+Circuit: qft12
+architecture: comb12
+Execution time is 2.5975800743589723e6
+Number of shuttling is 7109
+Number of phonons per core are
+Core11: 5831.328239150698
+Core3: 4828.135095748441
+Core1: 6440.9171987843665
+Core8: 2587.486305133619
+Core2: 3259.846871415677
+Core10: 3075.2055850355587
+Core9: 1461.2091037417977
+Core7: 4773.853434099878
+Core4: 4510.926899928683
+Core12: 2337.570696279589
+Core6: 5863.703455690152
+Core5: 6121.057114991435
+ *  Terminal will be reused by tasks, press any key to close it.
